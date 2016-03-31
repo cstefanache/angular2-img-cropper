@@ -1,0 +1,38 @@
+{
+  "name": "ng2-components",
+  "version": "0.0.1",
+  "description": "Angular2 Components",
+  "main": "component.js",
+  "typings": "./component.d.ts",
+  "repository": "cstefanache/ng2-components",
+  "scripts": {
+    "prepublish": "tsc & node make.js",
+    "all": "concurrently \"npm run watch\" \"npm run lite\" ",
+    "watch": "tsc -w ",
+    "lite": "lite-server"
+  },
+  "keywords": [
+    "angular2"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular2": "2.0.0-beta.9",
+    "autodts": "0.0.6",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+
+    "path": "^0.12.7",
+    "reflect-metadata": "0.1.2",
+    "requirejs": "^2.2.0",
+    "rxjs": "^5.0.0-beta.4",
+    "systemjs-builder": "^0.15.13",
+
+    "zone.js": "^0.5.15"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.1.0",
+    "typescript": "^1.8.9",
+    "typings":"^0.7.9"
+  }
+}

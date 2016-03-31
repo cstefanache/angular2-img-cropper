@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "out": "./dist/ng2-test-app.js",
+    "noImplicitAny": false,
+    "module": "system",
+    "target": "es5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "sourceMap": true,
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

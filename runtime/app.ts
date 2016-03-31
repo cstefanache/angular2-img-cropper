@@ -1,18 +1,3 @@
-
-
-# ng2-img-cropper
-
-This is an adapatation of Angular 1 image cropper from: https://github.com/AllanBishop/angular-img-cropper
-An image cropping tool for AngularJS. Features a rectangular crop area. The crop area's aspect ratio can be enforced during dragging. 
-The crop image can either be 1:1 or scaled to fit an area.
-
-## Screenshot
-
-![Screenshot](https://raw.githubusercontent.com/AllanBishop/ImageCropper/master/screenshots/screenshot.jpg "Screenshot")
-
-## Example usage
-
-```
 import {Component} from 'angular2/core';
 import {ImageCropperComponent, CropperSettings} from '../components';
 
@@ -43,5 +28,3 @@ export class AppComponent {
 
     }
 }
-
-```
