@@ -10,6 +10,13 @@ The crop image can either be 1:1 or scaled to fit an area.
 
 ![Screenshot](https://raw.githubusercontent.com/AllanBishop/ImageCropper/master/screenshots/screenshot.jpg "Screenshot")
 
+## Testing
+
+```
+    npm install
+    npm run all
+```
+
 ## Example usage
 
 ```
