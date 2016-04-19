@@ -6,7 +6,7 @@
   "typings": "./component.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cstefanache/ng2-components.git"
+    "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
   },
   "scripts": {
     "prepublish": "rm -rf dist & tsc",
