@@ -1,6 +1,6 @@
 {
   "name": "ng2-img-cropper",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Angular2 Components",
   "main": "component.js",
   "typings": "./component.d.ts",

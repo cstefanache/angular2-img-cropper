@@ -1,6 +1,3 @@
-///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
-
-
 import {Component, Renderer, ViewChild, ElementRef} from 'angular2/core';
 import {PointPool} from './model/pointPool';
 import {Point} from './model/point';
