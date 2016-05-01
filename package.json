@@ -17,7 +17,7 @@
   "keywords": [
     "angular2"
   ],
-  "files": ["src","runtime"],
+  "files": ["ng2-img-cropper.*"],
   "license": "MIT",
   "devDependencies": {
     "angular2": "2.0.0-beta.15",
