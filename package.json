@@ -9,7 +9,7 @@
     "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
   },
   "scripts": {
-    "prepublish": "rm -rf ng2-img-cropper.* & tsc",
+    "prepublish": "tsc",
     "all": "concurrently \"npm run watch\" \"npm run lite\" ",
     "watch": "tsc -w ",
     "lite": "lite-server"

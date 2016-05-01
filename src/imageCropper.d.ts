@@ -1,23 +1,28 @@
-import { Renderer, ElementRef } from 'angular2/core';
+import { Renderer, ElementRef, OnChanges, SimpleChange, EventEmitter } from 'angular2/core';
 import { PointPool } from './model/pointPool';
-import { Point } from './model/point';
 import { Bounds } from './model/bounds';
+import { Point } from './model/point';
 import { CornerMarker } from './model/cornerMarker';
 import { DragMarker } from './model/dragMarker';
-export declare class ImageCropperComponent {
+export declare class ImageCropperComponent implements OnChanges {
     cropcanvas: ElementRef;
     private cropper;
     private renderer;
-    image: any;
+    srcImage: any;
     croppedWidth: number;
     croppedHeight: number;
     settings: CropperSettings;
+    image: any;
+    onCrop: EventEmitter<any>;
     constructor(renderer: Renderer);
+    ngOnChanges(changes: {
+        [propName: string]: SimpleChange;
+    }): void;
     ngAfterViewInit(): void;
     onMouseDown($event: any): void;
     onMouseUp($event: any): void;
     onMouseMove($event: any): void;
-    fileChangeListener($event: any): void;
+    imageChanged(src: any): void;
 }
 export declare class CropperSettings {
     canvasWidth: number;
