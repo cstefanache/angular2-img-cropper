@@ -2,8 +2,8 @@
   "name": "ng2-img-cropper",
   "version": "0.2.2",
   "description": "Angular2 Components",
-  "main": "component.js",
-  "typings": "./component.d.ts",
+  "main": "ng2-img-cropper.js",
+  "typings": "./ng2-img-cropper.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
@@ -17,7 +17,6 @@
   "keywords": [
     "angular2"
   ],
-  "files": ["ng2-img-cropper.*"],
   "license": "MIT",
   "devDependencies": {
     "angular2": "2.0.0-beta.15",
