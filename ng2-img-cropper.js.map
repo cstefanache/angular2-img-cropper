@@ -1,1 +1,1 @@
-{"version":3,"file":"ng2-img-cropper.js","sourceRoot":"","sources":["ng2-img-cropper.ts"],"names":[],"mappings":";;;AACA,6BAAuD,oBAAoB,CAAC,CAAA;AAE5E,iBAAc,oBAAoB,CAAC,EAAA;AAEnC;kBAAe;IACX,UAAU,EAAE,CAAE,oCAAqB,EAAE,8BAAe,CAAE;CACzD,CAAA"}
+{"version":3,"file":"ng2-img-cropper.js","sourceRoot":"","sources":["ng2-img-cropper.ts"],"names":[],"mappings":";;;;AACA,6BAAuD,oBAAoB,CAAC,CAAA;AAE5E,iBAAc,oBAAoB,CAAC,EAAA;AAEnC;kBAAe;IACX,UAAU,EAAE,CAAE,oCAAqB,EAAE,8BAAe,CAAE;CACzD,CAAA"}

@@ -1,3 +1,4 @@
+"use strict";
 var CropTouch = (function () {
     function CropTouch(x, y, id) {
         if (x === void 0) {
@@ -15,6 +16,6 @@ var CropTouch = (function () {
         this.id = id;
     }
     return CropTouch;
-})();
+}());
 exports.CropTouch = CropTouch;
 //# sourceMappingURL=cropTouch.js.map

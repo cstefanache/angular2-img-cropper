@@ -1,4 +1,4 @@
-import {Component, Renderer, ViewChild, ElementRef, OnChanges, SimpleChange, Output, EventEmitter} from 'angular2/core';
+import {Component, Renderer, ViewChild, ElementRef, OnChanges, SimpleChange, Output, EventEmitter} from '@angular/core';
 import {PointPool} from './model/pointPool';
 import {Bounds} from './model/bounds';
 import {Point} from './model/point';

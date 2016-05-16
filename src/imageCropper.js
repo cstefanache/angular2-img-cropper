@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -12,7 +13,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('angular2/core');
+var core_1 = require('@angular/core');
 var pointPool_1 = require('./model/pointPool');
 var bounds_1 = require('./model/bounds');
 var cornerMarker_1 = require('./model/cornerMarker');
@@ -92,7 +93,7 @@ var ImageCropperComponent = (function () {
         __metadata('design:paramtypes', [core_1.Renderer])
     ], ImageCropperComponent);
     return ImageCropperComponent;
-})();
+}());
 exports.ImageCropperComponent = ImageCropperComponent;
 var CropperSettings = (function () {
     function CropperSettings() {
@@ -104,13 +105,13 @@ var CropperSettings = (function () {
         this.croppedHeight = 100;
     }
     return CropperSettings;
-})();
+}());
 exports.CropperSettings = CropperSettings;
 var ImageCropperModel = (function () {
     function ImageCropperModel() {
     }
     return ImageCropperModel;
-})();
+}());
 exports.ImageCropperModel = ImageCropperModel;
 var ImageCropper = (function (_super) {
     __extends(ImageCropper, _super);
@@ -1068,6 +1069,6 @@ var ImageCropper = (function (_super) {
     };
     ;
     return ImageCropper;
-})(ImageCropperModel);
+}(ImageCropperModel));
 exports.ImageCropper = ImageCropper;
 //# sourceMappingURL=imageCropper.js.map

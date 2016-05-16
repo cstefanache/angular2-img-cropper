@@ -1,3 +1,4 @@
+"use strict";
 var point_1 = require('./point');
 var PointPool = (function () {
     function PointPool(initialSize) {
@@ -43,6 +44,6 @@ var PointPool = (function () {
     };
     ;
     return PointPool;
-})();
+}());
 exports.PointPool = PointPool;
 //# sourceMappingURL=pointPool.js.map

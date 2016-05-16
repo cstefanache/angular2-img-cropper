@@ -1,3 +1,4 @@
+"use strict";
 var ImageCropperDataShare = (function () {
     function ImageCropperDataShare() {
     }
@@ -28,6 +29,6 @@ var ImageCropperDataShare = (function () {
     ;
     ImageCropperDataShare.share = {};
     return ImageCropperDataShare;
-})();
+}());
 exports.ImageCropperDataShare = ImageCropperDataShare;
 //# sourceMappingURL=imageCropperDataShare.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var point_1 = require('./point');
 var Handle = (function () {
     function Handle(x, y, radius) {
@@ -33,6 +34,6 @@ var Handle = (function () {
     };
     ;
     return Handle;
-})();
+}());
 exports.Handle = Handle;
 //# sourceMappingURL=handle.js.map

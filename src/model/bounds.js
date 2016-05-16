@@ -1,3 +1,4 @@
+"use strict";
 var pointPool_1 = require('./pointPool');
 var Bounds = (function () {
     function Bounds(x, y, width, height) {
@@ -33,6 +34,6 @@ var Bounds = (function () {
     };
     ;
     return Bounds;
-})();
+}());
 exports.Bounds = Bounds;
 //# sourceMappingURL=bounds.js.map

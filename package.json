@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "angular2": "2.0.0-beta.15",
+    "@angular/core": "2.0.0-rc.1",
     "autodts": "0.0.6",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.35.0",
@@ -28,7 +28,7 @@
     "requirejs": "^2.2.0",
     "systemjs-builder": "^0.15.13",
     "zone.js": "^0.6.10",
-    "rxjs": "5.0.0-beta.2",
+    "rxjs": "5.0.0-beta.6",
     "concurrently": "^2.0.0",
     "lite-server": "^2.1.0",
     "typescript": "^1.8.9",

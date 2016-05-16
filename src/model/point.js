@@ -1,3 +1,4 @@
+"use strict";
 var Point = (function () {
     function Point(x, y) {
         this.x = x;
@@ -8,6 +9,6 @@ var Point = (function () {
     Point.prototype.getPrev = function () { return this._prev; };
     Point.prototype.setPrev = function (p) { this._prev = p; };
     return Point;
-})();
+}());
 exports.Point = Point;
 //# sourceMappingURL=point.js.map
