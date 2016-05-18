@@ -6,6 +6,7 @@ import {ImageCropperComponent, CropperSettings} from '../components';
     selector: 'test-app',
     template: `<div>
         <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper><br>
+
         <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
     </div>`,
     directives: [ImageCropperComponent]
@@ -21,8 +22,8 @@ export class AppComponent {
         this.cropperSettings.height = 100;
         this.cropperSettings.croppedWidth =100;
         this.cropperSettings.croppedHeight = 100;
-        this.cropperSettings.canvasWidth = 400;
-        this.cropperSettings.canvasHeight = 300;
+        this.cropperSettings.canvasWidth = 500;
+        this.cropperSettings.canvasHeight = 400;
 
         this.data = {};
 
