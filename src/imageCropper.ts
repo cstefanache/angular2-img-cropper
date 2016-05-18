@@ -1,4 +1,7 @@
-import {Component, Renderer, ViewChild, ElementRef} from 'angular2/core';
+///<reference path="../node_modules/angular2-in-memory-web-api/typings/browser.d.ts"/>
+///<reference path="../typings/main.d.ts"/>
+
+import {Component, Renderer, ViewChild, ElementRef} from '@angular/core';
 import {PointPool} from './model/pointPool';
 import {Point} from './model/point';
 import {Bounds} from './model/bounds';
@@ -27,7 +30,7 @@ import {ImageCropperDataShare} from './imageCropperDataShare';
 })
 export class ImageCropperComponent {
 
-  @ViewChild('cropcanvas') cropcanvas: ElementRef;
+  @ViewChild('cropcanvas', undefined) cropcanvas: ElementRef;
 
   private cropper: ImageCropper;
   private renderer: Renderer;

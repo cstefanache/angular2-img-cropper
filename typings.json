@@ -1,0 +1,6 @@
+{
+  "ambientDependencies": {
+    "systemjs": "registry:dt/systemjs#0.18.4+20160417155658",
+    "underscore": "registry:dt/underscore#1.7.0+20160412141459"
+  }
+}

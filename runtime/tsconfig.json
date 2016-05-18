@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "out": "./dist/ng2-img-cropper.js",
+    "out": "dist/img-cropper-test-app.js",
     "noImplicitAny": false,
     "module": "system",
     "target": "es5",
@@ -11,9 +11,6 @@
     "moduleResolution": "node"
   },
   "exclude": [
-    "node_modules",
-    "dist",
-    "runtime",
-    "typings"
+    "node_modules"
   ]
 }

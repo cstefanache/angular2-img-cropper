@@ -9,8 +9,7 @@
     "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
   },
   "scripts": {
-    "prepublish": "rm -rf dist & tsc",
-    "all": "concurrently \"npm run watch\" \"npm run lite\" ",
+    "all": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "watch": "tsc -w ",
     "lite": "lite-server"
   },
@@ -19,21 +18,32 @@
   ],
   "files": ["src","runtime"],
   "license": "MIT",
+  "dependencies": {
+    "@angular/common":  "2.0.0-rc.1",
+    "@angular/compiler":  "2.0.0-rc.1",
+    "@angular/core":  "2.0.0-rc.1",
+    "@angular/http":  "2.0.0-rc.1",
+    "@angular/platform-browser":  "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic":  "2.0.0-rc.1",
+    "@angular/router":  "2.0.0-rc.1",
+    "@angular/router-deprecated":  "2.0.0-rc.1",
+    "@angular/upgrade":  "2.0.0-rc.1",
+
+
+    "jquery": "^2.2.3",
+    "systemjs": "0.19.27",
+    "es6-shim": "^0.35.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12",
+    "angular2-in-memory-web-api": "0.0.7",
+    "bootstrap": "^3.3.6"
+  },
   "devDependencies": {
-    "angular2": "^2.0.0-beta.13",
-    "autodts": "0.0.6",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
-    "path": "^0.12.7",
-    "reflect-metadata": "0.1.2",
-    "requirejs": "^2.2.0",
-    "systemjs-builder": "^0.15.13",
-    "zone.js": "^0.5.15",
-    "rxjs": "^5.0.0-beta.4",
     "concurrently": "^2.0.0",
-    "lite-server": "^2.1.0",
-    "typescript": "^1.8.9",
-    "typings": "^0.7.9"
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings": "^0.7.12"
   },
   "bugs": {
     "url": "https://github.com/cstefanache/ng2-components/issues"

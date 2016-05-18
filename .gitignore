@@ -8,11 +8,11 @@ build.xml
 node_modules/*
 npm-debug.log
 coverage
-*.js
+dist/img-cropper-test-app.d.ts
+dist/img-cropper-test-app.js
+dist/img-cropper-test-app.js.map
 !karma.conf.js
 !karma-test-shim.js
-*.map
-*.d.ts
 !make.js
 !bundles/*.js
 
