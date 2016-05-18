@@ -1,6 +1,6 @@
 {
   "name": "ng2-img-cropper",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Angular2 Image Cropper Component",
   "main": "component.js",
   "typings": "./component.d.ts",
@@ -16,7 +16,7 @@
   "keywords": [
     "angular2"
   ],
-  "files": ["src","runtime"],
+  "files": ["src","runtime","dist"],
   "license": "MIT",
   "dependencies": {
     "@angular/common":  "2.0.0-rc.1",

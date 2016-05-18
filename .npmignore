@@ -5,6 +5,3 @@ npm-debug.log
 Thumbs.db
 .DS_Store
 runtime
-dist/img-cropper-test-app.d.ts
-dist/img-cropper-test-app.js
-dist/img-cropper-test-app.js.map
