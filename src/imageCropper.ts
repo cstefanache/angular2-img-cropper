@@ -85,6 +85,7 @@ export class ImageCropperComponent {
     myReader.onloadend = function(loadEvent: any) {
       image.src = loadEvent.target.result;
       that.cropper.setImage(image);
+      that.image.image = that.cropper.getCroppedImage().src;
     }
 
     myReader.readAsDataURL(file);
