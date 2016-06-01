@@ -19,7 +19,6 @@ var Bounds = (function () {
         this.top = y;
         this.bottom = y + height;
     }
-
     Bounds.prototype.getWidth = function () {
         return this.right - this.left;
     };

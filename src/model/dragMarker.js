@@ -1,12 +1,9 @@
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() {
-            this.constructor = d;
-        }
-
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var handle_1 = require('./handle');
 var pointPool_1 = require('./pointPool');
 var DragMarker = (function (_super) {
@@ -18,7 +15,6 @@ var DragMarker = (function (_super) {
         this.getDragIconPoints(this.iconPoints, 1);
         this.getDragIconPoints(this.scaledIconPoints, 1.2);
     }
-
     DragMarker.prototype.draw = function (ctx) {
         if (this.over || this.drag) {
             this.drawIcon(ctx, this.scaledIconPoints);

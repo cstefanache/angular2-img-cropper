@@ -2,7 +2,6 @@
 var ImageCropperDataShare = (function () {
     function ImageCropperDataShare() {
     }
-
     ImageCropperDataShare.setPressed = function (canvas) {
         this.pressed = canvas;
     };

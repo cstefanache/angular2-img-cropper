@@ -1,9 +1,7 @@
 {
   "name": "ng2-img-cropper",
-  "version": "0.3.2",
+  "version": "0.3.7",
   "description": "Angular2 Image Cropper Component",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
@@ -17,9 +15,8 @@
   "keywords": [
     "angular2"
   ],
-  "files": ["src","runtime","dist"],
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@angular/common":  "2.0.0-rc.1",
     "@angular/compiler":  "2.0.0-rc.1",
     "@angular/core":  "2.0.0-rc.1",
@@ -37,9 +34,8 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.12",
     "angular2-in-memory-web-api": "0.0.7",
-    "bootstrap": "^3.3.6"
-  },
-  "devDependencies": {
+    "bootstrap": "^3.3.6",
+
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",

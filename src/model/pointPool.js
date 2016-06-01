@@ -16,7 +16,6 @@ var PointPool = (function () {
             }
         }
     }
-
     Object.defineProperty(PointPool, "instance", {
         get: function () {
             return PointPool._instance;

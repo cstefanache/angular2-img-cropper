@@ -15,7 +15,6 @@ var CropTouch = (function () {
         this.y = y;
         this.id = id;
     }
-
     return CropTouch;
 }());
 exports.CropTouch = CropTouch;

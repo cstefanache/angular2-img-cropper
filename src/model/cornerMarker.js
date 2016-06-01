@@ -1,19 +1,15 @@
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() {
-            this.constructor = d;
-        }
-
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var handle_1 = require('./handle');
 var CornerMarker = (function (_super) {
     __extends(CornerMarker, _super);
     function CornerMarker() {
         _super.apply(this, arguments);
     }
-
     CornerMarker.prototype.drawCornerBorder = function (ctx) {
         var sideLength = 10;
         if (this.over || this.drag) {

@@ -1,22 +1,19 @@
 ///<reference path="../typings/browser.d.ts"/>
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() {
-            this.constructor = d;
-        }
-
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var __metadata = (this && this.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var pointPool_1 = require('./model/pointPool');
 var bounds_1 = require('./model/bounds');
@@ -28,7 +25,6 @@ var ImageCropperComponent = (function () {
     function ImageCropperComponent(renderer) {
         this.renderer = renderer;
     }
-
     ImageCropperComponent.prototype.ngAfterViewInit = function () {
         var canvas = this.cropcanvas.nativeElement;
         if (!this.settings) {
@@ -63,7 +59,7 @@ var ImageCropperComponent = (function () {
         myReader.readAsDataURL(file);
     };
     __decorate([
-        core_1.ViewChild('cropcanvas', undefined),
+        core_1.ViewChild('cropcanvas', undefined), 
         __metadata('design:type', core_1.ElementRef)
     ], ImageCropperComponent.prototype, "cropcanvas", void 0);
     ImageCropperComponent = __decorate([
@@ -71,7 +67,7 @@ var ImageCropperComponent = (function () {
             selector: 'img-cropper',
             template: "\n    <span class=\"ng2-imgcrop\">\n      <input type=\"file\" (change)=\"fileChangeListener($event)\">\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\">\n      </canvas>\n    </span>\n  ",
             inputs: ['image', 'settings']
-        }),
+        }), 
         __metadata('design:paramtypes', [core_1.Renderer])
     ], ImageCropperComponent);
     return ImageCropperComponent;
@@ -86,32 +82,22 @@ var CropperSettings = (function () {
         this.croppedWidth = 100;
         this.croppedHeight = 100;
     }
-
     return CropperSettings;
 }());
 exports.CropperSettings = CropperSettings;
 var ImageCropperModel = (function () {
     function ImageCropperModel() {
     }
-
     return ImageCropperModel;
 }());
 exports.ImageCropperModel = ImageCropperModel;
 var ImageCropper = (function (_super) {
     __extends(ImageCropper, _super);
     function ImageCropper(canvas, x, y, width, height, croppedWidth, croppedHeight, keepAspect, touchRadius, minWidth, minHeight) {
-        if (keepAspect === void 0) {
-            keepAspect = true;
-        }
-        if (touchRadius === void 0) {
-            touchRadius = 50;
-        }
-        if (minWidth === void 0) {
-            minWidth = 50;
-        }
-        if (minHeight === void 0) {
-            minHeight = 50;
-        }
+        if (keepAspect === void 0) { keepAspect = true; }
+        if (touchRadius === void 0) { touchRadius = 50; }
+        if (minWidth === void 0) { minWidth = 50; }
+        if (minHeight === void 0) { minHeight = 50; }
         _super.call(this);
         this.crop = this;
         if (x === void 0) {
@@ -186,7 +172,6 @@ var ImageCropper = (function (_super) {
          .on('touchstart.angular-img-cropper', this.onTouchStart.bind(this));
          */
     }
-
     ImageCropper.prototype.resizeCanvas = function (width, height) {
         this.canvas.width = width;
         this.canvas.height = height;

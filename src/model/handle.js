@@ -8,7 +8,6 @@ var Handle = (function () {
         this.offset = new point_1.Point(0, 0);
         this.radius = radius;
     }
-
     Handle.prototype.setDrag = function (value) {
         this.drag = value;
         this.setOver(value);

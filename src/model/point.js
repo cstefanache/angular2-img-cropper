@@ -4,7 +4,6 @@ var Point = (function () {
         this.x = x;
         this.y = y;
     }
-
     Point.prototype.getNext = function () {
         return this._next;
     };
