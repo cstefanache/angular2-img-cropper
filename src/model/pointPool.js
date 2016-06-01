@@ -1,33 +1,30 @@
-import {Point} from './point';
-
-export class PointPool {
-
-    private static _instance:PointPool;
-
-    private borrowed:number;
-    private firstAvailable:Point;
-
-    constructor(initialSize) {
+"use strict";
+var point_1 = require('./point');
+var PointPool = (function () {
+    function PointPool(initialSize) {
         PointPool._instance = this;
         var prev = null;
         for (var i = 0; i < initialSize; i++) {
             if (i === 0) {
-                this.firstAvailable = new Point();
+                this.firstAvailable = new point_1.Point();
                 prev = this.firstAvailable;
             }
             else {
-                var p = new Point();
+                var p = new point_1.Point();
                 prev.setNext(p);
                 prev = p;
             }
         }
     }
 
-    static get instance():PointPool {
-        return PointPool._instance;
-    }
-
-    public borrow(x, y):Point {
+    Object.defineProperty(PointPool, "instance", {
+        get: function () {
+            return PointPool._instance;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    PointPool.prototype.borrow = function (x, y) {
         if (this.firstAvailable == null) {
             throw "Pool exhausted";
         }
@@ -38,12 +35,16 @@ export class PointPool {
         p.y = y;
         return p;
     };
-
-    public returnPoint(p:Point) {
+    ;
+    PointPool.prototype.returnPoint = function (p) {
         this.borrowed--;
         p.x = 0;
         p.y = 0;
         p.setNext(this.firstAvailable);
         this.firstAvailable = p;
     };
-}
+    ;
+    return PointPool;
+}());
+exports.PointPool = PointPool;
+//# sourceMappingURL=pointPool.js.map

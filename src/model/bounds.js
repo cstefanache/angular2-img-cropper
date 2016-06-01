@@ -1,14 +1,7 @@
-import {Point} from './point';
-import {PointPool} from './pointPool';
-
-export class Bounds {
-
-    left:number;
-    right:number;
-    top:number;
-    bottom:number;
-
-    constructor(x?:number, y?:number, width?:number, height?:number) {
+"use strict";
+var pointPool_1 = require('./pointPool');
+var Bounds = (function () {
+    function Bounds(x, y, width, height) {
         if (x === void 0) {
             x = 0;
         }
@@ -27,17 +20,21 @@ export class Bounds {
         this.bottom = y + height;
     }
 
-    getWidth():number {
+    Bounds.prototype.getWidth = function () {
         return this.right - this.left;
     };
-
-    getHeight():number {
+    ;
+    Bounds.prototype.getHeight = function () {
         return this.bottom - this.top;
     };
-
-    getCentre():Point {
+    ;
+    Bounds.prototype.getCentre = function () {
         var w = this.getWidth();
         var h = this.getHeight();
-        return PointPool.instance.borrow(this.left + (w / 2), this.top + (h / 2));
+        return pointPool_1.PointPool.instance.borrow(this.left + (w / 2), this.top + (h / 2));
     };
-}
+    ;
+    return Bounds;
+}());
+exports.Bounds = Bounds;
+//# sourceMappingURL=bounds.js.map

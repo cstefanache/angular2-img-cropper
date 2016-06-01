@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ImageCropperComponent, CropperSettings} from '../components';
+import {ImageCropperComponent, CropperSettings} from '../index';
 
 
 @Component({

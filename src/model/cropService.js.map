@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "cropService.js",
+  "sourceRoot": "",
+  "sources": [
+    "cropService.ts"
+  ],
+  "names": [],
+  "mappings": ";AAAA;IAAA;QAIE,YAAO,GAAG,YAAY,CAAC;IAOzB,CAAC;IALC,0BAAI,GAAJ,UAAK,MAAM;QACT,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,GAAG,GAAG,IAAI,CAAC,MAAM,CAAC,UAAU,CAAC,IAAI,CAAC,CAAC;IAC1C,CAAC;;IAEH,kBAAC;AAAD,CAAC,AAXD,IAWC;AAXY,mBAAW,cAWvB,CAAA"
+}

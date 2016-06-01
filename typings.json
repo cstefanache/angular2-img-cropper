@@ -1,6 +1,7 @@
 {
+  "devDependencies": {},
   "ambientDependencies": {
-    "systemjs": "registry:dt/systemjs#0.18.4+20160417155658",
+    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
     "underscore": "registry:dt/underscore#1.7.0+20160412141459"
   }
 }

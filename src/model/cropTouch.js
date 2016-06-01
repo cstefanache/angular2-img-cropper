@@ -1,10 +1,6 @@
-export class CropTouch {
-
-    x:number;
-    y:number;
-    id:number;
-
-    constructor(x:number, y:number, id:number) {
+"use strict";
+var CropTouch = (function () {
+    function CropTouch(x, y, id) {
         if (x === void 0) {
             x = 0;
         }
@@ -20,4 +16,7 @@ export class CropTouch {
         this.id = id;
     }
 
-}
+    return CropTouch;
+}());
+exports.CropTouch = CropTouch;
+//# sourceMappingURL=cropTouch.js.map
