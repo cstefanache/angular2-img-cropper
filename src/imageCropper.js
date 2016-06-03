@@ -23,6 +23,7 @@ var cropTouch_1 = require('./model/cropTouch');
 var imageCropperDataShare_1 = require('./imageCropperDataShare');
 var ImageCropperComponent = (function () {
     function ImageCropperComponent(renderer) {
+        this.onCrop = new core_1.EventEmitter();
         this.renderer = renderer;
     }
     ImageCropperComponent.prototype.ngAfterViewInit = function () {
@@ -41,6 +42,7 @@ var ImageCropperComponent = (function () {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp($event);
             this.image.image = this.cropper.getCroppedImage().src;
+            this.onCrop.emit(this.cropper.getCropBounds());
         }
     };
     ImageCropperComponent.prototype.onMouseMove = function ($event) {
@@ -55,6 +57,7 @@ var ImageCropperComponent = (function () {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
             that.image.image = that.cropper.getCroppedImage().src;
+            that.onCrop.emit(that.cropper.getCropBounds());
         };
         myReader.readAsDataURL(file);
     };
@@ -62,6 +65,10 @@ var ImageCropperComponent = (function () {
         core_1.ViewChild('cropcanvas', undefined), 
         __metadata('design:type', core_1.ElementRef)
     ], ImageCropperComponent.prototype, "cropcanvas", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], ImageCropperComponent.prototype, "onCrop", void 0);
     ImageCropperComponent = __decorate([
         core_1.Component({
             selector: 'img-cropper',

@@ -1,13 +1,14 @@
-import {Component} from '@angular/core';
-import {ImageCropperComponent, CropperSettings} from '../index';
+import {Component, ViewChild} from '@angular/core';
+import {ImageCropperComponent, CropperSettings, Bounds} from '../index';
 
 
 @Component({
     selector: 'test-app',
     template: `<div>
-        <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper><br>
+        <img-cropper [image]="data" [settings]="cropperSettings" (onCrop)="cropped($event)"></img-cropper><br>
 
         <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+
     </div>`,
     directives: [ImageCropperComponent]
 })
@@ -27,5 +28,9 @@ export class AppComponent {
 
         this.data = {};
 
+    }
+
+    cropped(bounds:Bounds) {
+        console.log(bounds);
     }
 }

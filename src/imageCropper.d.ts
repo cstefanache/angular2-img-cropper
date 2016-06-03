@@ -1,5 +1,5 @@
 /// <reference path="../typings/browser.d.ts" />
-import { Renderer, ElementRef } from '@angular/core';
+import { Renderer, ElementRef, EventEmitter } from '@angular/core';
 import { PointPool } from './model/pointPool';
 import { Point } from './model/point';
 import { Bounds } from './model/bounds';
@@ -7,6 +7,7 @@ import { CornerMarker } from './model/cornerMarker';
 import { DragMarker } from './model/dragMarker';
 export declare class ImageCropperComponent {
     cropcanvas: ElementRef;
+    onCrop: EventEmitter<any>;
     private cropper;
     private renderer;
     image: any;

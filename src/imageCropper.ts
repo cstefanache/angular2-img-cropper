@@ -1,6 +1,6 @@
 ///<reference path="../typings/browser.d.ts"/>
 
-import {Component, Renderer, ViewChild, ElementRef} from '@angular/core';
+import {Component, Renderer, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import {PointPool} from './model/pointPool';
 import {Point} from './model/point';
 import {Bounds} from './model/bounds';
@@ -30,6 +30,7 @@ import {ImageCropperDataShare} from './imageCropperDataShare';
 export class ImageCropperComponent {
 
     @ViewChild('cropcanvas', undefined) cropcanvas:ElementRef;
+    @Output() onCrop:EventEmitter<any> = new EventEmitter();
 
     private cropper:ImageCropper;
     private renderer:Renderer;
@@ -68,6 +69,7 @@ export class ImageCropperComponent {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp($event);
             this.image.image = this.cropper.getCroppedImage().src;
+            this.onCrop.emit(this.cropper.getCropBounds());
         }
     }
 
@@ -85,7 +87,8 @@ export class ImageCropperComponent {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
             that.image.image = that.cropper.getCroppedImage().src;
-        }
+            that.onCrop.emit(that.cropper.getCropBounds());
+        };
 
         myReader.readAsDataURL(file);
     }
