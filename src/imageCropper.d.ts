@@ -1,4 +1,3 @@
-/// <reference path="../typings/browser.d.ts" />
 import { Renderer, ElementRef, EventEmitter } from '@angular/core';
 import { PointPool } from './model/pointPool';
 import { Point } from './model/point';
@@ -8,7 +7,7 @@ import { DragMarker } from './model/dragMarker';
 export declare class ImageCropperComponent {
     cropcanvas: ElementRef;
     onCrop: EventEmitter<any>;
-    private cropper;
+    cropper: ImageCropper;
     private renderer;
     image: any;
     croppedWidth: number;
@@ -28,6 +27,7 @@ export declare class CropperSettings {
     height: number;
     croppedWidth: number;
     croppedHeight: number;
+    keepAspect: boolean;
     constructor();
 }
 export declare class ImageCropperModel {
@@ -49,11 +49,11 @@ export declare class ImageCropperModel {
     protected pointPool: PointPool;
     protected buffer: HTMLCanvasElement;
     protected cropCanvas: HTMLCanvasElement;
-    protected tl: CornerMarker;
-    protected tr: CornerMarker;
-    protected bl: CornerMarker;
-    protected br: CornerMarker;
-    protected markers: Array<CornerMarker>;
+    tl: CornerMarker;
+    tr: CornerMarker;
+    bl: CornerMarker;
+    br: CornerMarker;
+    markers: Array<CornerMarker>;
     protected center: DragMarker;
     protected ctx: any;
     protected aspectRatio: number;
@@ -72,7 +72,8 @@ export declare class ImageCropperModel {
 }
 export declare class ImageCropper extends ImageCropperModel {
     private crop;
-    constructor(canvas: HTMLCanvasElement, x: number, y: number, width: number, height: number, croppedWidth: number, croppedHeight: number, keepAspect?: boolean, touchRadius?: number, minWidth?: number, minHeight?: number);
+    constructor(x: number, y: number, width: number, height: number, croppedWidth: number, croppedHeight: number, keepAspect?: boolean, touchRadius?: number, minWidth?: number, minHeight?: number);
+    prepare(canvas: HTMLCanvasElement): void;
     resizeCanvas(width: any, height: any): void;
     draw(ctx: any): void;
     dragCrop(x: any, y: any, marker: any): void;
