@@ -9,6 +9,8 @@ import {DragMarker} from './model/dragMarker';
 import {CropTouch} from './model/cropTouch';
 
 import {ImageCropperDataShare} from './imageCropperDataShare';
+import {ImageCropperModel} from "./model/imageCropperModel";
+import {CropperSettings} from "./cropperSettings";
 
 
 @Component({
@@ -33,13 +35,12 @@ export class ImageCropperComponent {
     @Output() onCrop:EventEmitter<any> = new EventEmitter();
 
     cropper:ImageCropper;
-    private renderer:Renderer;
-
     image:any;
     croppedWidth:number;
     croppedHeight:number;
     settings:CropperSettings;
 
+    private renderer:Renderer;
 
     constructor(renderer:Renderer) {
         this.renderer = renderer;
@@ -63,20 +64,20 @@ export class ImageCropperComponent {
         this.cropper.prepare(canvas)
     }
 
-    onMouseDown($event):void {
-        this.cropper.onMouseDown($event);
+    onMouseDown():void {
+        this.cropper.onMouseDown();
     }
 
-    onMouseUp($event):void {
+    onMouseUp():void {
         if (this.cropper.isImageSet()) {
-            this.cropper.onMouseUp($event);
+            this.cropper.onMouseUp();
             this.image.image = this.cropper.getCroppedImage().src;
             this.onCrop.emit(this.cropper.getCropBounds());
         }
     }
 
-    onMouseMove($event):void {
-        this.cropper.onMouseMove($event);
+    onMouseMove(event):void {
+        this.cropper.onMouseMove(event);
     }
 
     fileChangeListener($event) {
@@ -98,69 +99,6 @@ export class ImageCropperComponent {
 }
 
 
-export class CropperSettings {
-    canvasWidth:number;
-    canvasHeight:number;
-
-    width:number;
-    height:number;
-
-    croppedWidth:number;
-    croppedHeight:number;
-
-    keepAspect:boolean;
-
-    constructor() {
-        this.canvasWidth = 300;
-        this.canvasHeight = 300;
-        this.width = 200;
-        this.height = 200;
-        this.croppedWidth = 100;
-        this.croppedHeight = 100;
-        this.keepAspect = true;
-    }
-}
-
-export class ImageCropperModel {
-    protected canvas:HTMLCanvasElement;
-    protected x:number;
-    protected y:number;
-    protected width:number;
-    protected height:number;
-    protected canvasWidth:number;
-    protected canvasHeight:number;
-    protected keepAspect:boolean;
-    protected touchRadius:number;
-    protected currentDragTouches:Array<any>;
-    protected isMouseDown:boolean;
-    protected ratioW:number;
-    protected ratioH:number;
-    protected fileType:string;
-    protected imageSet:boolean;
-    protected pointPool:PointPool;
-    protected buffer:HTMLCanvasElement;
-    protected cropCanvas:HTMLCanvasElement;
-    tl:CornerMarker;
-    tr:CornerMarker;
-    bl:CornerMarker;
-    br:CornerMarker;
-    markers:Array<CornerMarker>;
-    protected center:DragMarker;
-    protected ctx:any;
-    protected aspectRatio:number;
-    protected currentlyInteracting:boolean;
-    protected srcImage:ImageData;
-    protected vertSquashRatio:number;
-    protected minXClamp:number;
-    protected minYClamp:number;
-    protected maxXClamp:number;
-    protected maxYClamp:number;
-    protected minHeight:number;
-    protected minWidth:number;
-    protected cropWidth:number;
-    protected cropHeight:number;
-    protected croppedImage:HTMLImageElement;
-}
 
 export class ImageCropper extends ImageCropperModel {
 
@@ -1163,13 +1101,13 @@ export class ImageCropper extends ImageCropperModel {
         return (ratio === 0) ? 1 : ratio;
     };
 
-    onMouseDown(e) {
+    onMouseDown() {
         if (this.crop.isImageSet()) {
             this.isMouseDown = true;
         }
     };
 
-    onMouseUp(e) {
+    onMouseUp() {
         if (this.crop.isImageSet()) {
             ImageCropperDataShare.setReleased(this.canvas);
             this.isMouseDown = false;
