@@ -1,4 +1,3 @@
-///<reference path="../typings/browser.d.ts"/>
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -33,7 +32,10 @@ var ImageCropperComponent = (function () {
         }
         this.renderer.setElementAttribute(canvas, 'width', this.settings.canvasWidth.toString());
         this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
-        this.cropper = new ImageCropper(canvas, 0, 0, this.settings.width, this.settings.height, this.settings.croppedWidth, this.settings.croppedHeight);
+        if (!this.cropper) {
+            this.cropper = new ImageCropper(0, 0, this.settings.width, this.settings.height, this.settings.croppedWidth, this.settings.croppedHeight, this.settings.keepAspect);
+        }
+        this.cropper.prepare(canvas);
     };
     ImageCropperComponent.prototype.onMouseDown = function ($event) {
         this.cropper.onMouseDown($event);
@@ -63,21 +65,22 @@ var ImageCropperComponent = (function () {
     };
     __decorate([
         core_1.ViewChild('cropcanvas', undefined), 
-        __metadata('design:type', core_1.ElementRef)
+        __metadata('design:type', (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object)
     ], ImageCropperComponent.prototype, "cropcanvas", void 0);
     __decorate([
         core_1.Output(), 
-        __metadata('design:type', core_1.EventEmitter)
+        __metadata('design:type', (typeof (_b = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _b) || Object)
     ], ImageCropperComponent.prototype, "onCrop", void 0);
     ImageCropperComponent = __decorate([
         core_1.Component({
             selector: 'img-cropper',
             template: "\n    <span class=\"ng2-imgcrop\">\n      <input type=\"file\" (change)=\"fileChangeListener($event)\">\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\">\n      </canvas>\n    </span>\n  ",
-            inputs: ['image', 'settings']
+            inputs: ['image', 'settings', 'cropper']
         }), 
-        __metadata('design:paramtypes', [core_1.Renderer])
+        __metadata('design:paramtypes', [(typeof (_c = typeof core_1.Renderer !== 'undefined' && core_1.Renderer) === 'function' && _c) || Object])
     ], ImageCropperComponent);
     return ImageCropperComponent;
+    var _a, _b, _c;
 }());
 exports.ImageCropperComponent = ImageCropperComponent;
 var CropperSettings = (function () {
@@ -88,6 +91,7 @@ var CropperSettings = (function () {
         this.height = 200;
         this.croppedWidth = 100;
         this.croppedHeight = 100;
+        this.keepAspect = true;
     }
     return CropperSettings;
 }());
@@ -100,7 +104,7 @@ var ImageCropperModel = (function () {
 exports.ImageCropperModel = ImageCropperModel;
 var ImageCropper = (function (_super) {
     __extends(ImageCropper, _super);
-    function ImageCropper(canvas, x, y, width, height, croppedWidth, croppedHeight, keepAspect, touchRadius, minWidth, minHeight) {
+    function ImageCropper(x, y, width, height, croppedWidth, croppedHeight, keepAspect, touchRadius, minWidth, minHeight) {
         if (keepAspect === void 0) { keepAspect = true; }
         if (touchRadius === void 0) { touchRadius = 50; }
         if (minWidth === void 0) { minWidth = 50; }
@@ -136,10 +140,6 @@ var ImageCropper = (function (_super) {
         this.fileType = 'png';
         this.imageSet = false;
         this.pointPool = new pointPool_1.PointPool(200);
-        this.buffer = document.createElement('canvas');
-        this.cropCanvas = document.createElement('canvas');
-        this.buffer.width = canvas.width;
-        this.buffer.height = canvas.height;
         this.tl = new cornerMarker_1.CornerMarker(x, y, touchRadius);
         this.tr = new cornerMarker_1.CornerMarker(x + width, y, touchRadius);
         this.bl = new cornerMarker_1.CornerMarker(x, y + height, touchRadius);
@@ -154,31 +154,22 @@ var ImageCropper = (function (_super) {
         this.br.addVerticalNeighbour(this.tr);
         this.markers = [this.tl, this.tr, this.bl, this.br];
         this.center = new dragMarker_1.DragMarker(x + (width / 2), y + (height / 2), touchRadius);
-        this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
         this.keepAspect = keepAspect;
         this.aspectRatio = height / width;
-        this.draw(this.ctx);
         this.croppedImage = new Image();
         this.currentlyInteracting = false;
         this.cropWidth = croppedWidth;
         this.cropHeight = croppedHeight;
-        //TODO:check
-        /*
-         CropService.init(canvas);
-         angular.element(window)
-         .off('mousemove.angular-img-cropper mouseup.angular-img-cropper touchmove.angular-img-cropper touchend.angular-img-cropper')
-         .on('mousemove.angular-img-cropper', this.onMouseMove.bind(this))
-         .on('mouseup.angular-img-cropper', this.onMouseUp.bind(this))
-         .on('touchmove.angular-img-cropper', this.onTouchMove.bind(this))
-         .on('touchend.angular-img-cropper', this.onTouchEnd.bind(this));
-
-         angular.element(canvas)
-         .off('mousedown.angular-img-cropper touchstart.angular-img-cropper')
-         .on('mousedown.angular-img-cropper', this.onMouseDown.bind(this))
-         .on('touchstart.angular-img-cropper', this.onTouchStart.bind(this));
-         */
     }
+    ImageCropper.prototype.prepare = function (canvas) {
+        this.buffer = document.createElement('canvas');
+        this.cropCanvas = document.createElement('canvas');
+        this.buffer.width = canvas.width;
+        this.buffer.height = canvas.height;
+        this.canvas = canvas;
+        this.ctx = this.canvas.getContext("2d");
+        this.draw(this.ctx);
+    };
     ImageCropper.prototype.resizeCanvas = function (width, height) {
         this.canvas.width = width;
         this.canvas.height = height;
@@ -258,12 +249,6 @@ var ImageCropper = (function (_super) {
         this.br.moveX(x + (bounds.getWidth() / 2));
         this.br.moveY(y + (bounds.getHeight() / 2));
         marker.setPosition(x, y);
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         scope.$apply();
-         }
-         */
     };
     ;
     ImageCropper.prototype.enforceMinSize = function (x, y, marker) {
@@ -505,17 +490,10 @@ var ImageCropper = (function (_super) {
             pointPool_1.PointPool.instance.returnPoint(min);
         }
         this.center.recalculatePosition(this.getBounds());
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         scope.$apply();
-         }
-         */
     };
     ;
     ImageCropper.prototype.getSide = function (a, b, c) {
         var n = this.sign((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
-        //TODO move the return of the pools to outside of this function
         pointPool_1.PointPool.instance.returnPoint(a);
         pointPool_1.PointPool.instance.returnPoint(c);
         return n;
@@ -648,13 +626,6 @@ var ImageCropper = (function (_super) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
-        /*
-         var splitName = img.src.split('.');
-         var fileType = splitName[1];
-         if (fileType == 'png' || fileType == 'jpg') {
-         this.fileType = fileType;
-         }
-         */
         this.srcImage = img;
         this.updateClampBounds();
         var sourceAspect = this.srcImage.height / this.srcImage.width;
@@ -711,49 +682,10 @@ var ImageCropper = (function (_super) {
         pointPool_1.PointPool.instance.returnPoint(trPos);
         pointPool_1.PointPool.instance.returnPoint(blPos);
         pointPool_1.PointPool.instance.returnPoint(brPos);
-        //TODO: check this
-        /*
-         if (scope.cropAreaBounds
-         && scope.cropAreaBounds.left !== undefined
-         && scope.cropAreaBounds.top !== undefined
-         && scope.cropAreaBounds.right !== undefined
-         && scope.cropAreaBounds.bottom !== undefined) {
-
-         var canvasAspect = this.canvasHeight / this.canvasWidth;
-         if (canvasAspect > sourceAspect) {
-         w = this.canvasWidth;
-         h = this.canvasWidth * sourceAspect;
-         } else {
-         h = this.canvasHeight;
-         w = this.canvasHeight / sourceAspect;
-         }
-         this.ratioW = w / this.srcImage.width;
-         this.ratioH = h / this.srcImage.height;
-
-         var bounds = new Bounds();
-         bounds.top = Math.round(h + this.minYClamp - this.ratioH * scope.cropAreaBounds.top);
-         bounds.bottom = Math.round(h + this.minYClamp - this.ratioH * scope.cropAreaBounds.bottom);
-         bounds.left = Math.round(this.ratioW * scope.cropAreaBounds.left + this.minXClamp);
-         bounds.right = Math.round(this.ratioW * scope.cropAreaBounds.right + this.minXClamp);
-
-         this.tl.setPosition(bounds.left, bounds.top);
-         this.tr.setPosition(bounds.right, bounds.top);
-         this.bl.setPosition(bounds.left, bounds.bottom);
-         this.br.setPosition(bounds.right, bounds.bottom);
-
-         this.center.setPosition(bounds.left + bounds.getWidth() / 2, bounds.top + bounds.getHeight() / 2);
-         }
-         */
         this.vertSquashRatio = this.detectVerticalSquash(this.srcImage);
         this.draw(this.ctx);
-        //TODO: check this
         var croppedImg = this.getCroppedImage(this.cropWidth, this.cropHeight);
         this.croppedImage = croppedImg;
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         }
-         */
     };
     ;
     ImageCropper.prototype.getCroppedImage = function (fillWidth, fillHeight) {
@@ -1005,11 +937,7 @@ var ImageCropper = (function (_super) {
         }
     };
     ;
-    //http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
     ImageCropper.prototype.drawImageIOSFix = function (ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
-        // Works only if whole image is displayed:
-        // ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
-        // The following works correct also when only a part of the image is displayed:
         ctx.drawImage(img, sx * this.vertSquashRatio, sy * this.vertSquashRatio, sw * this.vertSquashRatio, sh * this.vertSquashRatio, dx, dy, dw, dh);
     };
     ;
@@ -1021,7 +949,6 @@ var ImageCropper = (function (_super) {
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
         var data = ctx.getImageData(0, 0, 1, ih).data;
-        // search image edge pixel position in case it is squashed vertically.
         var sy = 0;
         var ey = ih;
         var py = ih;

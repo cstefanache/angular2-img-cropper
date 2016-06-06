@@ -25,14 +25,14 @@ import {ImageCropperDataShare} from './imageCropperDataShare';
       </canvas>
     </span>
   `,
-    inputs: ['image', 'settings']
+    inputs: ['image', 'settings', 'cropper']
 })
 export class ImageCropperComponent {
 
     @ViewChild('cropcanvas', undefined) cropcanvas:ElementRef;
     @Output() onCrop:EventEmitter<any> = new EventEmitter();
 
-    private cropper:ImageCropper;
+    cropper:ImageCropper;
     private renderer:Renderer;
 
     image:any;
@@ -55,10 +55,12 @@ export class ImageCropperComponent {
         this.renderer.setElementAttribute(canvas, 'width', this.settings.canvasWidth.toString());
         this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
 
-        this.cropper = new ImageCropper(canvas, 0, 0,
-            this.settings.width, this.settings.height,
-            this.settings.croppedWidth, this.settings.croppedHeight);
+        if(!this.cropper){
+            this.cropper = new ImageCropper(0, 0, this.settings.width, this.settings.height,
+                  this.settings.croppedWidth, this.settings.croppedHeight, this.settings.keepAspect);
+        }
 
+        this.cropper.prepare(canvas)
     }
 
     onMouseDown($event):void {
@@ -106,6 +108,8 @@ export class CropperSettings {
     croppedWidth:number;
     croppedHeight:number;
 
+    keepAspect:boolean;
+
     constructor() {
         this.canvasWidth = 300;
         this.canvasHeight = 300;
@@ -113,6 +117,7 @@ export class CropperSettings {
         this.height = 200;
         this.croppedWidth = 100;
         this.croppedHeight = 100;
+        this.keepAspect = true;
     }
 }
 
@@ -135,11 +140,11 @@ export class ImageCropperModel {
     protected pointPool:PointPool;
     protected buffer:HTMLCanvasElement;
     protected cropCanvas:HTMLCanvasElement;
-    protected tl:CornerMarker;
-    protected tr:CornerMarker;
-    protected bl:CornerMarker;
-    protected br:CornerMarker;
-    protected markers:Array<CornerMarker>;
+    tl:CornerMarker;
+    tr:CornerMarker;
+    bl:CornerMarker;
+    br:CornerMarker;
+    markers:Array<CornerMarker>;
     protected center:DragMarker;
     protected ctx:any;
     protected aspectRatio:number;
@@ -161,8 +166,7 @@ export class ImageCropper extends ImageCropperModel {
 
     private crop:ImageCropper;
 
-    constructor(canvas:HTMLCanvasElement,
-                x:number, y:number,
+    constructor(x:number, y:number,
                 width:number, height:number,
                 croppedWidth:number, croppedHeight:number,
                 keepAspect:boolean = true, touchRadius:number = 50,
@@ -203,10 +207,7 @@ export class ImageCropper extends ImageCropperModel {
         this.imageSet = false;
         this.pointPool = new PointPool(200);
 
-        this.buffer = document.createElement('canvas');
-        this.cropCanvas = document.createElement('canvas');
-        this.buffer.width = canvas.width;
-        this.buffer.height = canvas.height;
+
         this.tl = new CornerMarker(x, y, touchRadius);
         this.tr = new CornerMarker(x + width, y, touchRadius);
         this.bl = new CornerMarker(x, y + height, touchRadius);
@@ -221,11 +222,8 @@ export class ImageCropper extends ImageCropperModel {
         this.br.addVerticalNeighbour(this.tr);
         this.markers = [this.tl, this.tr, this.bl, this.br];
         this.center = new DragMarker(x + (width / 2), y + (height / 2), touchRadius);
-        this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
         this.keepAspect = keepAspect;
         this.aspectRatio = height / width;
-        this.draw(this.ctx);
         this.croppedImage = new Image();
         this.currentlyInteracting = false;
         this.cropWidth = croppedWidth;
@@ -247,6 +245,16 @@ export class ImageCropper extends ImageCropperModel {
          .on('mousedown.angular-img-cropper', this.onMouseDown.bind(this))
          .on('touchstart.angular-img-cropper', this.onTouchStart.bind(this));
          */
+    }
+
+    prepare(canvas:HTMLCanvasElement){
+      this.buffer = document.createElement('canvas');
+      this.cropCanvas = document.createElement('canvas');
+      this.buffer.width = canvas.width;
+      this.buffer.height = canvas.height;
+      this.canvas = canvas;
+      this.ctx = this.canvas.getContext("2d");
+      this.draw(this.ctx);
     }
 
 
