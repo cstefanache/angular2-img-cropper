@@ -107,7 +107,7 @@ export class ImageCropper extends ImageCropperModel {
     constructor(x:number, y:number,
                 width:number, height:number,
                 croppedWidth:number, croppedHeight:number,
-                keepAspect:boolean = true, touchRadius:number = 50,
+                keepAspect:boolean = true, touchRadius:number = 20,
                 minWidth:number = 50, minHeight:number = 50) {
 
         super();

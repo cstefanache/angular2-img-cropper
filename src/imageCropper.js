@@ -89,7 +89,7 @@ var ImageCropper = (function (_super) {
     __extends(ImageCropper, _super);
     function ImageCropper(x, y, width, height, croppedWidth, croppedHeight, keepAspect, touchRadius, minWidth, minHeight) {
         if (keepAspect === void 0) { keepAspect = true; }
-        if (touchRadius === void 0) { touchRadius = 50; }
+        if (touchRadius === void 0) { touchRadius = 20; }
         if (minWidth === void 0) { minWidth = 50; }
         if (minHeight === void 0) { minHeight = 50; }
         _super.call(this);
