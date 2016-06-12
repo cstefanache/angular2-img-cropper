@@ -21,7 +21,7 @@ The crop image can either be 1:1 or scaled to fit an area.
 
 ```
 import {Component} from 'angular2/core';
-import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper/src/imageCropper';
+import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 
 @Component({
