@@ -142,21 +142,6 @@ var ImageCropper = (function (_super) {
         this.currentlyInteracting = false;
         this.cropWidth = croppedWidth;
         this.cropHeight = croppedHeight;
-        //TODO:check
-        /*
-         CropService.init(canvas);
-         angular.element(window)
-         .off('mousemove.angular-img-cropper mouseup.angular-img-cropper touchmove.angular-img-cropper touchend.angular-img-cropper')
-         .on('mousemove.angular-img-cropper', this.onMouseMove.bind(this))
-         .on('mouseup.angular-img-cropper', this.onMouseUp.bind(this))
-         .on('touchmove.angular-img-cropper', this.onTouchMove.bind(this))
-         .on('touchend.angular-img-cropper', this.onTouchEnd.bind(this));
-
-         angular.element(canvas)
-         .off('mousedown.angular-img-cropper touchstart.angular-img-cropper')
-         .on('mousedown.angular-img-cropper', this.onMouseDown.bind(this))
-         .on('touchstart.angular-img-cropper', this.onTouchStart.bind(this));
-         */
     }
     ImageCropper.prototype.prepare = function (canvas) {
         this.buffer = document.createElement('canvas');
@@ -246,12 +231,6 @@ var ImageCropper = (function (_super) {
         this.br.moveX(x + (bounds.getWidth() / 2));
         this.br.moveY(y + (bounds.getHeight() / 2));
         marker.setPosition(x, y);
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         scope.$apply();
-         }
-         */
     };
     ;
     ImageCropper.prototype.enforceMinSize = function (x, y, marker) {
@@ -493,17 +472,10 @@ var ImageCropper = (function (_super) {
             pointPool_1.PointPool.instance.returnPoint(min);
         }
         this.center.recalculatePosition(this.getBounds());
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         scope.$apply();
-         }
-         */
     };
     ;
     ImageCropper.prototype.getSide = function (a, b, c) {
         var n = this.sign((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
-        //TODO move the return of the pools to outside of this function
         pointPool_1.PointPool.instance.returnPoint(a);
         pointPool_1.PointPool.instance.returnPoint(c);
         return n;
@@ -636,13 +608,6 @@ var ImageCropper = (function (_super) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
-        /*
-         var splitName = img.src.split('.');
-         var fileType = splitName[1];
-         if (fileType == 'png' || fileType == 'jpg') {
-         this.fileType = fileType;
-         }
-         */
         this.srcImage = img;
         this.updateClampBounds();
         var sourceAspect = this.srcImage.height / this.srcImage.width;
@@ -699,49 +664,10 @@ var ImageCropper = (function (_super) {
         pointPool_1.PointPool.instance.returnPoint(trPos);
         pointPool_1.PointPool.instance.returnPoint(blPos);
         pointPool_1.PointPool.instance.returnPoint(brPos);
-        //TODO: check this
-        /*
-         if (scope.cropAreaBounds
-         && scope.cropAreaBounds.left !== undefined
-         && scope.cropAreaBounds.top !== undefined
-         && scope.cropAreaBounds.right !== undefined
-         && scope.cropAreaBounds.bottom !== undefined) {
-
-         var canvasAspect = this.canvasHeight / this.canvasWidth;
-         if (canvasAspect > sourceAspect) {
-         w = this.canvasWidth;
-         h = this.canvasWidth * sourceAspect;
-         } else {
-         h = this.canvasHeight;
-         w = this.canvasHeight / sourceAspect;
-         }
-         this.ratioW = w / this.srcImage.width;
-         this.ratioH = h / this.srcImage.height;
-
-         var bounds = new Bounds();
-         bounds.top = Math.round(h + this.minYClamp - this.ratioH * scope.cropAreaBounds.top);
-         bounds.bottom = Math.round(h + this.minYClamp - this.ratioH * scope.cropAreaBounds.bottom);
-         bounds.left = Math.round(this.ratioW * scope.cropAreaBounds.left + this.minXClamp);
-         bounds.right = Math.round(this.ratioW * scope.cropAreaBounds.right + this.minXClamp);
-
-         this.tl.setPosition(bounds.left, bounds.top);
-         this.tr.setPosition(bounds.right, bounds.top);
-         this.bl.setPosition(bounds.left, bounds.bottom);
-         this.br.setPosition(bounds.right, bounds.bottom);
-
-         this.center.setPosition(bounds.left + bounds.getWidth() / 2, bounds.top + bounds.getHeight() / 2);
-         }
-         */
         this.vertSquashRatio = this.detectVerticalSquash(this.srcImage);
         this.draw(this.ctx);
-        //TODO: check this
         var croppedImg = this.getCroppedImage(this.cropWidth, this.cropHeight);
         this.croppedImage = croppedImg;
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         }
-         */
     };
     ;
     ImageCropper.prototype.getCroppedImage = function (fillWidth, fillHeight) {
@@ -993,11 +919,7 @@ var ImageCropper = (function (_super) {
         }
     };
     ;
-    //http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
     ImageCropper.prototype.drawImageIOSFix = function (ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
-        // Works only if whole image is displayed:
-        // ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
-        // The following works correct also when only a part of the image is displayed:
         ctx.drawImage(img, sx * this.vertSquashRatio, sy * this.vertSquashRatio, sw * this.vertSquashRatio, sh * this.vertSquashRatio, dx, dy, dw, dh);
     };
     ;
@@ -1009,7 +931,6 @@ var ImageCropper = (function (_super) {
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
         var data = ctx.getImageData(0, 0, 1, ih).data;
-        // search image edge pixel position in case it is squashed vertically.
         var sy = 0;
         var ey = ih;
         var py = ih;

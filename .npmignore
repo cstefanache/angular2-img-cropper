@@ -1,5 +1,4 @@
-/runtime
-/dist
+
 # Node generated files
 node_modules
 npm-debug.log
@@ -7,3 +6,12 @@ npm-debug.log
 Thumbs.db
 .DS_Store
 /.idea
+/**/*.ts
+!/**/*.d.ts
+runtime
+typings
+/system.config.js
+/typings.json
+/tsconfig.json
+/index.html
+dist

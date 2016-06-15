@@ -1,3 +1,4 @@
+/// <reference path="../typings/browser.d.ts" />
 import { Renderer, ElementRef, EventEmitter } from '@angular/core';
 import { Point } from './model/point';
 import { Bounds } from './model/bounds';
