@@ -18,6 +18,7 @@
     "node_modules",
     "dist",
     "runtime",
-    "typings"
+    "typings/main",
+    "typings/main.d.ts"
   ]
 }
