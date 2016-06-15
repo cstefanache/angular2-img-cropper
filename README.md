@@ -1,3 +1,11 @@
+# Important
+
+Starting with: 0.4.2 ts files are no loger published (only js & d.ts).
+Please change your system.config files to make use of the js files.
+```
+ 'ng2-img-cropper' :           { main: 'index.js', defaultExtension: 'js' }
+```
+
 
 
 # ng2-img-cropper
