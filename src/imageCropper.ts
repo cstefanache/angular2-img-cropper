@@ -1,4 +1,4 @@
-///<reference path="../typings/browser.d.ts"/>
+
 
 import {Component, Renderer, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import {PointPool} from './model/pointPool';
