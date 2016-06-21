@@ -1,6 +1,7 @@
 import {Handle} from './handle';
 import {PointPool} from './pointPool';
 import {Point} from './point';
+import {CropperDrawSettings} from "../cropperDrawSettings";
 
 export class CornerMarker extends Handle {
 
@@ -29,8 +30,8 @@ export class CornerMarker extends Handle {
         ctx.lineTo(this.position.x, this.position.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x, this.position.y);
         ctx.closePath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(255,228,0,1)';
+        ctx.lineWidth = this.drawSettings.strokeWidth;
+        ctx.strokeStyle = this.drawSettings.strokeColor;
         ctx.stroke();
     };
 

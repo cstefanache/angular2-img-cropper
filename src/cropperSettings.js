@@ -1,4 +1,5 @@
 "use strict";
+var cropperDrawSettings_1 = require("./cropperDrawSettings");
 var CropperSettings = (function () {
     function CropperSettings() {
         this.canvasWidth = 300;
@@ -8,6 +9,7 @@ var CropperSettings = (function () {
         this.croppedWidth = 100;
         this.croppedHeight = 100;
         this.keepAspect = true;
+        this.cropperDrawSettings = new cropperDrawSettings_1.CropperDrawSettings();
     }
     return CropperSettings;
 }());

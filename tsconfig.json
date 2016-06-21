@@ -12,7 +12,8 @@
     "rootDir": "."
   },
   "files": [
-    "typings/browser.d.ts"
+    "typings/browser.d.ts",
+    "index.ts"
   ],
   "exclude": [
     "node_modules",

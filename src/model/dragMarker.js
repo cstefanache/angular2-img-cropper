@@ -8,8 +8,8 @@ var handle_1 = require('./handle');
 var pointPool_1 = require('./pointPool');
 var DragMarker = (function (_super) {
     __extends(DragMarker, _super);
-    function DragMarker(x, y, radius) {
-        _super.call(this, x, y, radius);
+    function DragMarker(x, y, radius, drawSettings) {
+        _super.call(this, x, y, radius, drawSettings);
         this.iconPoints = [];
         this.scaledIconPoints = [];
         this.getDragIconPoints(this.iconPoints, 1);
@@ -23,7 +23,6 @@ var DragMarker = (function (_super) {
             this.drawIcon(ctx, this.iconPoints);
         }
     };
-    ;
     DragMarker.prototype.getDragIconPoints = function (arr, scale) {
         var maxLength = 17 * scale;
         var arrowWidth = 14 * scale;
@@ -54,7 +53,6 @@ var DragMarker = (function (_super) {
         arr.push(pointPool_1.PointPool.instance.borrow(-maxLength + arrowLength, connectorThroat / 2));
         arr.push(pointPool_1.PointPool.instance.borrow(-connectorThroat / 2, connectorThroat / 2));
     };
-    ;
     DragMarker.prototype.drawIcon = function (ctx, points) {
         ctx.beginPath();
         ctx.moveTo(points[0].x + this.position.x, points[0].y + this.position.y);
@@ -63,16 +61,14 @@ var DragMarker = (function (_super) {
             ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
         }
         ctx.closePath();
-        ctx.fillStyle = 'rgba(255,228,0,1)';
+        ctx.fillStyle = this.drawSettings.strokeColor;
         ctx.fill();
     };
-    ;
     DragMarker.prototype.recalculatePosition = function (bounds) {
         var c = bounds.getCentre();
         this.setPosition(c.x, c.y);
         pointPool_1.PointPool.instance.returnPoint(c);
     };
-    ;
     return DragMarker;
 }(handle_1.Handle));
 exports.DragMarker = DragMarker;

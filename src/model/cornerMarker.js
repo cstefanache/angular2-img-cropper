@@ -31,11 +31,10 @@ var CornerMarker = (function (_super) {
         ctx.lineTo(this.position.x, this.position.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x, this.position.y);
         ctx.closePath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(255,228,0,1)';
+        ctx.lineWidth = this.drawSettings.strokeWidth;
+        ctx.strokeStyle = this.drawSettings.strokeColor;
         ctx.stroke();
     };
-    ;
     CornerMarker.prototype.drawCornerFill = function (ctx) {
         var sideLength = 10;
         if (this.over || this.drag) {
@@ -62,38 +61,30 @@ var CornerMarker = (function (_super) {
     CornerMarker.prototype.moveX = function (x) {
         this.setPosition(x, this.position.y);
     };
-    ;
     CornerMarker.prototype.moveY = function (y) {
         this.setPosition(this.position.x, y);
     };
-    ;
     CornerMarker.prototype.move = function (x, y) {
         this.setPosition(x, y);
         this.verticalNeighbour.moveX(x);
         this.horizontalNeighbour.moveY(y);
     };
-    ;
     CornerMarker.prototype.addHorizontalNeighbour = function (neighbour) {
         this.horizontalNeighbour = neighbour;
     };
-    ;
     CornerMarker.prototype.addVerticalNeighbour = function (neighbour) {
         this.verticalNeighbour = neighbour;
     };
-    ;
     CornerMarker.prototype.getHorizontalNeighbour = function () {
         return this.horizontalNeighbour;
     };
-    ;
     CornerMarker.prototype.getVerticalNeighbour = function () {
         return this.verticalNeighbour;
     };
-    ;
     CornerMarker.prototype.draw = function (ctx) {
         this.drawCornerFill(ctx);
         this.drawCornerBorder(ctx);
     };
-    ;
     return CornerMarker;
 }(handle_1.Handle));
 exports.CornerMarker = CornerMarker;

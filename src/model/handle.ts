@@ -1,4 +1,5 @@
 import {Point} from './point';
+import {CropperDrawSettings} from "../cropperDrawSettings";
 
 export class Handle {
 
@@ -8,7 +9,7 @@ export class Handle {
     offset:Point;
     radius:number;
 
-    constructor(x, y, radius) {
+    constructor(x, y, radius, protected drawSettings:CropperDrawSettings) {
         this.over = false;
         this.drag = false;
         this.position = new Point(x, y);

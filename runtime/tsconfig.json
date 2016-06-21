@@ -8,8 +8,14 @@
     "experimentalDecorators": true,
     "declaration": true,
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "rootDir": "."
   },
+  "files": [
+    "../index.d.ts",
+    "../typings/browser.d.ts",
+    "./main.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -1,14 +1,15 @@
 import {Handle} from './handle';
 import {PointPool} from './pointPool';
 import {Point} from './point';
+import {CropperDrawSettings} from "../cropperDrawSettings";
 
 export class DragMarker extends Handle {
 
     iconPoints:Array<Point>;
     scaledIconPoints:Array<Point>;
 
-    constructor(x:number, y:number, radius:number) {
-        super(x, y, radius);
+    constructor(x:number, y:number, radius:number, drawSettings: CropperDrawSettings) {
+        super(x, y, radius, drawSettings);
         this.iconPoints = [];
         this.scaledIconPoints = [];
         this.getDragIconPoints(this.iconPoints, 1);
@@ -64,7 +65,7 @@ export class DragMarker extends Handle {
             ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
         }
         ctx.closePath();
-        ctx.fillStyle = 'rgba(255,228,0,1)';
+        ctx.fillStyle = this.drawSettings.strokeColor;
         ctx.fill();
     };
 

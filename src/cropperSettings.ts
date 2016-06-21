@@ -1,3 +1,4 @@
+import {CropperDrawSettings} from "./cropperDrawSettings";
 export class CropperSettings {
     canvasWidth:number;
     canvasHeight:number;
@@ -9,6 +10,8 @@ export class CropperSettings {
     croppedHeight:number;
 
     keepAspect:boolean;
+    cropperDrawSettings:CropperDrawSettings;
+
 
     constructor() {
         this.canvasWidth = 300;
@@ -18,5 +21,7 @@ export class CropperSettings {
         this.croppedWidth = 100;
         this.croppedHeight = 100;
         this.keepAspect = true;
+        this.cropperDrawSettings = new CropperDrawSettings();
+
     }
 }
