@@ -20,26 +20,26 @@ export class Handle {
     setDrag(value) {
         this.drag = value;
         this.setOver(value);
-    };
+    }
 
     draw(ctx) {
-    };
+    }
 
     setOver(over) {
         this.over = over;
-    };
+    }
 
     touchInBounds(x, y) {
         return (x > this.position.x - this.radius && x < this.position.x + this.radius && y > this.position.y - this.radius && y < this.position.y + this.radius);
-    };
+    }
 
     getPosition() {
         return this.position;
-    };
+    }
 
     setPosition(x, y) {
         this.position.x = x;
         this.position.y = y;
-    };
+    }
 
 }

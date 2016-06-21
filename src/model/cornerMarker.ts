@@ -33,7 +33,7 @@ export class CornerMarker extends Handle {
         ctx.lineWidth = this.drawSettings.strokeWidth;
         ctx.strokeStyle = this.drawSettings.strokeColor;
         ctx.stroke();
-    };
+    }
 
     drawCornerFill(ctx:any):void {
         var sideLength = 10;
@@ -61,37 +61,37 @@ export class CornerMarker extends Handle {
 
     moveX(x:number):void {
         this.setPosition(x, this.position.y);
-    };
+    }
 
     moveY(y:number):void {
         this.setPosition(this.position.x, y);
-    };
+    }
 
     move(x:number, y:number):void {
         this.setPosition(x, y);
         this.verticalNeighbour.moveX(x);
         this.horizontalNeighbour.moveY(y);
-    };
+    }
 
     addHorizontalNeighbour(neighbour:CornerMarker):void {
         this.horizontalNeighbour = neighbour;
-    };
+    }
 
     addVerticalNeighbour(neighbour:CornerMarker):void {
         this.verticalNeighbour = neighbour;
-    };
+    }
 
     getHorizontalNeighbour():CornerMarker {
         return this.horizontalNeighbour;
-    };
+    }
 
     getVerticalNeighbour():CornerMarker {
         return this.verticalNeighbour;
-    };
+    }
 
     draw(ctx:any):void {
         this.drawCornerFill(ctx);
         this.drawCornerBorder(ctx);
-    };
+    }
 
 }

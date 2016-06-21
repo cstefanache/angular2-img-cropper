@@ -23,7 +23,7 @@ export class DragMarker extends Handle {
         else {
             this.drawIcon(ctx, this.iconPoints);
         }
-    };
+    }
 
     getDragIconPoints(arr:Array<any>, scale:number) {
         var maxLength = 17 * scale;
@@ -55,7 +55,7 @@ export class DragMarker extends Handle {
         arr.push(PointPool.instance.borrow(-maxLength + arrowLength, arrowWidth / 2));
         arr.push(PointPool.instance.borrow(-maxLength + arrowLength, connectorThroat / 2));
         arr.push(PointPool.instance.borrow(-connectorThroat / 2, connectorThroat / 2));
-    };
+    }
 
     drawIcon(ctx:any, points:Array<Point>) {
         ctx.beginPath();
@@ -67,13 +67,13 @@ export class DragMarker extends Handle {
         ctx.closePath();
         ctx.fillStyle = this.drawSettings.strokeColor;
         ctx.fill();
-    };
+    }
 
     recalculatePosition(bounds) {
 
         var c = bounds.getCentre();
         this.setPosition(c.x, c.y);
         PointPool.instance.returnPoint(c);
-    };
+    }
 
 }
