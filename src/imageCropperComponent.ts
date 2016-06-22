@@ -53,6 +53,15 @@ export class ImageCropperComponent extends Type {
         }
 
         this.cropper.prepare(canvas);
+        
+        if (this.image != {}) {
+            var imgObj:any = new Image();
+
+            imgObj.src = this.image.image;
+            this.cropper.setImage(imgObj);
+            this.image.image = this.cropper.getCroppedImage().src;
+            this.onCrop.emit(this.cropper.getCropBounds());
+        }
     }
 
     onTouchMove(event):void {
