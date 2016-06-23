@@ -4,7 +4,9 @@
  - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)
  - cropper takes into consideration source image data pixels not cropper image data. (Issue #17)
  - support for minSize now have the following option: minWithRelativeToResolution. When set to false it will keep min size relative to canvas size. (Issue #21)
- 
+ - allow user to customize look and feel of the cropper:  
+        this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
 
 ### Release 0.4.2:
 Starting with: 0.4.2 ts files are no loger published (only js & d.ts).
