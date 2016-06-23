@@ -8,8 +8,8 @@ var handle_1 = require('./handle');
 var pointPool_1 = require('./pointPool');
 var DragMarker = (function (_super) {
     __extends(DragMarker, _super);
-    function DragMarker(x, y, radius, drawSettings) {
-        _super.call(this, x, y, radius, drawSettings);
+    function DragMarker(x, y, radius, cropperSettings) {
+        _super.call(this, x, y, radius, cropperSettings);
         this.iconPoints = [];
         this.scaledIconPoints = [];
         this.getDragIconPoints(this.iconPoints, 1);
@@ -61,7 +61,7 @@ var DragMarker = (function (_super) {
             ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
         }
         ctx.closePath();
-        ctx.fillStyle = this.drawSettings.strokeColor;
+        ctx.fillStyle = this.cropperSettings.cropperDrawSettings.strokeColor;
         ctx.fill();
     };
     DragMarker.prototype.recalculatePosition = function (bounds) {

@@ -1,11 +1,11 @@
 import { Point } from './model/point';
 import { Bounds } from './model/bounds';
 import { ImageCropperModel } from "./model/imageCropperModel";
-import { CropperDrawSettings } from "./cropperDrawSettings";
+import { CropperSettings } from "./cropperSettings";
 export declare class ImageCropper extends ImageCropperModel {
     private crop;
-    private drawSettings;
-    constructor(x: number, y: number, width: number, height: number, croppedWidth: number, croppedHeight: number, drawSettings: CropperDrawSettings, keepAspect?: boolean, touchRadius?: number, minWidth?: number, minHeight?: number);
+    private cropperSettings;
+    constructor(cropperSettings: CropperSettings);
     static sign(x: any): any;
     static getMousePos(canvas: any, evt: any): Point;
     static getTouchPos(canvas: any, touch: any): Point;

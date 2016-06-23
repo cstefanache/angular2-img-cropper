@@ -7,30 +7,33 @@ import {CropTouch} from './model/cropTouch';
 import {ImageCropperModel} from "./model/imageCropperModel";
 import {CropperDrawSettings} from "./cropperDrawSettings";
 import {ImageCropperDataShare} from "./imageCropperDataShare";
+import {CropperSettings} from "./cropperSettings";
 
 export class ImageCropper extends ImageCropperModel {
 
     private crop:ImageCropper;
-    private drawSettings:CropperDrawSettings;
+    private cropperSettings:CropperSettings;
 
-    constructor(x:number, y:number,
-                width:number, height:number,
-                croppedWidth:number, croppedHeight:number,
-                drawSettings:CropperDrawSettings,
-                keepAspect:boolean = true, touchRadius:number = 20,
-                minWidth:number = 50, minHeight:number = 50) {
+    constructor(cropperSettings:CropperSettings) {
 
         super();
 
+        var x = 0;
+        var y = 0;
+        var width = cropperSettings.width;
+        var height = cropperSettings.height;
+        var keepAspect = cropperSettings.keepAspect;
+        var touchRadius = cropperSettings.touchRadius;
+        var minWidth = cropperSettings.minWidth;
+        var minHeight = cropperSettings.minHeight;
+        var croppedWidth = cropperSettings.croppedWidth;
+        var croppedHeight = cropperSettings.croppedHeight;
+        this.cropperSettings = cropperSettings;
+
         this.crop = this;
+        this.x = x;
+        this.y = y;
 
-        if (x === void 0) {
-            this.x = 0;
-        }
-
-        if (y === void 0) {
-            this.y = 0;
-        }
         if (width === void 0) {
             this.width = 100;
         }
@@ -54,13 +57,13 @@ export class ImageCropper extends ImageCropperModel {
         this.fileType = 'png';
         this.imageSet = false;
         this.pointPool = new PointPool(200);
-        this.drawSettings = drawSettings;
 
 
-        this.tl = new CornerMarker(x, y, touchRadius, this.drawSettings);
-        this.tr = new CornerMarker(x + width, y, touchRadius, this.drawSettings);
-        this.bl = new CornerMarker(x, y + height, touchRadius, this.drawSettings);
-        this.br = new CornerMarker(x + width, y + height, touchRadius, this.drawSettings);
+        this.tl = new CornerMarker(x, y, touchRadius, this.cropperSettings);
+        this.tr = new CornerMarker(x + width, y, touchRadius, this.cropperSettings);
+        this.bl = new CornerMarker(x, y + height, touchRadius, this.cropperSettings);
+        this.br = new CornerMarker(x + width, y + height, touchRadius, this.cropperSettings);
+
         this.tl.addHorizontalNeighbour(this.tr);
         this.tl.addVerticalNeighbour(this.bl);
         this.tr.addHorizontalNeighbour(this.tl);
@@ -70,7 +73,7 @@ export class ImageCropper extends ImageCropperModel {
         this.br.addHorizontalNeighbour(this.bl);
         this.br.addVerticalNeighbour(this.tr);
         this.markers = [this.tl, this.tr, this.bl, this.br];
-        this.center = new DragMarker(x + (width / 2), y + (height / 2), touchRadius, this.drawSettings);
+        this.center = new DragMarker(x + (width / 2), y + (height / 2), touchRadius, this.cropperSettings);
         this.keepAspect = keepAspect;
         this.aspectRatio = height / width;
         this.croppedImage = new Image();
@@ -78,7 +81,6 @@ export class ImageCropper extends ImageCropperModel {
         this.cropWidth = croppedWidth;
         this.cropHeight = croppedHeight;
     }
-
 
     static sign(x) {
         if (+x === x) {
@@ -171,18 +173,33 @@ export class ImageCropper extends ImageCropperModel {
                 this.drawImageIOSFix(ctx, this.srcImage, 0, 0, this.srcImage.width, this.srcImage.height, 0, this.buffer.height / 2 - h / 2, w, h);
             }
             this.buffer.getContext('2d').drawImage(this.canvas, 0, 0, this.canvasWidth, this.canvasHeight);
-            ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
             ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-            ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.getWidth(), 1), Math.max(bounds.getHeight(), 1), bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+
+
+            ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
+            ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor; //'rgba(255,228,0,1)';
+
+            if (!this.cropperSettings.rounded) {
+                ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.getWidth(), 1), Math.max(bounds.getHeight(), 1), bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+                ctx.strokeRect(bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+            } else {
+                ctx.fillStyle = '#fff';
+                ctx.globalCompositeOperation = 'overlay';
+                ctx.beginPath();
+                ctx.arc(bounds.left + bounds.getWidth() / 2, bounds.top + bounds.getHeight() / 2, bounds.getWidth() / 2, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.stroke();
+            }
+
             var marker;
             for (var i = 0; i < this.markers.length; i++) {
                 marker = this.markers[i];
                 marker.draw(ctx);
             }
             this.center.draw(ctx);
-            ctx.lineWidth = this.drawSettings.strokeWidth;
-            ctx.strokeStyle = this.drawSettings.strokeColor; //'rgba(255,228,0,1)';
-            ctx.strokeRect(bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
         }
         else {
             ctx.fillStyle = 'rgba(192,192,192,1)';
@@ -219,12 +236,7 @@ export class ImageCropper extends ImageCropperModel {
         this.br.moveY(y + (bounds.getHeight() / 2));
         marker.setPosition(x, y);
 
-        /*
-         if (scope.cropAreaBounds && this.imageSet) {
-         scope.cropAreaBounds = this.getCropBounds();
-         scope.$apply();
-         }
-         */
+
     }
 
     enforceMinSize(x, y, marker) {
@@ -611,15 +623,19 @@ export class ImageCropper extends ImageCropperModel {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
-        /*
-         var splitName = img.src.split('.');
-         var fileType = splitName[1];
-         if (fileType == 'png' || fileType == 'jpg') {
-         this.fileType = fileType;
-         }
-         */
+
+        var splitName = img.src.split('.');
+        var fileType = splitName[1];
+        if (fileType == 'png' || fileType == 'jpg') {
+            this.fileType = fileType;
+        }
 
         this.srcImage = img;
+
+        if (this.cropperSettings.minWithRelativeToResolution) {
+            this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);
+            this.minHeight = (this.canvas.height * this.minHeight / this.srcImage.height);
+        }
 
         this.updateClampBounds();
         var sourceAspect = this.srcImage.height / this.srcImage.width;

@@ -13,19 +13,22 @@ var imageCropperModel_1 = require("./model/imageCropperModel");
 var imageCropperDataShare_1 = require("./imageCropperDataShare");
 var ImageCropper = (function (_super) {
     __extends(ImageCropper, _super);
-    function ImageCropper(x, y, width, height, croppedWidth, croppedHeight, drawSettings, keepAspect, touchRadius, minWidth, minHeight) {
-        if (keepAspect === void 0) { keepAspect = true; }
-        if (touchRadius === void 0) { touchRadius = 20; }
-        if (minWidth === void 0) { minWidth = 50; }
-        if (minHeight === void 0) { minHeight = 50; }
+    function ImageCropper(cropperSettings) {
         _super.call(this);
+        var x = 0;
+        var y = 0;
+        var width = cropperSettings.width;
+        var height = cropperSettings.height;
+        var keepAspect = cropperSettings.keepAspect;
+        var touchRadius = cropperSettings.touchRadius;
+        var minWidth = cropperSettings.minWidth;
+        var minHeight = cropperSettings.minHeight;
+        var croppedWidth = cropperSettings.croppedWidth;
+        var croppedHeight = cropperSettings.croppedHeight;
+        this.cropperSettings = cropperSettings;
         this.crop = this;
-        if (x === void 0) {
-            this.x = 0;
-        }
-        if (y === void 0) {
-            this.y = 0;
-        }
+        this.x = x;
+        this.y = y;
         if (width === void 0) {
             this.width = 100;
         }
@@ -49,11 +52,10 @@ var ImageCropper = (function (_super) {
         this.fileType = 'png';
         this.imageSet = false;
         this.pointPool = new pointPool_1.PointPool(200);
-        this.drawSettings = drawSettings;
-        this.tl = new cornerMarker_1.CornerMarker(x, y, touchRadius, this.drawSettings);
-        this.tr = new cornerMarker_1.CornerMarker(x + width, y, touchRadius, this.drawSettings);
-        this.bl = new cornerMarker_1.CornerMarker(x, y + height, touchRadius, this.drawSettings);
-        this.br = new cornerMarker_1.CornerMarker(x + width, y + height, touchRadius, this.drawSettings);
+        this.tl = new cornerMarker_1.CornerMarker(x, y, touchRadius, this.cropperSettings);
+        this.tr = new cornerMarker_1.CornerMarker(x + width, y, touchRadius, this.cropperSettings);
+        this.bl = new cornerMarker_1.CornerMarker(x, y + height, touchRadius, this.cropperSettings);
+        this.br = new cornerMarker_1.CornerMarker(x + width, y + height, touchRadius, this.cropperSettings);
         this.tl.addHorizontalNeighbour(this.tr);
         this.tl.addVerticalNeighbour(this.bl);
         this.tr.addHorizontalNeighbour(this.tl);
@@ -63,7 +65,7 @@ var ImageCropper = (function (_super) {
         this.br.addHorizontalNeighbour(this.bl);
         this.br.addVerticalNeighbour(this.tr);
         this.markers = [this.tl, this.tr, this.bl, this.br];
-        this.center = new dragMarker_1.DragMarker(x + (width / 2), y + (height / 2), touchRadius, this.drawSettings);
+        this.center = new dragMarker_1.DragMarker(x + (width / 2), y + (height / 2), touchRadius, this.cropperSettings);
         this.keepAspect = keepAspect;
         this.aspectRatio = height / width;
         this.croppedImage = new Image();
@@ -152,18 +154,30 @@ var ImageCropper = (function (_super) {
                 this.drawImageIOSFix(ctx, this.srcImage, 0, 0, this.srcImage.width, this.srcImage.height, 0, this.buffer.height / 2 - h / 2, w, h);
             }
             this.buffer.getContext('2d').drawImage(this.canvas, 0, 0, this.canvasWidth, this.canvasHeight);
-            ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
             ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-            ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.getWidth(), 1), Math.max(bounds.getHeight(), 1), bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+            ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
+            ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor;
+            if (!this.cropperSettings.rounded) {
+                ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.getWidth(), 1), Math.max(bounds.getHeight(), 1), bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+                ctx.strokeRect(bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+            }
+            else {
+                ctx.fillStyle = '#fff';
+                ctx.globalCompositeOperation = 'overlay';
+                ctx.beginPath();
+                ctx.arc(bounds.left + bounds.getWidth() / 2, bounds.top + bounds.getHeight() / 2, bounds.getWidth() / 2, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.stroke();
+            }
             var marker;
             for (var i = 0; i < this.markers.length; i++) {
                 marker = this.markers[i];
                 marker.draw(ctx);
             }
             this.center.draw(ctx);
-            ctx.lineWidth = this.drawSettings.strokeWidth;
-            ctx.strokeStyle = this.drawSettings.strokeColor;
-            ctx.strokeRect(bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
         }
         else {
             ctx.fillStyle = 'rgba(192,192,192,1)';
@@ -556,7 +570,16 @@ var ImageCropper = (function (_super) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
+        var splitName = img.src.split('.');
+        var fileType = splitName[1];
+        if (fileType == 'png' || fileType == 'jpg') {
+            this.fileType = fileType;
+        }
         this.srcImage = img;
+        if (this.cropperSettings.minWithRelativeToResolution) {
+            this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);
+            this.minHeight = (this.canvas.height * this.minHeight / this.srcImage.height);
+        }
         this.updateClampBounds();
         var sourceAspect = this.srcImage.height / this.srcImage.width;
         var cropBounds = this.getBounds();

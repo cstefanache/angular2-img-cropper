@@ -1,13 +1,13 @@
 import { Point } from './point';
-import { CropperDrawSettings } from "../cropperDrawSettings";
+import { CropperSettings } from "../cropperSettings";
 export declare class Handle {
-    protected drawSettings: CropperDrawSettings;
+    protected cropperSettings: CropperSettings;
     over: Boolean;
     drag: Boolean;
     position: Point;
     offset: Point;
     radius: number;
-    constructor(x: any, y: any, radius: any, drawSettings: CropperDrawSettings);
+    constructor(x: any, y: any, radius: any, cropperSettings: CropperSettings);
     setDrag(value: any): void;
     draw(ctx: any): void;
     setOver(over: any): void;

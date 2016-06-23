@@ -23,16 +23,28 @@ var CornerMarker = (function (_super) {
         if (this.verticalNeighbour.position.y < this.position.y) {
             vDirection = -1;
         }
+        if (this.cropperSettings.rounded) {
+            var width = this.position.x - this.horizontalNeighbour.position.x;
+            var height = this.position.y - this.verticalNeighbour.position.y;
+            var offX = Math.round(Math.sin(Math.PI / 2) * Math.abs(width / 2)) / 4;
+            var offY = Math.round(Math.sin(Math.PI / 2) * Math.abs(height / 2)) / 4;
+            this.offset.x = hDirection > 0 ? offX : -offX;
+            this.offset.y = vDirection > 0 ? offY : -offY;
+        }
+        else {
+            this.offset.x = 0;
+            this.offset.y = 0;
+        }
         ctx.beginPath();
         ctx.lineJoin = "miter";
-        ctx.moveTo(this.position.x, this.position.y);
-        ctx.lineTo(this.position.x + (sideLength * hDirection), this.position.y);
-        ctx.lineTo(this.position.x + (sideLength * hDirection), this.position.y + (sideLength * vDirection));
-        ctx.lineTo(this.position.x, this.position.y + (sideLength * vDirection));
-        ctx.lineTo(this.position.x, this.position.y);
+        ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
+        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
+        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y + (sideLength * vDirection));
+        ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
+        ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
-        ctx.lineWidth = this.drawSettings.strokeWidth;
-        ctx.strokeStyle = this.drawSettings.strokeColor;
+        ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
+        ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor;
         ctx.stroke();
     };
     CornerMarker.prototype.drawCornerFill = function (ctx) {
@@ -49,11 +61,11 @@ var CornerMarker = (function (_super) {
             vDirection = -1;
         }
         ctx.beginPath();
-        ctx.moveTo(this.position.x, this.position.y);
-        ctx.lineTo(this.position.x + (sideLength * hDirection), this.position.y);
-        ctx.lineTo(this.position.x + (sideLength * hDirection), this.position.y + (sideLength * vDirection));
-        ctx.lineTo(this.position.x, this.position.y + (sideLength * vDirection));
-        ctx.lineTo(this.position.x, this.position.y);
+        ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
+        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
+        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y + (sideLength * vDirection));
+        ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
+        ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
         ctx.fillStyle = 'rgba(0,0,0,1)';
         ctx.fill();

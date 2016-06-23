@@ -1,5 +1,12 @@
-# Important
+# Changelog
 
+###  Release 0.4.5:
+ - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)
+ - cropper takes into consideration source image data pixels not cropper image data. (Issue #17)
+ - support for minSize now have the following option: minWithRelativeToResolution. When set to false it will keep min size relative to canvas size. (Issue #21)
+ 
+
+### Release 0.4.2:
 Starting with: 0.4.2 ts files are no loger published (only js & d.ts).
 Please change your system.config files to make use of the js files.
 ```
@@ -22,7 +29,7 @@ The crop image can either be 1:1 or scaled to fit an area.
 
 ## Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/AllanBishop/ImageCropper/master/screenshots/screenshot.jpg "Screenshot")
+![Screenshot](https://raw.githubusercontent.com/cstefanache/cstefanache.github.io/master/assets/img/cropper.png "Screenshot")
 
 ## Testing
 

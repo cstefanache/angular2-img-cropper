@@ -1,8 +1,8 @@
 "use strict";
 var point_1 = require('./point');
 var Handle = (function () {
-    function Handle(x, y, radius, drawSettings) {
-        this.drawSettings = drawSettings;
+    function Handle(x, y, radius, cropperSettings) {
+        this.cropperSettings = cropperSettings;
         this.over = false;
         this.drag = false;
         this.position = new point_1.Point(x, y);
@@ -19,7 +19,10 @@ var Handle = (function () {
         this.over = over;
     };
     Handle.prototype.touchInBounds = function (x, y) {
-        return (x > this.position.x - this.radius && x < this.position.x + this.radius && y > this.position.y - this.radius && y < this.position.y + this.radius);
+        return (x > this.position.x - this.radius + this.offset.x &&
+            x < this.position.x + this.radius + this.offset.x &&
+            y > this.position.y - this.radius + this.offset.y &&
+            y < this.position.y + this.radius + this.offset.y);
     };
     Handle.prototype.getPosition = function () {
         return this.position;

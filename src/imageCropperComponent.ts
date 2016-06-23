@@ -48,8 +48,7 @@ export class ImageCropperComponent extends Type {
         this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
 
         if (!this.cropper) {
-            this.cropper = new ImageCropper(0, 0, this.settings.width, this.settings.height,
-                this.settings.croppedWidth, this.settings.croppedHeight, this.settings.cropperDrawSettings, this.settings.keepAspect);
+            this.cropper = new ImageCropper(this.settings);
         }
 
         this.cropper.prepare(canvas);

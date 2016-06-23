@@ -4,9 +4,15 @@ export declare class CropperSettings {
     canvasHeight: number;
     width: number;
     height: number;
+    minWidth: number;
+    minHeight: number;
+    minWithRelativeToResolution: boolean;
     croppedWidth: number;
     croppedHeight: number;
-    keepAspect: boolean;
     cropperDrawSettings: CropperDrawSettings;
-    constructor();
+    touchRadius: number;
+    private _rounded;
+    private _keepAspect;
+    rounded: boolean;
+    keepAspect: boolean;
 }
