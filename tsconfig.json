@@ -12,7 +12,7 @@
     "rootDir": "."
   },
   "files": [
-    "typings/browser.d.ts",
+    "typings/index.d.ts",
     "index.ts"
   ],
   "exclude": [
