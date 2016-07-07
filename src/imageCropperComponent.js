@@ -69,6 +69,7 @@ var ImageCropperComponent = (function (_super) {
         myReader.onloadend = function (loadEvent) {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
+            that.image.original = image;
             that.image.image = that.cropper.getCroppedImage().src;
             that.onCrop.emit(that.cropper.getCropBounds());
         };
