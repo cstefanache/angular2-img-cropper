@@ -570,7 +570,11 @@ var ImageCropper = (function (_super) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
-        this.fileType = img.src.match(/^data:.+\/(.+);base64,(.*)$/)[1];
+        var splitName = img.src.split('.');
+        var fileType = splitName[1];
+        if (fileType == 'png' || fileType == 'jpg') {
+            this.fileType = fileType;
+        }
         this.srcImage = img;
         if (this.cropperSettings.minWithRelativeToResolution) {
             this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);

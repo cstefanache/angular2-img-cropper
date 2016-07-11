@@ -1,5 +1,9 @@
 # Changelog
 
+### Release 0.5 (pending)
+
+ - introduced flag to hide the component file input in order to allow customization
+
 ###  Release 0.4.5:
  - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)
  - cropper takes into consideration source image data pixels not cropper image data. (Issue #17)
@@ -78,3 +82,66 @@ export class AppComponent {
 
 Checkout this [sample plunker](https://embed.plnkr.co/V91mKCNkBQZB5QO2MUP4/)
 
+
+## Settings
+
+* canvasWidth:number - Canvas DOM Element width
+* canvasHeight:number - Canvas DOM Element height
+* width:number - Crop Width
+* height:number - Crop Height
+* minWidth:number - Minimum crop Width
+* minHeight:number - Minimum crop height
+* croppedWidth:number - Resulting image width
+* croppedHeight:number - Resulting image height
+* touchRadius:number - (default: 20) Touch devices radius
+* minWithRelativeToResolution:boolean - (default: true) By default the resulting image will be cropped from original image. If false, it will be cropped from canvas pixels
+* noFileInput:boolean - (default: false) - hides the file input element from cropper canvas. 
+* cropperDrawSettings:CropperDrawSettings - rendering options
+    * strokeWidth - box/ellipsis stroke width
+    * strokeColor - box/ellipsis stroke color
+
+## Customizing Image cropper
+
+Replacing component file input:
+
+```html
+<div class="file-upload">
+    <span class="text">upload</span>
+    <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+</div>
+<img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+<br>
+<span class="result rounded" *ngIf="data.image" >
+    <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+</span>
+```
+
+```typescript
+
+data:any;
+
+@ViewChild('cropper', undefined) 
+cropper:ImageCropperComponent;
+
+constructor() {
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.noFileInput = true;
+    this.data = {};
+}
+
+fileChangeListener($event) {
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.cropper.setImage(image);
+
+    };
+
+    myReader.readAsDataURL(file);
+}
+
+
+```

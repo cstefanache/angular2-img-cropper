@@ -4,6 +4,16 @@ import {Style} from 'ng2-styler';
 
 
 @Style({
+    "h3": {
+      paddingBottom: "20px",
+      borderBottom: "1px solid #A0A0A0"
+    },
+
+    "h4": {
+        paddingBottom: "20px",
+        paddingTop: "20px",
+        borderTop: "1px solid #A0A0A0"
+    },
     ".result": {
         marginTop: "30px",
         border: "1px solid rgba(125,125,125,0.6)",
@@ -22,20 +32,23 @@ import {Style} from 'ng2-styler';
         float: "left",
         marginRight: "10px",
         padding: "10px",
-        backgroundColor: "rgba(0,0,0,0.05)"
+        backgroundColor: "rgba(0,0,0,0.05)",
+        position: "relative",
+
     },
 
+
     ".file-upload": {
-        height: "50px",
-        width: "50px",
-        borderRadius: "50px",
+        height: "25px",
+        width: "100px",
         position: "relative",
+        borderRadius: "3px",
 
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
 
-        border: "4px solid #FFFFFF",
+        border: "1px solid #FFFFFF",
         overflow: "hidden",
         backgroundImage: "linear-gradient(to bottom, #2590EB 50%, #FFFFFF 50%)",
         backgroundSize: "100% 200%",
@@ -49,13 +62,13 @@ import {Style} from 'ng2-styler';
         },
 
         ".text": {
-            fontSize: "12px"
+            fontSize: "14px"
         },
 
 
         "input[type='file']": {
-            height: "50px",
-            width: "50px",
+            height: "25px",
+            width: "100px",
             position: "absolute",
             top: "0",
             left: "0",
@@ -102,18 +115,17 @@ this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
         <div class="pull-left">
             <h3>
                 Sample cropper 2
-                <div class="file-upload" style="float:right">
-                    <span class="text">upload</span>
-                    <input id="custom-input" type="file" (change)="fileChangeListener($event)">
-                </div>
             </h3>
+           <div class="file-upload">
+                <span class="text">upload</span>
+                <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+            </div>
 
             <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
             <br>
             <span class="result rounded" *ngIf="data2.image" >
                 <img [src]="data2.image" [width]="cropperSettings2.croppedWidth" [height]="cropperSettings2.croppedHeight">
             </span>
-
             <h4>Settings:</h4>
             <pre>
 this.cropperSettings2 = new CropperSettings();
