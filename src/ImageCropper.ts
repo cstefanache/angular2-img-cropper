@@ -623,12 +623,8 @@ export class ImageCropper extends ImageCropperModel {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
-
-        var splitName = img.src.split('.');
-        var fileType = splitName[1];
-        if (fileType == 'png' || fileType == 'jpg') {
-            this.fileType = fileType;
-        }
+        
+        this.fileType = img.src.match(/^data:.+\/(.+);base64,(.*)$/)[1];
 
         this.srcImage = img;
 
