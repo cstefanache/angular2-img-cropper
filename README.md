@@ -85,20 +85,20 @@ Checkout this [sample plunker](https://embed.plnkr.co/V91mKCNkBQZB5QO2MUP4/)
 
 ## Settings
 
-* canvasWidth:number - Canvas DOM Element width
-* canvasHeight:number - Canvas DOM Element height
-* width:number - Crop Width
-* height:number - Crop Height
-* minWidth:number - Minimum crop Width
-* minHeight:number - Minimum crop height
-* croppedWidth:number - Resulting image width
-* croppedHeight:number - Resulting image height
-* touchRadius:number - (default: 20) Touch devices radius
-* minWithRelativeToResolution:boolean - (default: true) By default the resulting image will be cropped from original image. If false, it will be cropped from canvas pixels
-* noFileInput:boolean - (default: false) - hides the file input element from cropper canvas. 
-* cropperDrawSettings:CropperDrawSettings - rendering options
-    * strokeWidth - box/ellipsis stroke width
-    * strokeColor - box/ellipsis stroke color
+* **canvasWidth**:*number* - Canvas DOM Element width
+* **canvasHeight**:*number* - Canvas DOM Element height
+* **width**:*number* - Crop Width
+* **height**:*number* - Crop Height
+* **minWidth**:*number* - Minimum crop Width
+* **minHeight**:*number* - Minimum crop height
+* **croppedWidth**:*number* - Resulting image width
+* **croppedHeight**:*number* - Resulting image height
+* **touchRadius**:*number* - (default: 20) Touch devices radius
+* **minWithRelativeToResolution**:*boolean* - (default: true) By default the resulting image will be cropped from original image. If false, it will be cropped from canvas pixels
+* **noFileInput**:*boolean* - (default: false) - hides the file input element from cropper canvas. 
+* **cropperDrawSettings**:*CropperDrawSettings* - rendering options
+    * **strokeWidth**:*number* - box/ellipsis stroke width
+    * **strokeColor**:*string* - box/ellipsis stroke color
 
 ## Customizing Image cropper
 
