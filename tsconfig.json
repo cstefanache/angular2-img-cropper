@@ -1,19 +1,25 @@
 {
   "compilerOptions": {
-    "out": "./dist/ng2-img-cropper.js",
+    "removeComments": true,
     "noImplicitAny": false,
-    "module": "system",
+    "module": "commonjs",
     "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "rootDir": "."
   },
+  "files": [
+    "typings/index.d.ts",
+    "index.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     "runtime",
-    "typings"
+    "typings/main",
+    "typings/main.d.ts"
   ]
 }

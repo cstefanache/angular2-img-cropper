@@ -1,19 +1,20 @@
-import {Handle} from './handle';
-import {PointPool} from './pointPool';
-import {Point} from './point';
-import {CropperDrawSettings} from "../cropperDrawSettings";
-
-export class CornerMarker extends Handle {
-
-    private horizontalNeighbour:CornerMarker;
-    private verticalNeighbour:CornerMarker;
-
-    drawCornerBorder(ctx:any):void {
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var handle_1 = require('./handle');
+var CornerMarker = (function (_super) {
+    __extends(CornerMarker, _super);
+    function CornerMarker() {
+        _super.apply(this, arguments);
+    }
+    CornerMarker.prototype.drawCornerBorder = function (ctx) {
         var sideLength = 10;
         if (this.over || this.drag) {
             sideLength = 12;
         }
-
         var hDirection = 1;
         var vDirection = 1;
         if (this.horizontalNeighbour.position.x < this.position.x) {
@@ -22,21 +23,18 @@ export class CornerMarker extends Handle {
         if (this.verticalNeighbour.position.y < this.position.y) {
             vDirection = -1;
         }
-
         if (this.cropperSettings.rounded) {
             var width = this.position.x - this.horizontalNeighbour.position.x;
             var height = this.position.y - this.verticalNeighbour.position.y;
-
-            var offX = Math.round(Math.sin(Math.PI / 2) * Math.abs(width/2)) / 4;
-            var offY = Math.round(Math.sin(Math.PI / 2) * Math.abs(height/2)) / 4;
-
+            var offX = Math.round(Math.sin(Math.PI / 2) * Math.abs(width / 2)) / 4;
+            var offY = Math.round(Math.sin(Math.PI / 2) * Math.abs(height / 2)) / 4;
             this.offset.x = hDirection > 0 ? offX : -offX;
             this.offset.y = vDirection > 0 ? offY : -offY;
-        } else {
+        }
+        else {
             this.offset.x = 0;
             this.offset.y = 0;
         }
-
         ctx.beginPath();
         ctx.lineJoin = "miter";
         ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
@@ -48,9 +46,8 @@ export class CornerMarker extends Handle {
         ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
         ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor;
         ctx.stroke();
-    }
-
-    drawCornerFill(ctx:any):void {
+    };
+    CornerMarker.prototype.drawCornerFill = function (ctx) {
         var sideLength = 10;
         if (this.over || this.drag) {
             sideLength = 12;
@@ -72,41 +69,35 @@ export class CornerMarker extends Handle {
         ctx.closePath();
         ctx.fillStyle = 'rgba(0,0,0,1)';
         ctx.fill();
-    }
-
-    moveX(x:number):void {
+    };
+    CornerMarker.prototype.moveX = function (x) {
         this.setPosition(x, this.position.y);
-    }
-
-    moveY(y:number):void {
+    };
+    CornerMarker.prototype.moveY = function (y) {
         this.setPosition(this.position.x, y);
-    }
-
-    move(x:number, y:number):void {
+    };
+    CornerMarker.prototype.move = function (x, y) {
         this.setPosition(x, y);
         this.verticalNeighbour.moveX(x);
         this.horizontalNeighbour.moveY(y);
-    }
-
-    addHorizontalNeighbour(neighbour:CornerMarker):void {
+    };
+    CornerMarker.prototype.addHorizontalNeighbour = function (neighbour) {
         this.horizontalNeighbour = neighbour;
-    }
-
-    addVerticalNeighbour(neighbour:CornerMarker):void {
+    };
+    CornerMarker.prototype.addVerticalNeighbour = function (neighbour) {
         this.verticalNeighbour = neighbour;
-    }
-
-    getHorizontalNeighbour():CornerMarker {
+    };
+    CornerMarker.prototype.getHorizontalNeighbour = function () {
         return this.horizontalNeighbour;
-    }
-
-    getVerticalNeighbour():CornerMarker {
+    };
+    CornerMarker.prototype.getVerticalNeighbour = function () {
         return this.verticalNeighbour;
-    }
-
-    draw(ctx:any):void {
+    };
+    CornerMarker.prototype.draw = function (ctx) {
         this.drawCornerFill(ctx);
         this.drawCornerBorder(ctx);
-    }
-
-}
+    };
+    return CornerMarker;
+}(handle_1.Handle));
+exports.CornerMarker = CornerMarker;
+//# sourceMappingURL=cornerMarker.js.map

@@ -1,14 +1,13 @@
 {
   "name": "ng2-img-cropper",
-  "version": "0.3.1",
+  "version": "0.4.6",
   "description": "Angular2 Image Cropper Component",
-  "main": "component.js",
-  "typings": "./component.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
   },
   "scripts": {
+    "prepublish": "tsc",
     "all": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "watch": "tsc -w ",
     "lite": "lite-server"
@@ -16,9 +15,8 @@
   "keywords": [
     "angular2"
   ],
-  "files": ["src","runtime","dist"],
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@angular/common":  "2.0.0-rc.1",
     "@angular/compiler":  "2.0.0-rc.1",
     "@angular/core":  "2.0.0-rc.1",
@@ -29,7 +27,6 @@
     "@angular/router-deprecated":  "2.0.0-rc.1",
     "@angular/upgrade":  "2.0.0-rc.1",
 
-
     "jquery": "^2.2.3",
     "systemjs": "0.19.27",
     "es6-shim": "^0.35.0",
@@ -37,17 +34,16 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.12",
     "angular2-in-memory-web-api": "0.0.7",
-    "bootstrap": "^3.3.6"
-  },
-  "devDependencies": {
+    "bootstrap": "^3.3.6",
+
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12"
+    "typings": "^1.3.0"
   },
   "bugs": {
-    "url": "https://github.com/cstefanache/ng2-components/issues"
+    "url": "https://github.com/cstefanache/angular2-img-cropper/issues"
   },
-  "homepage": "https://github.com/cstefanache/ng2-components#readme",
+  "homepage": "https://github.com/cstefanache/angular2-img-cropper#readme",
   "author": "Cornel Stefanache"
 }

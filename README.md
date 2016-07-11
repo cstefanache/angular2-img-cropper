@@ -1,3 +1,20 @@
+# Changelog
+
+###  Release 0.4.5:
+ - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)
+ - cropper takes into consideration source image data pixels not cropper image data. (Issue #17)
+ - support for minSize now have the following option: minWithRelativeToResolution. When set to false it will keep min size relative to canvas size. (Issue #21)
+ - allow user to customize look and feel of the cropper:  
+        this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
+
+### Release 0.4.2:
+Starting with: 0.4.2 ts files are no loger published (only js & d.ts).
+Please change your system.config files to make use of the js files.
+```
+ 'ng2-img-cropper' :           { main: 'index.js', defaultExtension: 'js' }
+```
+
 
 
 # ng2-img-cropper
@@ -6,9 +23,15 @@ This is an adapatation of Angular 1 image cropper from: https://github.com/Allan
 An image cropping tool for AngularJS. Features a rectangular crop area. The crop area's aspect ratio can be enforced during dragging. 
 The crop image can either be 1:1 or scaled to fit an area.
 
+## Install from NPM
+
+```
+    npm i ng2-img-cropper --save
+```
+
 ## Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/AllanBishop/ImageCropper/master/screenshots/screenshot.jpg "Screenshot")
+![Screenshot](https://raw.githubusercontent.com/cstefanache/cstefanache.github.io/master/assets/img/cropper.png "Screenshot")
 
 ## Testing
 
@@ -21,7 +44,7 @@ The crop image can either be 1:1 or scaled to fit an area.
 
 ```
 import {Component} from 'angular2/core';
-import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper/src/imageCropper';
+import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 
 @Component({
@@ -52,3 +75,6 @@ export class AppComponent {
 }
 
 ```
+
+Checkout this [sample plunker](https://embed.plnkr.co/V91mKCNkBQZB5QO2MUP4/)
+
