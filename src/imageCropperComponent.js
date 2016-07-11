@@ -64,15 +64,18 @@ var ImageCropperComponent = (function (_super) {
     ImageCropperComponent.prototype.fileChangeListener = function ($event) {
         var image = new Image();
         var file = $event.target.files[0];
-        var myReader = new FileReader();
+        var fileReader = new FileReader();
         var that = this;
-        myReader.onloadend = function (loadEvent) {
+        fileReader.onloadend = function (loadEvent) {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
             that.image.image = that.cropper.getCroppedImage().src;
             that.onCrop.emit(that.cropper.getCropBounds());
         };
-        myReader.readAsDataURL(file);
+        fileReader.readAsDataURL(file);
+    };
+    ImageCropperComponent.prototype.setImage = function (image) {
+        this.cropper.setImage(image);
     };
     __decorate([
         core_1.ViewChild('cropcanvas', undefined), 
@@ -82,11 +85,22 @@ var ImageCropperComponent = (function (_super) {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], ImageCropperComponent.prototype, "onCrop", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', cropperSettings_1.CropperSettings)
+    ], ImageCropperComponent.prototype, "settings", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], ImageCropperComponent.prototype, "image", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', imageCropper_1.ImageCropper)
+    ], ImageCropperComponent.prototype, "cropper", void 0);
     ImageCropperComponent = __decorate([
         core_1.Component({
             selector: 'img-cropper',
-            template: "\n    <span class=\"ng2-imgcrop\">\n      <input type=\"file\" (change)=\"fileChangeListener($event)\">\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\"\n              (touchstart)=\"onTouchStart($event)\">\n      </canvas>\n    </span>\n  ",
-            inputs: ['image', 'settings', 'cropper']
+            template: "\n    <span class=\"ng2-imgcrop\">\n      <input *ngIf=\"!settings.noFileInput\" type=\"file\" (change)=\"fileChangeListener($event)\">\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\"\n              (touchstart)=\"onTouchStart($event)\">\n      </canvas>\n    </span>\n  "
         }), 
         __metadata('design:paramtypes', [core_1.Renderer])
     ], ImageCropperComponent);

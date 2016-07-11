@@ -13,6 +13,7 @@ var CropperSettings = (function () {
         this.croppedHeight = 100;
         this.cropperDrawSettings = new cropperDrawSettings_1.CropperDrawSettings();
         this.touchRadius = 20;
+        this.noFileInput = false;
         this._rounded = false;
         this._keepAspect = true;
     }

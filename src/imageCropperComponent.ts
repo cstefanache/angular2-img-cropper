@@ -1,4 +1,4 @@
-import {Component, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type} from '@angular/core';
+import {Component, Input, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type} from '@angular/core';
 import {ImageCropper} from "./imageCropper";
 import {CropperSettings} from "./cropperSettings";
 
@@ -6,7 +6,7 @@ import {CropperSettings} from "./cropperSettings";
     selector: 'img-cropper',
     template: `
     <span class="ng2-imgcrop">
-      <input type="file" (change)="fileChangeListener($event)">
+      <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)">
       <canvas #cropcanvas
               (mousedown)="onMouseDown($event)"
               (mouseup)="onMouseUp($event)"
@@ -16,19 +16,27 @@ import {CropperSettings} from "./cropperSettings";
               (touchstart)="onTouchStart($event)">
       </canvas>
     </span>
-  `,
-    inputs: ['image', 'settings', 'cropper']
+  `
 })
 export class ImageCropperComponent extends Type {
 
-    @ViewChild('cropcanvas', undefined) cropcanvas:ElementRef;
+    @ViewChild('cropcanvas', undefined)
+    cropcanvas:ElementRef;
+
+
     @Output() onCrop:EventEmitter<any> = new EventEmitter();
 
-    cropper:ImageCropper;
+    @Input()
+    settings:CropperSettings;
+
+    @Input()
     image:any;
+
+    @Input()
+    cropper:ImageCropper;
+
     croppedWidth:number;
     croppedHeight:number;
-    settings:CropperSettings;
 
     private renderer:Renderer;
 
@@ -89,17 +97,21 @@ export class ImageCropperComponent extends Type {
     fileChangeListener($event) {
         var image:any = new Image();
         var file:File = $event.target.files[0];
-        var myReader:FileReader = new FileReader();
+        var fileReader:FileReader = new FileReader();
         var that = this;
 
-        myReader.onloadend = function (loadEvent:any) {
+        fileReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
             that.image.image = that.cropper.getCroppedImage().src;
             that.onCrop.emit(that.cropper.getCropBounds());
         };
 
-        myReader.readAsDataURL(file);
+        fileReader.readAsDataURL(file);
+    }
+
+    setImage(image) {
+        this.cropper.setImage(image);
     }
 
 }

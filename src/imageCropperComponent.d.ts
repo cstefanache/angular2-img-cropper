@@ -4,11 +4,11 @@ import { CropperSettings } from "./cropperSettings";
 export declare class ImageCropperComponent extends Type {
     cropcanvas: ElementRef;
     onCrop: EventEmitter<any>;
-    cropper: ImageCropper;
+    settings: CropperSettings;
     image: any;
+    cropper: ImageCropper;
     croppedWidth: number;
     croppedHeight: number;
-    settings: CropperSettings;
     private renderer;
     constructor(renderer: Renderer);
     ngAfterViewInit(): void;
@@ -19,4 +19,5 @@ export declare class ImageCropperComponent extends Type {
     onMouseUp(): void;
     onMouseMove(event: any): void;
     fileChangeListener($event: any): void;
+    setImage(image: any): void;
 }

@@ -16,6 +16,7 @@ export class CropperSettings {
 
     cropperDrawSettings:CropperDrawSettings = new CropperDrawSettings();
     touchRadius:number = 20;
+    noFileInput:boolean = false;
 
     private _rounded:boolean = false;
     private _keepAspect:boolean = true;
