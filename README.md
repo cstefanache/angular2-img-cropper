@@ -3,6 +3,7 @@
 ### Release 0.5 (pending)
 
  - introduced flag to hide the component file input in order to allow customization
+ - added pinch/zoom feature for touch devices
 
 ###  Release 0.4.5:
  - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)

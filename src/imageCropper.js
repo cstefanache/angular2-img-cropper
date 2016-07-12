@@ -729,17 +729,31 @@ var ImageCropper = (function (_super) {
         this.center.recalculatePosition(bounds);
         this.center.draw(this.ctx);
     };
-    ImageCropper.prototype.onTouchMove = function (e) {
+    ImageCropper.prototype.onTouchMove = function (event) {
         if (this.crop.isImageSet()) {
-            e.preventDefault();
-            if (e.touches.length >= 1) {
-                for (var i = 0; i < e.touches.length; i++) {
-                    var touch = e.touches[i];
+            event.preventDefault();
+            if (event.touches.length === 1) {
+                for (var i = 0; i < event.touches.length; i++) {
+                    var touch = event.touches[i];
                     var touchPosition = ImageCropper.getTouchPos(this.canvas, touch);
                     var cropTouch = new cropTouch_1.CropTouch(touchPosition.x, touchPosition.y, touch.identifier);
                     pointPool_1.PointPool.instance.returnPoint(touchPosition);
                     this.move(cropTouch);
                 }
+            }
+            else if (event.touches.length === 2) {
+                var distance = ((event.touches[0].clientX - event.touches[1].clientX) * (event.touches[0].clientX - event.touches[1].clientX)) +
+                    ((event.touches[0].clientY - event.touches[1].clientY) * (event.touches[0].clientY - event.touches[1].clientY));
+                if (this.previousDistance && this.previousDistance !== distance) {
+                    var increment = distance < this.previousDistance ? 1 : -1;
+                    var bounds = this.getBounds();
+                    bounds.top += increment;
+                    bounds.left += increment;
+                    bounds.right -= increment;
+                    bounds.bottom -= increment;
+                    this.setBounds(bounds);
+                }
+                this.previousDistance = distance;
             }
             this.draw(this.ctx);
         }
@@ -831,15 +845,15 @@ var ImageCropper = (function (_super) {
         marker.setOver(false);
         return false;
     };
-    ImageCropper.prototype.onTouchStart = function () {
+    ImageCropper.prototype.onTouchStart = function (event) {
         if (this.crop.isImageSet()) {
             this.isMouseDown = true;
         }
     };
-    ImageCropper.prototype.onTouchEnd = function (e) {
+    ImageCropper.prototype.onTouchEnd = function (event) {
         if (this.crop.isImageSet()) {
-            for (var i = 0; i < e.changedTouches.length; i++) {
-                var touch = e.changedTouches[i];
+            for (var i = 0; i < event.changedTouches.length; i++) {
+                var touch = event.changedTouches[i];
                 var dragTouch = this.getDragTouchForID(touch.identifier);
                 if (dragTouch != null) {
                     if (dragTouch.dragHandle instanceof cornerMarker_1.CornerMarker || dragTouch.dragHandle instanceof dragMarker_1.DragMarker) {

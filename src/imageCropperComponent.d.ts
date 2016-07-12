@@ -13,7 +13,7 @@ export declare class ImageCropperComponent extends Type {
     constructor(renderer: Renderer);
     ngAfterViewInit(): void;
     onTouchMove(event: any): void;
-    onTouchStart(event: any): void;
+    onTouchStart(event: TouchEvent): void;
     onTouchEnd(event: any): void;
     onMouseDown(): void;
     onMouseUp(): void;

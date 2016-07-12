@@ -66,8 +66,8 @@ export class ImageCropperComponent extends Type {
         this.cropper.onTouchMove(event);
     }
 
-    onTouchStart(event):void {
-        this.cropper.onTouchStart();
+    onTouchStart(event:TouchEvent):void {
+        this.cropper.onTouchStart(event);
     }
 
     onTouchEnd(event):void {

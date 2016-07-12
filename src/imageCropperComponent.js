@@ -39,7 +39,7 @@ var ImageCropperComponent = (function (_super) {
         this.cropper.onTouchMove(event);
     };
     ImageCropperComponent.prototype.onTouchStart = function (event) {
-        this.cropper.onTouchStart();
+        this.cropper.onTouchStart(event);
     };
     ImageCropperComponent.prototype.onTouchEnd = function (event) {
         this.cropper.onTouchEnd(event);

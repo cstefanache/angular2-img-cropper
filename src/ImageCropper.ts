@@ -13,6 +13,7 @@ export class ImageCropper extends ImageCropperModel {
 
     private crop:ImageCropper;
     private cropperSettings:CropperSettings;
+    private previousDistance:number;
 
     constructor(cropperSettings:CropperSettings) {
 
@@ -809,18 +810,34 @@ export class ImageCropper extends ImageCropperModel {
 
     }
 
-
-    onTouchMove(e) {
+    onTouchMove(event:TouchEvent) {
         if (this.crop.isImageSet()) {
-            e.preventDefault();
-            if (e.touches.length >= 1) {
-                for (var i = 0; i < e.touches.length; i++) {
-                    var touch = e.touches[i];
+            event.preventDefault();
+            if (event.touches.length === 1) {
+                for (var i = 0; i < event.touches.length; i++) {
+                    var touch = event.touches[i];
                     var touchPosition = ImageCropper.getTouchPos(this.canvas, touch);
                     var cropTouch = new CropTouch(touchPosition.x, touchPosition.y, touch.identifier);
                     PointPool.instance.returnPoint(touchPosition);
                     this.move(cropTouch);
                 }
+            } else if (event.touches.length === 2) {
+                var distance =
+                    ((event.touches[0].clientX - event.touches[1].clientX) * (event.touches[0].clientX - event.touches[1].clientX)) +
+                    ((event.touches[0].clientY - event.touches[1].clientY) * (event.touches[0].clientY - event.touches[1].clientY));
+                if (this.previousDistance && this.previousDistance !== distance) {
+                    var increment:number = distance < this.previousDistance ? 1 : -1;
+                    var bounds:Bounds = this.getBounds();
+
+                    bounds.top += increment;
+                    bounds.left += increment;
+                    bounds.right -= increment;
+                    bounds.bottom -= increment;
+
+                    this.setBounds(bounds);
+                }
+
+                this.previousDistance = distance;
             }
             this.draw(this.ctx);
         }
@@ -920,16 +937,16 @@ export class ImageCropper extends ImageCropperModel {
         return false;
     }
 
-    onTouchStart() {
+    onTouchStart(event:TouchEvent) {
         if (this.crop.isImageSet()) {
             this.isMouseDown = true;
         }
     }
 
-    onTouchEnd(e) {
+    onTouchEnd(event:TouchEvent) {
         if (this.crop.isImageSet()) {
-            for (var i = 0; i < e.changedTouches.length; i++) {
-                var touch = e.changedTouches[i];
+            for (var i = 0; i < event.changedTouches.length; i++) {
+                var touch = event.changedTouches[i];
                 var dragTouch = this.getDragTouchForID(touch.identifier);
                 if (dragTouch != null) {
                     if (dragTouch.dragHandle instanceof CornerMarker || dragTouch.dragHandle instanceof DragMarker) {

@@ -5,6 +5,7 @@ import { CropperSettings } from "./cropperSettings";
 export declare class ImageCropper extends ImageCropperModel {
     private crop;
     private cropperSettings;
+    private previousDistance;
     constructor(cropperSettings: CropperSettings);
     static sign(x: any): any;
     static getMousePos(canvas: any, evt: any): Point;
@@ -27,14 +28,14 @@ export declare class ImageCropper extends ImageCropperModel {
     getCroppedImage(fillWidth?: number, fillHeight?: number): HTMLImageElement;
     getBounds(): Bounds;
     setBounds(bounds: any): void;
-    onTouchMove(e: any): void;
+    onTouchMove(event: TouchEvent): void;
     onMouseMove(e: any): void;
     move(cropTouch: any): void;
     getDragTouchForID(id: any): any;
     drawCursors(cropTouch: any): void;
     drawCornerCursor(marker: any, x: any, y: any): boolean;
-    onTouchStart(): void;
-    onTouchEnd(e: any): void;
+    onTouchStart(event: TouchEvent): void;
+    onTouchEnd(event: TouchEvent): void;
     drawImageIOSFix(ctx: any, img: any, sx: any, sy: any, sw: any, sh: any, dx: any, dy: any, dw: any, dh: any): void;
     onMouseDown(): void;
     onMouseUp(): void;
