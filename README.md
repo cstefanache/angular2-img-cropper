@@ -1,6 +1,6 @@
 # Changelog
 
-### Release 0.5 (pending)
+### Release 0.5
 
  - introduced flag to hide the component file input in order to allow customization
  - added pinch/zoom feature for touch devices
