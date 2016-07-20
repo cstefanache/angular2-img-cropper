@@ -103,6 +103,7 @@ export class ImageCropperComponent extends Type {
         fileReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
+            that.image.original = image;
             that.image.image = that.cropper.getCroppedImage().src;
             that.onCrop.emit(that.cropper.getCropBounds());
         };
