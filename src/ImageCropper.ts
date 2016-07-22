@@ -671,15 +671,8 @@ export class ImageCropper extends ImageCropperModel {
             trPos = PointPool.instance.borrow(cX + cropW / 2, cY + imageH / 2);
             blPos = PointPool.instance.borrow(cX - cropW / 2, cY - imageH / 2);
             brPos = PointPool.instance.borrow(cX + cropW / 2, cY - imageH / 2);
-        } else if (cropAspect < sourceAspect) {
-            var imageW = Math.min(h / sourceAspect, w);
-            var cropH = imageW * cropAspect;
-            tlPos = PointPool.instance.borrow(cX - imageW / 2, cY + cropH / 2);
-            trPos = PointPool.instance.borrow(cX + imageW / 2, cY + cropH / 2);
-            blPos = PointPool.instance.borrow(cX - imageW / 2, cY - cropH / 2);
-            brPos = PointPool.instance.borrow(cX + imageW / 2, cY - cropH / 2);
         } else {
-            var imageW = Math.min(h, w);
+            var imageW = Math.min(h / sourceAspect, w);
             var cropH = imageW * cropAspect;
             tlPos = PointPool.instance.borrow(cX - imageW / 2, cY + cropH / 2);
             trPos = PointPool.instance.borrow(cX + imageW / 2, cY + cropH / 2);
