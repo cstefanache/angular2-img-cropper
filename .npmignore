@@ -6,7 +6,7 @@ npm-debug.log
 Thumbs.db
 .DS_Store
 /.idea
-/**/*.ts
+!/**/*.ts
 !/**/*.d.ts
 runtime
 typings
