@@ -102,10 +102,7 @@ export class ImageCropperComponent extends Type {
 
         fileReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
-            that.cropper.setImage(image);
-            that.image.original = image;
-            that.image.image = that.cropper.getCroppedImage().src;
-            that.onCrop.emit(that.cropper.getCropBounds());
+            that.setImage(image);
         };
 
         fileReader.readAsDataURL(file);
@@ -113,6 +110,9 @@ export class ImageCropperComponent extends Type {
 
     setImage(image) {
         this.cropper.setImage(image);
+        this.image.original = image;
+        this.image.image = this.cropper.getCroppedImage().src;
+        this.onCrop.emit(this.cropper.getCropBounds());
     }
 
 }

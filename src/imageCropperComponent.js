@@ -68,15 +68,15 @@ var ImageCropperComponent = (function (_super) {
         var that = this;
         fileReader.onloadend = function (loadEvent) {
             image.src = loadEvent.target.result;
-            that.cropper.setImage(image);
-            that.image.original = image;
-            that.image.image = that.cropper.getCroppedImage().src;
-            that.onCrop.emit(that.cropper.getCropBounds());
+            that.setImage(image);
         };
         fileReader.readAsDataURL(file);
     };
     ImageCropperComponent.prototype.setImage = function (image) {
         this.cropper.setImage(image);
+        this.image.original = image;
+        this.image.image = this.cropper.getCroppedImage().src;
+        this.onCrop.emit(this.cropper.getCropBounds());
     };
     __decorate([
         core_1.ViewChild('cropcanvas', undefined), 

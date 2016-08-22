@@ -174,24 +174,19 @@ export class ImageCropper extends ImageCropperModel {
                 this.drawImageIOSFix(ctx, this.srcImage, 0, 0, this.srcImage.width, this.srcImage.height, 0, this.buffer.height / 2 - h / 2, w, h);
             }
             this.buffer.getContext('2d').drawImage(this.canvas, 0, 0, this.canvasWidth, this.canvasHeight);
-            ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
-            ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-
 
             ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
             ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor; //'rgba(255,228,0,1)';
 
             if (!this.cropperSettings.rounded) {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+                ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
                 ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.getWidth(), 1), Math.max(bounds.getHeight(), 1), bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
                 ctx.strokeRect(bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
             } else {
-                ctx.fillStyle = '#fff';
-                ctx.globalCompositeOperation = 'overlay';
                 ctx.beginPath();
                 ctx.arc(bounds.left + bounds.getWidth() / 2, bounds.top + bounds.getHeight() / 2, bounds.getWidth() / 2, 0, Math.PI * 2, true);
                 ctx.closePath();
-                ctx.fill();
-                ctx.globalCompositeOperation = 'source-over';
                 ctx.stroke();
             }
 
