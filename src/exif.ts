@@ -476,8 +476,6 @@ export class Exif {
 
                 return Exif.readIPTCData(file, startOffset, sectionLength);
 
-                break;
-
             }
 
 

@@ -1,5 +1,13 @@
 # Changelog
 
+### Release 0.6.0
+
+ - Parsed EXIF information for image orientation
+ - fixed multiple browser compatibility issues
+ - added accepted files regex
+ - updated to Angular RC5
+
+
 ### Release 0.5.0
 
  - introduced flag to hide the component file input in order to allow customization

@@ -144,7 +144,6 @@ var Exif = (function () {
                 var startOffset = offset + 8 + nameHeaderLength;
                 var sectionLength = dataView.getUint16(offset + 6 + nameHeaderLength);
                 return Exif.readIPTCData(file, startOffset, sectionLength);
-                break;
             }
             offset++;
         }
