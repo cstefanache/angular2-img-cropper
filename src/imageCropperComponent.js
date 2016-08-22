@@ -66,10 +66,10 @@ var ImageCropperComponent = (function (_super) {
         var file = $event.target.files[0];
         var fileReader = new FileReader();
         var that = this;
-        fileReader.onloadend = function (loadEvent) {
+        fileReader.addEventListener('loadend', function (loadEvent) {
             image.src = loadEvent.target.result;
             that.setImage(image);
-        };
+        });
         fileReader.readAsDataURL(file);
     };
     ImageCropperComponent.prototype.setImage = function (image) {

@@ -100,10 +100,10 @@ export class ImageCropperComponent extends Type {
         var fileReader:FileReader = new FileReader();
         var that = this;
 
-        fileReader.onloadend = function (loadEvent:any) {
+        fileReader.addEventListener('loadend', function(loadEvent:any){
             image.src = loadEvent.target.result;
             that.setImage(image);
-        };
+        });
 
         fileReader.readAsDataURL(file);
     }
