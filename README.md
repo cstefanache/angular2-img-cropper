@@ -100,6 +100,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/V91mKCNkBQZB5QO2MUP4/)
 * **cropperDrawSettings**:*CropperDrawSettings* - rendering options
     * **strokeWidth**:*number* - box/ellipsis stroke width
     * **strokeColor**:*string* - box/ellipsis stroke color
+* **allowedFilesRegex**:*RegExp* - (default: /\.(jpe?g|png|gif)$/i) - Regex for allowed images
 
 ## Customizing Image cropper
 

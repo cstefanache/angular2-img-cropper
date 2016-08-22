@@ -18,6 +18,8 @@ export class CropperSettings {
     touchRadius:number = 20;
     noFileInput:boolean = false;
 
+    allowedFilesRegex:RegExp = /\.(jpe?g|png|gif)$/i;
+
     private _rounded:boolean = false;
     private _keepAspect:boolean = true;
 

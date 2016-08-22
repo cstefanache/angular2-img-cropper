@@ -9,6 +9,7 @@ export declare class ImageCropperComponent extends Type {
     cropper: ImageCropper;
     croppedWidth: number;
     croppedHeight: number;
+    intervalRef: number;
     private renderer;
     constructor(renderer: Renderer);
     ngAfterViewInit(): void;

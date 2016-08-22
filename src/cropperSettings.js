@@ -14,6 +14,7 @@ var CropperSettings = (function () {
         this.cropperDrawSettings = new cropperDrawSettings_1.CropperDrawSettings();
         this.touchRadius = 20;
         this.noFileInput = false;
+        this.allowedFilesRegex = /\.(jpe?g|png|gif)$/i;
         this._rounded = false;
         this._keepAspect = true;
     }

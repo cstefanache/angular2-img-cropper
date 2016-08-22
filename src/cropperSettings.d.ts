@@ -12,6 +12,7 @@ export declare class CropperSettings {
     cropperDrawSettings: CropperDrawSettings;
     touchRadius: number;
     noFileInput: boolean;
+    allowedFilesRegex: RegExp;
     private _rounded;
     private _keepAspect;
     rounded: boolean;

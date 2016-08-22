@@ -6,7 +6,7 @@ import {CropperSettings} from "./cropperSettings";
     selector: 'img-cropper',
     template: `
     <span class="ng2-imgcrop">
-      <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)">
+      <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)" >
       <canvas #cropcanvas
               (mousedown)="onMouseDown($event)"
               (mouseup)="onMouseUp($event)"
@@ -37,6 +37,8 @@ export class ImageCropperComponent extends Type {
 
     croppedWidth:number;
     croppedHeight:number;
+
+    intervalRef:number;
 
     private renderer:Renderer;
 
@@ -95,24 +97,37 @@ export class ImageCropperComponent extends Type {
     }
 
     fileChangeListener($event) {
-        var image:any = new Image();
         var file:File = $event.target.files[0];
-        var fileReader:FileReader = new FileReader();
-        var that = this;
+        if (this.settings.allowedFilesRegex.test(file.name)) {
+            var image:any = new Image();
+            var fileReader:FileReader = new FileReader();
+            var that = this;
 
-        fileReader.addEventListener('loadend', function(loadEvent:any){
-            image.src = loadEvent.target.result;
-            that.setImage(image);
-        });
+            fileReader.addEventListener('loadend', function (loadEvent:any) {
+                image.src = loadEvent.target.result;
+                that.setImage(image);
+            });
 
-        fileReader.readAsDataURL(file);
+            fileReader.readAsDataURL(file);
+        }
     }
 
     setImage(image) {
-        this.cropper.setImage(image);
-        this.image.original = image;
-        this.image.image = this.cropper.getCroppedImage().src;
-        this.onCrop.emit(this.cropper.getCropBounds());
+        var self = this;
+        if (this.intervalRef) {
+            clearInterval(this.intervalRef);
+        }
+
+        this.intervalRef = setInterval(function () {
+            if (image.naturalHeight > 0) {
+                clearInterval(this.intervalRef);
+                self.cropper.setImage(image);
+                self.image.original = image;
+                self.image.image = self.cropper.getCroppedImage().src;
+                self.onCrop.emit(self.cropper.getCropBounds());
+            }
+        }, 50);
+
     }
 
 }

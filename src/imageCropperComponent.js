@@ -62,21 +62,32 @@ var ImageCropperComponent = (function (_super) {
         this.cropper.onMouseMove(event);
     };
     ImageCropperComponent.prototype.fileChangeListener = function ($event) {
-        var image = new Image();
         var file = $event.target.files[0];
-        var fileReader = new FileReader();
-        var that = this;
-        fileReader.addEventListener('loadend', function (loadEvent) {
-            image.src = loadEvent.target.result;
-            that.setImage(image);
-        });
-        fileReader.readAsDataURL(file);
+        if (this.settings.allowedFilesRegex.test(file.name)) {
+            var image = new Image();
+            var fileReader = new FileReader();
+            var that = this;
+            fileReader.addEventListener('loadend', function (loadEvent) {
+                image.src = loadEvent.target.result;
+                that.setImage(image);
+            });
+            fileReader.readAsDataURL(file);
+        }
     };
     ImageCropperComponent.prototype.setImage = function (image) {
-        this.cropper.setImage(image);
-        this.image.original = image;
-        this.image.image = this.cropper.getCroppedImage().src;
-        this.onCrop.emit(this.cropper.getCropBounds());
+        var self = this;
+        if (this.intervalRef) {
+            clearInterval(this.intervalRef);
+        }
+        this.intervalRef = setInterval(function () {
+            if (image.naturalHeight > 0) {
+                clearInterval(this.intervalRef);
+                self.cropper.setImage(image);
+                self.image.original = image;
+                self.image.image = self.cropper.getCroppedImage().src;
+                self.onCrop.emit(self.cropper.getCropBounds());
+            }
+        }, 50);
     };
     __decorate([
         core_1.ViewChild('cropcanvas', undefined), 
@@ -101,7 +112,7 @@ var ImageCropperComponent = (function (_super) {
     ImageCropperComponent = __decorate([
         core_1.Component({
             selector: 'img-cropper',
-            template: "\n    <span class=\"ng2-imgcrop\">\n      <input *ngIf=\"!settings.noFileInput\" type=\"file\" (change)=\"fileChangeListener($event)\">\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\"\n              (touchstart)=\"onTouchStart($event)\">\n      </canvas>\n    </span>\n  "
+            template: "\n    <span class=\"ng2-imgcrop\">\n      <input *ngIf=\"!settings.noFileInput\" type=\"file\" (change)=\"fileChangeListener($event)\" >\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\"\n              (touchstart)=\"onTouchStart($event)\">\n      </canvas>\n    </span>\n  "
         }), 
         __metadata('design:paramtypes', [core_1.Renderer])
     ], ImageCropperComponent);
