@@ -101,7 +101,7 @@ export class ImageCropper extends ImageCropperModel {
     }
 
     static detectVerticalSquash(img) {
-        var iw = img.naturalWidth, ih = img.naturalHeight;
+        var ih = img.height;
         var canvas = document.createElement('canvas');
         canvas.width = 1;
         canvas.height = ih;
@@ -609,12 +609,12 @@ export class ImageCropper extends ImageCropperModel {
         return this.imageSet;
     }
 
-    setImage(img) {
+    setImage(img:any) {
         if (!img) {
             throw "Image is null";
         }
 
-
+        this.srcImage = img;
         this.imageSet = true;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
@@ -629,7 +629,6 @@ export class ImageCropper extends ImageCropperModel {
         //TODO: investigate better solution
         //this.fileType = img.src.match(/^data:.+\/(.+);base64,(.*)$/)[1];
 
-        this.srcImage = img;
 
         if (this.cropperSettings.minWithRelativeToResolution) {
             this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);

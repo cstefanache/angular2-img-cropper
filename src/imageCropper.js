@@ -88,7 +88,7 @@ var ImageCropper = (function (_super) {
         return pointPool_1.PointPool.instance.borrow(touch.clientX - rect.left, touch.clientY - rect.top);
     };
     ImageCropper.detectVerticalSquash = function (img) {
-        var iw = img.naturalWidth, ih = img.naturalHeight;
+        var ih = img.height;
         var canvas = document.createElement('canvas');
         canvas.width = 1;
         canvas.height = ih;
@@ -562,6 +562,7 @@ var ImageCropper = (function (_super) {
         if (!img) {
             throw "Image is null";
         }
+        this.srcImage = img;
         this.imageSet = true;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var bufferContext = this.buffer.getContext('2d');
@@ -571,7 +572,6 @@ var ImageCropper = (function (_super) {
         if (fileType == 'png' || fileType == 'jpg') {
             this.fileType = fileType;
         }
-        this.srcImage = img;
         if (this.cropperSettings.minWithRelativeToResolution) {
             this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);
             this.minHeight = (this.canvas.height * this.minHeight / this.srcImage.height);

@@ -21,4 +21,5 @@ export declare class ImageCropperComponent extends Type {
     onMouseMove(event: any): void;
     fileChangeListener($event: any): void;
     setImage(image: any): void;
+    private getOrientedImage(image, callback);
 }

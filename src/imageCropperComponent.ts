@@ -1,6 +1,7 @@
 import {Component, Input, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type} from '@angular/core';
 import {ImageCropper} from "./imageCropper";
 import {CropperSettings} from "./cropperSettings";
+import {Exif} from "./exif";
 
 @Component({
     selector: 'img-cropper',
@@ -112,22 +113,76 @@ export class ImageCropperComponent extends Type {
         }
     }
 
+
     setImage(image) {
         var self = this;
-        if (this.intervalRef) {
-            clearInterval(this.intervalRef);
-        }
 
         this.intervalRef = setInterval(function () {
-            if (image.naturalHeight > 0) {
+            if (this.intervalRef) {
                 clearInterval(this.intervalRef);
-                self.cropper.setImage(image);
-                self.image.original = image;
-                self.image.image = self.cropper.getCroppedImage().src;
-                self.onCrop.emit(self.cropper.getCropBounds());
             }
-        }, 50);
+            if (image.naturalHeight > 0) {
 
+                image.height = image.naturalHeight;
+                image.width = image.naturalWidth;
+
+                clearInterval(self.intervalRef);
+                self.getOrientedImage(image, function (img) {
+                    self.cropper.setImage(img);
+                    self.image.original = img;
+                    self.image.image = self.cropper.getCroppedImage().src;
+                    self.onCrop.emit(self.cropper.getCropBounds());
+                });
+            }
+        }, 10);
+
+    }
+
+    private getOrientedImage(image, callback) {
+        var img:any;
+
+        Exif.getData(image, function () {
+            var orientation = Exif.getTag(image, 'Orientation');
+
+            if ([3, 6, 8].indexOf(orientation) > -1) {
+                var canvas:HTMLCanvasElement = document.createElement("canvas"),
+                    ctx:CanvasRenderingContext2D = canvas.getContext("2d"),
+                    cw:number = image.width, ch:number = image.height, cx:number = 0, cy:number = 0, deg:number = 0;
+                switch (orientation) {
+                    case 3:
+                        cx = -image.width;
+                        cy = -image.height;
+                        deg = 180;
+                        break;
+                    case 6:
+                        cw = image.height;
+                        ch = image.width;
+                        cy = -image.height;
+                        deg = 90;
+                        break;
+                    case 8:
+                        cw = image.height;
+                        ch = image.width;
+                        cx = -image.width;
+                        deg = 270;
+                        break;
+                }
+
+                canvas.width = cw;
+                canvas.height = ch;
+                ctx.rotate(deg * Math.PI / 180);
+                ctx.drawImage(image, cx, cy);
+                img = document.createElement("img");
+                img.width = cw;
+                img.height = ch;
+                img.src = canvas.toDataURL("image/png");
+
+            } else {
+                img = image;
+            }
+
+            callback(img);
+        });
     }
 
 }
