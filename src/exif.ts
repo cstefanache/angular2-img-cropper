@@ -361,7 +361,7 @@ export class Exif {
 
             } else if (/^blob\:/i.test(img.src)) { // Object URL
                 var fileReader = new FileReader();
-                fileReader.onload = function (e) {
+                fileReader.onload = function (e:any) {
                     handleBinaryFile(e.target.result);
                 };
                 Exif.objectURLToBlob(img.src, function (blob) {
@@ -383,7 +383,7 @@ export class Exif {
             }
         } else if (FileReader && (img instanceof Blob || img instanceof File)) {
             var fileReader = new FileReader();
-            fileReader.onload = function (e) {
+            fileReader.onload = function (e:any) {
                 if (Exif.debug) console.log("Got file of length " + e.target.result.byteLength);
                 handleBinaryFile(e.target.result);
             };
