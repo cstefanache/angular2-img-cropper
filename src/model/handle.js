@@ -2,7 +2,6 @@
 var point_1 = require('./point');
 var Handle = (function () {
     function Handle(x, y, radius, cropperSettings) {
-        this.cropperSettings = cropperSettings;
         this.over = false;
         this.drag = false;
         this.position = new point_1.Point(x, y);

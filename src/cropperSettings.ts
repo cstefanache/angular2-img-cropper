@@ -1,5 +1,7 @@
 import {CropperDrawSettings} from "./cropperDrawSettings";
+
 export class CropperSettings {
+
     public canvasWidth: number = 300;
     public canvasHeight: number = 300;
 

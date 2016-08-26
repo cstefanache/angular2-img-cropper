@@ -6,6 +6,7 @@ import {DragMarker} from "./model/dragMarker";
 import {ImageCropperModel} from "./model/imageCropperModel";
 import {ImageCropperDataShare} from "./imageCropperDataShare";
 import {PointPool} from "./model/pointPool";
+import {Point} from "./model/point";
 
 export class ImageCropper extends ImageCropperModel {
 
@@ -80,24 +81,24 @@ export class ImageCropper extends ImageCropperModel {
         this.cropHeight = croppedHeight;
     }
 
-    static sign(x) {
+    private static sign(x): number {
         if (+x === x) {
             return (x === 0) ? x : (x > 0) ? 1 : -1;
         }
         return NaN;
     }
 
-    static getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
+    private static getMousePos(canvas, evt): Point {
+        let rect = canvas.getBoundingClientRect();
         return PointPool.instance.borrow(evt.clientX - rect.left, evt.clientY - rect.top);
     }
 
-    static getTouchPos(canvas, touch) {
-        var rect = canvas.getBoundingClientRect();
+    private static getTouchPos(canvas, touch): Point {
+        let rect = canvas.getBoundingClientRect();
         return PointPool.instance.borrow(touch.clientX - rect.left, touch.clientY - rect.top);
     }
 
-    static detectVerticalSquash(img) {
+    private static detectVerticalSquash(img) {
         var ih = img.height;
         var canvas = document.createElement('canvas');
         canvas.width = 1;
