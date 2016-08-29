@@ -14,8 +14,8 @@ var Exif = (function () {
         return !!(img.exifdata);
     };
     Exif.base64ToArrayBuffer = function (base64, contentType) {
-        contentType = contentType || base64.match(/^data\:([^\;]+)\;base64,/mi)[1] || '';
-        base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, '');
+        contentType = contentType || base64.match(/^data\:([^\;]+)\;base64,/mi)[1] || "";
+        base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, "");
         var binary = atob(base64);
         var len = binary.length;
         var buffer = new ArrayBuffer(len);
@@ -52,35 +52,36 @@ var Exif = (function () {
                 handleBinaryFile(arrayBuffer);
             }
             else if (/^blob\:/i.test(img.src)) {
-                var fileReader = new FileReader();
-                fileReader.onload = function (e) {
+                var fileReader_1 = new FileReader();
+                fileReader_1.onload = function (e) {
                     handleBinaryFile(e.target.result);
                 };
                 Exif.objectURLToBlob(img.src, function (blob) {
-                    fileReader.readAsArrayBuffer(blob);
+                    fileReader_1.readAsArrayBuffer(blob);
                 });
             }
             else {
-                var http = new XMLHttpRequest();
-                http.onload = function () {
-                    if (this.status == 200 || this.status === 0) {
-                        handleBinaryFile(http.response);
+                var http_1 = new XMLHttpRequest();
+                http_1.onload = function () {
+                    if (this.status === 200 || this.status === 0) {
+                        handleBinaryFile(http_1.response);
                     }
                     else {
                         throw "Could not load image";
                     }
-                    http = null;
+                    http_1 = null;
                 };
-                http.open("GET", img.src, true);
-                http.responseType = "arraybuffer";
-                http.send(null);
+                http_1.open("GET", img.src, true);
+                http_1.responseType = "arraybuffer";
+                http_1.send(null);
             }
         }
         else if (FileReader && (img instanceof Blob || img instanceof File)) {
             var fileReader = new FileReader();
             fileReader.onload = function (e) {
-                if (Exif.debug)
+                if (Exif.debug) {
                     console.log("Got file of length " + e.target.result.byteLength);
+                }
                 handleBinaryFile(e.target.result);
             };
             fileReader.readAsArrayBuffer(img);
@@ -88,26 +89,31 @@ var Exif = (function () {
     };
     Exif.findEXIFinJPEG = function (file) {
         var dataView = new DataView(file);
-        if (Exif.debug)
+        if (Exif.debug) {
             console.log("Got file of length " + file.byteLength);
-        if ((dataView.getUint8(0) != 0xFF) || (dataView.getUint8(1) != 0xD8)) {
-            if (Exif.debug)
+        }
+        if ((dataView.getUint8(0) !== 0xFF) || (dataView.getUint8(1) != 0xD8)) {
+            if (Exif.debug) {
                 console.log("Not a valid JPEG");
+            }
             return false;
         }
         var offset = 2, length = file.byteLength, marker;
         while (offset < length) {
-            if (dataView.getUint8(offset) != 0xFF) {
-                if (Exif.debug)
+            if (dataView.getUint8(offset) !== 0xFF) {
+                if (Exif.debug) {
                     console.log("Not a valid marker at offset " + offset + ", found: " + dataView.getUint8(offset));
+                }
                 return false;
             }
             marker = dataView.getUint8(offset + 1);
-            if (Exif.debug)
+            if (Exif.debug) {
                 console.log(marker);
-            if (marker == 225) {
-                if (Exif.debug)
+            }
+            if (marker === 225) {
+                if (Exif.debug) {
                     console.log("Found 0xFFE1 marker");
+                }
                 return Exif.readEXIFData(dataView, offset + 4);
             }
             else {
@@ -117,14 +123,17 @@ var Exif = (function () {
     };
     Exif.findIPTCinJPEG = function (file) {
         var dataView = new DataView(file);
-        if (Exif.debug)
+        if (Exif.debug) {
             console.log("Got file of length " + file.byteLength);
+        }
         if ((dataView.getUint8(0) != 0xFF) || (dataView.getUint8(1) != 0xD8)) {
-            if (Exif.debug)
+            if (Exif.debug) {
                 console.log("Not a valid JPEG");
+            }
             return false;
         }
-        var offset = 2, length = file.byteLength;
+        var offset = 2;
+        var length = file.byteLength;
         var isFieldSegmentStart = function (dataView, offset) {
             return (dataView.getUint8(offset) === 0x38 &&
                 dataView.getUint8(offset + 1) === 0x42 &&
@@ -136,8 +145,9 @@ var Exif = (function () {
         while (offset < length) {
             if (isFieldSegmentStart(dataView, offset)) {
                 var nameHeaderLength = dataView.getUint8(offset + 7);
-                if (nameHeaderLength % 2 !== 0)
+                if (nameHeaderLength % 2 !== 0) {
                     nameHeaderLength += 1;
+                }
                 if (nameHeaderLength === 0) {
                     nameHeaderLength = 4;
                 }
@@ -156,10 +166,10 @@ var Exif = (function () {
         while (segmentStartPos < startOffset + sectionLength) {
             if (dataView.getUint8(segmentStartPos) === 0x1C && dataView.getUint8(segmentStartPos + 1) === 0x02) {
                 segmentType = dataView.getUint8(segmentStartPos + 2);
-                if (segmentType in Exif.iptcFieldMap) {
+                if (segmentType in Exif.IptcFieldMap) {
                     dataSize = dataView.getInt16(segmentStartPos + 3);
                     segmentSize = dataSize + 5;
-                    fieldName = Exif.iptcFieldMap[segmentType];
+                    fieldName = Exif.IptcFieldMap[segmentType];
                     fieldValue = Exif.getStringFromDB(dataView, segmentStartPos + 5, dataSize);
                     if (data.hasOwnProperty(fieldName)) {
                         if (data[fieldName] instanceof Array) {
@@ -430,7 +440,7 @@ var Exif = (function () {
         0x7A: "captionWriter",
         0x69: "headline",
         0x74: "copyright",
-        0x0F: "category",
+        0x0F: "category"
     };
     Exif.Tags = {
         0x9000: "ExifVersion",

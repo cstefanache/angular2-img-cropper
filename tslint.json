@@ -4,21 +4,10 @@
     "no-constructor-vars": true,
     "ordered-imports": false,
     "member-ordering": false,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "never",
-        "singleline": "never"
-      }
-    ],
-    "variable-name": [
-      true,
-      "check-format",
-      "allow-leading-underscore",
-      "ban-keywords",
-      "allow-pascal-case"
-    ]
+    "variable-name": false,
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "trailing-comma": [true, { "multiline": "never", "singleline": "never" }]
   },
-  "rulesDirectory": [
-  ]
+  "rulesDirectory": []
 }
