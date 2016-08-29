@@ -13,7 +13,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var imageCropper_1 = require("./imageCropper");
 var cropperSettings_1 = require("./cropperSettings");
 var exif_1 = require("./exif");
@@ -135,13 +135,9 @@ var ImageCropperComponent = (function (_super) {
         });
     };
     __decorate([
-        core_1.ViewChild('cropcanvas', undefined), 
+        core_1.ViewChild("cropcanvas", undefined), 
         __metadata('design:type', core_1.ElementRef)
     ], ImageCropperComponent.prototype, "cropcanvas", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', core_1.EventEmitter)
-    ], ImageCropperComponent.prototype, "onCrop", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', cropperSettings_1.CropperSettings)
@@ -154,9 +150,13 @@ var ImageCropperComponent = (function (_super) {
         core_1.Input(), 
         __metadata('design:type', imageCropper_1.ImageCropper)
     ], ImageCropperComponent.prototype, "cropper", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], ImageCropperComponent.prototype, "onCrop", void 0);
     ImageCropperComponent = __decorate([
         core_1.Component({
-            selector: 'img-cropper',
+            selector: "img-cropper",
             template: "\n    <span class=\"ng2-imgcrop\">\n      <input *ngIf=\"!settings.noFileInput\" type=\"file\" (change)=\"fileChangeListener($event)\" >\n      <canvas #cropcanvas\n              (mousedown)=\"onMouseDown($event)\"\n              (mouseup)=\"onMouseUp($event)\"\n              (mousemove)=\"onMouseMove($event)\"\n              (touchmove)=\"onTouchMove($event)\"\n              (touchend)=\"onTouchEnd($event)\"\n              (touchstart)=\"onTouchStart($event)\">\n      </canvas>\n    </span>\n  "
         }), 
         __metadata('design:paramtypes', [core_1.Renderer])

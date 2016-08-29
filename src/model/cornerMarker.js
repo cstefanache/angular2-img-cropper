@@ -39,7 +39,8 @@ var CornerMarker = (function (_super) {
         ctx.lineJoin = "miter";
         ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
-        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y + (sideLength * vDirection));
+        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y +
+            (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
@@ -63,11 +64,12 @@ var CornerMarker = (function (_super) {
         ctx.beginPath();
         ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
-        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y + (sideLength * vDirection));
+        ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y +
+            (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(0,0,0,1)';
+        ctx.fillStyle = "rgba(0,0,0,1)";
         ctx.fill();
     };
     CornerMarker.prototype.moveX = function (x) {

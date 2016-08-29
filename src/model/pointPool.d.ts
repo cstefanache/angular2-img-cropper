@@ -1,4 +1,4 @@
-import { Point } from './point';
+import { Point } from "./point";
 export declare class PointPool {
     private static _instance;
     private borrowed;

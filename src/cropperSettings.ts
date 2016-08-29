@@ -1,29 +1,31 @@
 import {CropperDrawSettings} from "./cropperDrawSettings";
+
 export class CropperSettings {
-    canvasWidth:number = 300;
-    canvasHeight:number = 300;
 
-    width:number = 200;
-    height:number = 200;
+    public canvasWidth: number = 300;
+    public canvasHeight: number = 300;
 
-    minWidth:number = 50;
-    minHeight:number = 50;
-    minWithRelativeToResolution:boolean = true;
+    public width: number = 200;
+    public height: number = 200;
 
-    croppedWidth:number = 100;
-    croppedHeight:number = 100;
+    public minWidth: number = 50;
+    public minHeight: number = 50;
+    public minWithRelativeToResolution: boolean = true;
+
+    public croppedWidth: number = 100;
+    public croppedHeight: number = 100;
 
 
-    cropperDrawSettings:CropperDrawSettings = new CropperDrawSettings();
-    touchRadius:number = 20;
-    noFileInput:boolean = false;
+    public cropperDrawSettings: CropperDrawSettings = new CropperDrawSettings();
+    public touchRadius: number = 20;
+    public noFileInput: boolean = false;
 
-    allowedFilesRegex:RegExp = /\.(jpe?g|png|gif)$/i;
+    public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif)$/i;
 
-    private _rounded:boolean = false;
-    private _keepAspect:boolean = true;
+    private _rounded: boolean = false;
+    private _keepAspect: boolean = true;
 
-    set rounded(val:boolean) {
+    set rounded(val: boolean) {
         this._rounded = val;
         if (val) {
             this._keepAspect = true;
@@ -34,7 +36,7 @@ export class CropperSettings {
         return this._rounded;
     }
 
-    set keepAspect(val:boolean) {
+    set keepAspect(val: boolean) {
         if (val === false && this._rounded) {
             throw new Error("Cannot set keep aspect to false on rounded cropper. Ellipsis not supported");
         }
@@ -42,7 +44,7 @@ export class CropperSettings {
         this._keepAspect = val;
     }
 
-    get keepAspect() {
+    get keepAspect(): boolean {
         return this._keepAspect;
     }
 

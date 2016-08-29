@@ -1,15 +1,13 @@
-import { Renderer, ElementRef, EventEmitter, Type } from '@angular/core';
-import { ImageCropper } from "./imageCropper";
-import { CropperSettings } from "./cropperSettings";
+import { Renderer, Type } from "@angular/core";
 export declare class ImageCropperComponent extends Type {
-    cropcanvas: ElementRef;
-    onCrop: EventEmitter<any>;
-    settings: CropperSettings;
-    image: any;
-    cropper: ImageCropper;
-    croppedWidth: number;
-    croppedHeight: number;
-    intervalRef: number;
+    private cropcanvas;
+    private settings;
+    private image;
+    private cropper;
+    private onCrop;
+    private croppedWidth;
+    private croppedHeight;
+    private intervalRef;
     private renderer;
     constructor(renderer: Renderer);
     ngAfterViewInit(): void;

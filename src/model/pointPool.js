@@ -1,5 +1,5 @@
 "use strict";
-var point_1 = require('./point');
+var point_1 = require("./point");
 var PointPool = (function () {
     function PointPool(initialSize) {
         PointPool._instance = this;

@@ -382,6 +382,7 @@ var Exif = (function () {
             return;
         return img.exifdata[tag];
     };
+    ;
     Exif.getAllTags = function (img) {
         if (!Exif.imageHasData(img))
             return {};
@@ -393,6 +394,7 @@ var Exif = (function () {
         }
         return tags;
     };
+    ;
     Exif.pretty = function (img) {
         if (!Exif.imageHasData(img))
             return "";

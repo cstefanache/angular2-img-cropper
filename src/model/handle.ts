@@ -3,13 +3,16 @@ import {CropperSettings} from "../cropperSettings";
 
 export class Handle {
 
-    over:Boolean;
-    drag:Boolean;
-    position:Point;
-    offset:Point;
-    radius:number;
+    public over: boolean;
+    public drag: boolean;
+    public position: Point;
+    public offset: Point;
+    public radius: number;
 
-    constructor(x, y, radius, protected cropperSettings:CropperSettings) {
+    protected cropperSettings: CropperSettings;
+
+
+    constructor(x, y, radius, cropperSettings) {
         this.over = false;
         this.drag = false;
         this.position = new Point(x, y);
@@ -17,31 +20,31 @@ export class Handle {
         this.radius = radius;
     }
 
-    setDrag(value) {
+    public setDrag(value) {
         this.drag = value;
         this.setOver(value);
     }
 
-    draw(ctx) {
+    public draw(ctx) {
     }
 
-    setOver(over) {
+    public setOver(over) {
         this.over = over;
     }
 
-    touchInBounds(x, y) {
+    public touchInBounds(x, y) {
         return (
-            x > this.position.x - this.radius + this.offset.x &&
-            x < this.position.x + this.radius + this.offset.x &&
-            y > this.position.y - this.radius + this.offset.y &&
-            y < this.position.y + this.radius + this.offset.y );
+        x > this.position.x - this.radius + this.offset.x &&
+        x < this.position.x + this.radius + this.offset.x &&
+        y > this.position.y - this.radius + this.offset.y &&
+        y < this.position.y + this.radius + this.offset.y );
     }
 
-    getPosition() {
+    public getPosition() {
         return this.position;
     }
 
-    setPosition(x, y) {
+    public setPosition(x, y) {
         this.position.x = x;
         this.position.y = y;
     }
