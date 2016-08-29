@@ -8,6 +8,7 @@
   },
   "scripts": {
     "prepublish": "tsc",
+    "postinstall": "typings install",
     "all": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "watch": "tsc -w ",
     "lite": "lite-server"
