@@ -30,7 +30,7 @@ export class ImageCropperModel {
     protected ctx: any;
     protected aspectRatio: number;
     protected currentlyInteracting: boolean;
-    protected srcImage: ImageData;
+    protected srcImage: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement;
     protected vertSquashRatio: number;
     protected minXClamp: number;
     protected minYClamp: number;

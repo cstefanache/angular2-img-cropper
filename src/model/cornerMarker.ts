@@ -106,7 +106,7 @@ export class CornerMarker extends Handle {
         return this.verticalNeighbour;
     }
 
-    public draw(ctx: any): void {
+    public draw(ctx: CanvasRenderingContext2D): void {
         this.drawCornerFill(ctx);
         this.drawCornerBorder(ctx);
     }

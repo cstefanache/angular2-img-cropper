@@ -1,8 +1,13 @@
+import {DragMarker} from "./dragMarker";
+import {CornerMarker} from "./cornerMarker";
+
 export class CropTouch {
 
-    private x: number;
-    private y: number;
-    private id: number;
+    public x: number;
+    public y: number;
+    public id: number;
+
+    public dragHandle: CornerMarker | DragMarker;
 
     constructor(x: number, y: number, id: number) {
         if (x === void 0) {

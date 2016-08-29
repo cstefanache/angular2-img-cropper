@@ -7,9 +7,9 @@ export class PointPool {
     private borrowed: number;
     private firstAvailable: Point;
 
-    constructor(initialSize) {
+    constructor(initialSize: number) {
         PointPool._instance = this;
-        let prev = null;
+        let prev: Point = null;
         for (let i = 0; i < initialSize; i++) {
             if (i === 0) {
                 this.firstAvailable = new Point();
@@ -26,7 +26,7 @@ export class PointPool {
         return PointPool._instance;
     }
 
-    public borrow(x, y): Point {
+    public borrow(x: number, y: number): Point {
         if (this.firstAvailable == null) {
             throw "Pool exhausted";
         }

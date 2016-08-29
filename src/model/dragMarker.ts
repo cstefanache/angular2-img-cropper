@@ -2,6 +2,7 @@ import {Handle} from "./handle";
 import {PointPool} from "./pointPool";
 import {Point} from "./point";
 import {CropperSettings} from "../cropperSettings";
+import {Bounds} from "./bounds";
 
 export class DragMarker extends Handle {
 
@@ -16,7 +17,7 @@ export class DragMarker extends Handle {
         this.getDragIconPoints(this.scaledIconPoints, 1.2);
     }
 
-    public draw(ctx) {
+    public draw(ctx: CanvasRenderingContext2D) {
         if (this.over || this.drag) {
             this.drawIcon(ctx, this.scaledIconPoints);
         } else {
@@ -56,7 +57,7 @@ export class DragMarker extends Handle {
         arr.push(PointPool.instance.borrow(-connectorThroat / 2, connectorThroat / 2));
     }
 
-    public drawIcon(ctx: any, points: Array<Point>) {
+    public drawIcon(ctx: CanvasRenderingContext2D, points: Array<Point>) {
         ctx.beginPath();
         ctx.moveTo(points[0].x + this.position.x, points[0].y + this.position.y);
         for (let k = 0; k < points.length; k++) {
@@ -68,9 +69,8 @@ export class DragMarker extends Handle {
         ctx.fill();
     }
 
-    public recalculatePosition(bounds) {
-
-        let  c = bounds.getCentre();
+    public recalculatePosition(bounds: Bounds) {
+        let c = bounds.getCentre();
         this.setPosition(c.x, c.y);
         PointPool.instance.returnPoint(c);
     }

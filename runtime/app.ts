@@ -3,10 +3,8 @@ import {ImageCropperComponent, CropperSettings, Bounds} from "../index";
 
 @Component({
     selector: "test-app",
-    template: require("./app.html"),
-    styles: [
-        require("./app.scss")
-    ],
+    templateUrl: "./app.html",
+    styleUrls: [ "./app.css" ],
     directives: [
         ImageCropperComponent
     ]

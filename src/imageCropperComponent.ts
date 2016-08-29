@@ -58,7 +58,7 @@ export class ImageCropperComponent extends Type {
         this.cropper.prepare(canvas);
     }
 
-    public onTouchMove(event): void {
+    public onTouchMove(event: TouchEvent): void {
         this.cropper.onTouchMove(event);
     }
 
@@ -66,7 +66,7 @@ export class ImageCropperComponent extends Type {
         this.cropper.onTouchStart(event);
     }
 
-    public onTouchEnd(event): void {
+    public onTouchEnd(event: TouchEvent): void {
         this.cropper.onTouchEnd(event);
         if (this.cropper.isImageSet()) {
             this.image.image = this.cropper.getCroppedImage().src;
@@ -86,11 +86,11 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    public onMouseMove(event): void {
+    public onMouseMove(event: MouseEvent): void {
         this.cropper.onMouseMove(event);
     }
 
-    public fileChangeListener($event) {
+    public fileChangeListener($event: any) {
         let file: File = $event.target.files[0];
         if (this.settings.allowedFilesRegex.test(file.name)) {
             let image: any = new Image();
@@ -106,7 +106,7 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    public setImage(image) {
+    public setImage(image: HTMLImageElement) {
         let self = this;
 
         this.intervalRef = setInterval(function () {
@@ -119,7 +119,7 @@ export class ImageCropperComponent extends Type {
                 image.width = image.naturalWidth;
 
                 clearInterval(self.intervalRef);
-                self.getOrientedImage(image, function (img) {
+                self.getOrientedImage(image, function (img: HTMLImageElement) {
                     self.cropper.setImage(img);
                     self.image.original = img;
                     self.image.image = self.cropper.getCroppedImage().src;
@@ -130,7 +130,7 @@ export class ImageCropperComponent extends Type {
 
     }
 
-    private getOrientedImage(image, callback) {
+    private getOrientedImage(image: HTMLImageElement, callback: Function) {
         let img: any;
 
         Exif.getData(image, function () {
