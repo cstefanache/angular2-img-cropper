@@ -1,32 +1,29 @@
 export class Point {
 
-    public x:number;
-    public y:number;
+    public x: number;
+    public y: number;
 
-    private _next:Point;
-    private _prev:Point;
+    private _next: Point;
+    private _prev: Point;
 
-
-    constructor(x?:number, y?:number) {
+    constructor(x?: number, y?: number) {
         this.x = x;
         this.y = y;
     }
 
-    getNext():Point {
+    public getNext(): Point {
         return this._next;
     }
 
-    setNext(p:Point) {
+    public setNext(p: Point) {
         this._next = p;
     }
 
-    getPrev():Point {
+    public getPrev(): Point {
         return this._prev;
     }
 
-    setPrev(p:Point) {
+    public setPrev(p: Point) {
         this._prev = p;
     }
-
-
 }

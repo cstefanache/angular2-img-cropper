@@ -1,4 +1,11 @@
 /typings
+/dist
+src/**/*.js.map
+src/**/*.d.ts
+src/**/*.js
+index.js.map
+index.d.ts
+index.js
 #################
 ## Misc
 #################

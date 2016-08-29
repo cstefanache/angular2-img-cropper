@@ -1,10 +1,10 @@
-import {Component, Input, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type} from '@angular/core';
+import {Component, Input, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type} from "@angular/core";
 import {ImageCropper} from "./imageCropper";
 import {CropperSettings} from "./cropperSettings";
 import {Exif} from "./exif";
 
 @Component({
-    selector: 'img-cropper',
+    selector: "img-cropper",
     template: `
     <span class="ng2-imgcrop">
       <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)" >
@@ -21,35 +21,28 @@ import {Exif} from "./exif";
 })
 export class ImageCropperComponent extends Type {
 
-    @ViewChild('cropcanvas', undefined)
-    cropcanvas:ElementRef;
+    @ViewChild("cropcanvas", undefined) private cropcanvas: ElementRef;
 
+    @Input() private settings: CropperSettings;
+    @Input() private image: any;
+    @Input() private cropper: ImageCropper;
 
-    @Output() onCrop:EventEmitter<any> = new EventEmitter();
+    @Output() private onCrop: EventEmitter<any> = new EventEmitter();
 
-    @Input()
-    settings:CropperSettings;
+    private croppedWidth: number;
+    private croppedHeight: number;
 
-    @Input()
-    image:any;
+    private intervalRef: number;
 
-    @Input()
-    cropper:ImageCropper;
+    private renderer: Renderer;
 
-    croppedWidth:number;
-    croppedHeight:number;
-
-    intervalRef:number;
-
-    private renderer:Renderer;
-
-    constructor(renderer:Renderer) {
+    constructor(renderer: Renderer) {
         super();
         this.renderer = renderer;
     }
 
     ngAfterViewInit() {
-        var canvas:any = this.cropcanvas.nativeElement;
+        let canvas: any = this.cropcanvas.nativeElement;
 
         if (!this.settings) {
             this.settings = new CropperSettings();
@@ -65,15 +58,15 @@ export class ImageCropperComponent extends Type {
         this.cropper.prepare(canvas);
     }
 
-    onTouchMove(event):void {
+    onTouchMove(event): void {
         this.cropper.onTouchMove(event);
     }
 
-    onTouchStart(event:TouchEvent):void {
+    onTouchStart(event: TouchEvent): void {
         this.cropper.onTouchStart(event);
     }
 
-    onTouchEnd(event):void {
+    onTouchEnd(event): void {
         this.cropper.onTouchEnd(event);
         if (this.cropper.isImageSet()) {
             this.image.image = this.cropper.getCroppedImage().src;
@@ -81,11 +74,11 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    onMouseDown():void {
+    onMouseDown(): void {
         this.cropper.onMouseDown();
     }
 
-    onMouseUp():void {
+    onMouseUp(): void {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp();
             this.image.image = this.cropper.getCroppedImage().src;
@@ -93,18 +86,18 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    onMouseMove(event):void {
+    onMouseMove(event): void {
         this.cropper.onMouseMove(event);
     }
 
     fileChangeListener($event) {
-        var file:File = $event.target.files[0];
+        var file: File = $event.target.files[0];
         if (this.settings.allowedFilesRegex.test(file.name)) {
-            var image:any = new Image();
-            var fileReader:FileReader = new FileReader();
+            var image: any = new Image();
+            var fileReader: FileReader = new FileReader();
             var that = this;
 
-            fileReader.addEventListener('loadend', function (loadEvent:any) {
+            fileReader.addEventListener('loadend', function (loadEvent: any) {
                 image.src = loadEvent.target.result;
                 that.setImage(image);
             });
@@ -139,15 +132,15 @@ export class ImageCropperComponent extends Type {
     }
 
     private getOrientedImage(image, callback) {
-        var img:any;
+        var img: any;
 
         Exif.getData(image, function () {
             var orientation = Exif.getTag(image, 'Orientation');
 
             if ([3, 6, 8].indexOf(orientation) > -1) {
-                var canvas:HTMLCanvasElement = document.createElement("canvas"),
-                    ctx:CanvasRenderingContext2D = canvas.getContext("2d"),
-                    cw:number = image.width, ch:number = image.height, cx:number = 0, cy:number = 0, deg:number = 0;
+                var canvas: HTMLCanvasElement = document.createElement("canvas"),
+                    ctx: CanvasRenderingContext2D = canvas.getContext("2d"),
+                    cw: number = image.width, ch: number = image.height, cx: number = 0, cy: number = 0, deg: number = 0;
                 switch (orientation) {
                     case 3:
                         cx = -image.width;

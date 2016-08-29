@@ -1,34 +1,33 @@
-import {PointPool} from './model/pointPool';
-import {Point} from './model/point';
-import {Bounds} from './model/bounds';
-import {CornerMarker} from './model/cornerMarker';
-import {DragMarker} from './model/dragMarker';
-import {CropTouch} from './model/cropTouch';
-import {ImageCropperModel} from "./model/imageCropperModel";
-import {CropperDrawSettings} from "./cropperDrawSettings";
-import {ImageCropperDataShare} from "./imageCropperDataShare";
+import {Bounds} from "./model/bounds";
+import {CornerMarker} from "./model/cornerMarker";
+import {CropTouch} from "./model/cropTouch";
 import {CropperSettings} from "./cropperSettings";
+import {DragMarker} from "./model/dragMarker";
+import {ImageCropperModel} from "./model/imageCropperModel";
+import {ImageCropperDataShare} from "./imageCropperDataShare";
+import {PointPool} from "./model/pointPool";
+import {Point} from "./model/point";
 
 export class ImageCropper extends ImageCropperModel {
 
-    private crop:ImageCropper;
-    private cropperSettings:CropperSettings;
-    private previousDistance:number;
+    private crop: ImageCropper;
+    private cropperSettings: CropperSettings;
+    private previousDistance: number;
 
-    constructor(cropperSettings:CropperSettings) {
-
+    constructor(cropperSettings: CropperSettings) {
         super();
 
-        var x = 0;
-        var y = 0;
-        var width = cropperSettings.width;
-        var height = cropperSettings.height;
-        var keepAspect = cropperSettings.keepAspect;
-        var touchRadius = cropperSettings.touchRadius;
-        var minWidth = cropperSettings.minWidth;
-        var minHeight = cropperSettings.minHeight;
-        var croppedWidth = cropperSettings.croppedWidth;
-        var croppedHeight = cropperSettings.croppedHeight;
+        let x: number = 0;
+        let y: number = 0;
+        let width: number = cropperSettings.width;
+        let height: number = cropperSettings.height;
+        let keepAspect: boolean = cropperSettings.keepAspect;
+        let touchRadius: number = cropperSettings.touchRadius;
+        let minWidth: number = cropperSettings.minWidth;
+        let minHeight: number = cropperSettings.minHeight;
+        let croppedWidth: number = cropperSettings.croppedWidth;
+        let croppedHeight: number = cropperSettings.croppedHeight;
+
         this.cropperSettings = cropperSettings;
 
         this.crop = this;
@@ -55,10 +54,9 @@ export class ImageCropper extends ImageCropperModel {
         this.isMouseDown = false;
         this.ratioW = 1;
         this.ratioH = 1;
-        this.fileType = 'png';
+        this.fileType = "png";
         this.imageSet = false;
         this.pointPool = new PointPool(200);
-
 
         this.tl = new CornerMarker(x, y, touchRadius, this.cropperSettings);
         this.tr = new CornerMarker(x + width, y, touchRadius, this.cropperSettings);
@@ -83,24 +81,24 @@ export class ImageCropper extends ImageCropperModel {
         this.cropHeight = croppedHeight;
     }
 
-    static sign(x) {
+    private static sign(x): number {
         if (+x === x) {
             return (x === 0) ? x : (x > 0) ? 1 : -1;
         }
         return NaN;
     }
 
-    static getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
+    private static getMousePos(canvas, evt): Point {
+        let rect = canvas.getBoundingClientRect();
         return PointPool.instance.borrow(evt.clientX - rect.left, evt.clientY - rect.top);
     }
 
-    static getTouchPos(canvas, touch) {
-        var rect = canvas.getBoundingClientRect();
+    private static getTouchPos(canvas, touch): Point {
+        let rect = canvas.getBoundingClientRect();
         return PointPool.instance.borrow(touch.clientX - rect.left, touch.clientY - rect.top);
     }
 
-    static detectVerticalSquash(img) {
+    private static detectVerticalSquash(img) {
         var ih = img.height;
         var canvas = document.createElement('canvas');
         canvas.width = 1;
@@ -127,7 +125,7 @@ export class ImageCropper extends ImageCropperModel {
     }
 
 
-    prepare(canvas:HTMLCanvasElement) {
+    prepare(canvas: HTMLCanvasElement) {
         this.buffer = document.createElement('canvas');
         this.cropCanvas = document.createElement('canvas');
         this.cropCanvas.width = this.cropWidth;
@@ -140,7 +138,7 @@ export class ImageCropper extends ImageCropperModel {
     }
 
 
-    resizeCanvas(width, height):void {
+    resizeCanvas(width, height): void {
         this.canvas.width = width;
         this.canvas.height = height;
         this.buffer.width = width;
@@ -149,7 +147,7 @@ export class ImageCropper extends ImageCropperModel {
     }
 
 
-    draw(ctx):void {
+    draw(ctx): void {
         var bounds = this.getBounds();
         if (this.srcImage) {
             ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -609,7 +607,7 @@ export class ImageCropper extends ImageCropperModel {
         return this.imageSet;
     }
 
-    setImage(img:any) {
+    setImage(img: any) {
         if (!img) {
             throw "Image is null";
         }
@@ -689,7 +687,7 @@ export class ImageCropper extends ImageCropperModel {
         this.croppedImage = this.getCroppedImage(this.cropWidth, this.cropHeight);
     }
 
-    getCroppedImage(fillWidth?:number, fillHeight?:number) {
+    getCroppedImage(fillWidth?: number, fillHeight?: number) {
         var bounds = this.getBounds();
         if (!this.srcImage) {
             throw "Source image not set.";
@@ -797,7 +795,7 @@ export class ImageCropper extends ImageCropperModel {
 
     }
 
-    onTouchMove(event:TouchEvent) {
+    onTouchMove(event: TouchEvent) {
         if (this.crop.isImageSet()) {
             event.preventDefault();
             if (event.touches.length === 1) {
@@ -813,8 +811,8 @@ export class ImageCropper extends ImageCropperModel {
                     ((event.touches[0].clientX - event.touches[1].clientX) * (event.touches[0].clientX - event.touches[1].clientX)) +
                     ((event.touches[0].clientY - event.touches[1].clientY) * (event.touches[0].clientY - event.touches[1].clientY));
                 if (this.previousDistance && this.previousDistance !== distance) {
-                    var increment:number = distance < this.previousDistance ? 1 : -1;
-                    var bounds:Bounds = this.getBounds();
+                    var increment: number = distance < this.previousDistance ? 1 : -1;
+                    var bounds: Bounds = this.getBounds();
 
                     bounds.top += increment;
                     bounds.left += increment;
@@ -823,7 +821,6 @@ export class ImageCropper extends ImageCropperModel {
 
                     this.setBounds(bounds);
                 }
-
                 this.previousDistance = distance;
             }
             this.draw(this.ctx);
@@ -833,14 +830,13 @@ export class ImageCropper extends ImageCropperModel {
     onMouseMove(e) {
 
         if (this.crop.isImageSet()) {
-            var mousePosition = ImageCropper.getMousePos(this.canvas, e);
+            let mousePosition = ImageCropper.getMousePos(this.canvas, e);
             this.move(new CropTouch(mousePosition.x, mousePosition.y, 0));
-            var dragTouch = this.getDragTouchForID(0);
+            let dragTouch = this.getDragTouchForID(0);
             if (dragTouch) {
                 dragTouch.x = mousePosition.x;
                 dragTouch.y = mousePosition.y;
-            }
-            else {
+            } else {
                 dragTouch = new CropTouch(mousePosition.x, mousePosition.y, 0);
             }
             PointPool.instance.returnPoint(mousePosition);
@@ -924,13 +920,13 @@ export class ImageCropper extends ImageCropperModel {
         return false;
     }
 
-    onTouchStart(event:TouchEvent) {
+    onTouchStart(event: TouchEvent) {
         if (this.crop.isImageSet()) {
             this.isMouseDown = true;
         }
     }
 
-    onTouchEnd(event:TouchEvent) {
+    onTouchEnd(event: TouchEvent) {
         if (this.crop.isImageSet()) {
             for (var i = 0; i < event.changedTouches.length; i++) {
                 var touch = event.changedTouches[i];
