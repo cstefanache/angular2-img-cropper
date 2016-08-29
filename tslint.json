@@ -5,6 +5,7 @@
     "ordered-imports": false,
     "member-ordering": false,
     "variable-name": false,
+    "one-variable-per-declaration": false,
     "no-console": false,
     "object-literal-sort-keys": false,
     "trailing-comma": [true, { "multiline": "never", "singleline": "never" }]

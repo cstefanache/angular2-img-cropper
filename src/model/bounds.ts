@@ -3,12 +3,12 @@ import {PointPool} from './pointPool';
 
 export class Bounds {
 
-    left:number;
-    right:number;
-    top:number;
-    bottom:number;
+    public left: number;
+    public right: number;
+    public top: number;
+    public bottom: number;
 
-    constructor(x?:number, y?:number, width?:number, height?:number) {
+    constructor(x?: number, y?: number, width?: number, height?: number) {
         if (x === void 0) {
             x = 0;
         }
@@ -27,17 +27,17 @@ export class Bounds {
         this.bottom = y + height;
     }
 
-    getWidth():number {
+    public getWidth(): number {
         return this.right - this.left;
     };
 
-    getHeight():number {
+    public getHeight(): number {
         return this.bottom - this.top;
     };
 
-    getCentre():Point {
-        var w = this.getWidth();
-        var h = this.getHeight();
+    public getCentre(): Point {
+        let w = this.getWidth();
+        let h = this.getHeight();
         return PointPool.instance.borrow(this.left + (w / 2), this.top + (h / 2));
     };
 }

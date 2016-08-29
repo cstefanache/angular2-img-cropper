@@ -1,14 +1,14 @@
-import {Handle} from './handle';
-import {PointPool} from './pointPool';
-import {Point} from './point';
+import {Handle} from "./handle";
+import {PointPool} from "./pointPool";
+import {Point} from "./point";
 import {CropperSettings} from "../cropperSettings";
 
 export class DragMarker extends Handle {
 
-    iconPoints:Array<Point>;
-    scaledIconPoints:Array<Point>;
+    private iconPoints: Array<Point>;
+    private scaledIconPoints: Array<Point>;
 
-    constructor(x:number, y:number, radius:number, cropperSettings: CropperSettings) {
+    constructor(x: number, y: number, radius: number, cropperSettings: CropperSettings) {
         super(x, y, radius, cropperSettings);
         this.iconPoints = [];
         this.scaledIconPoints = [];
@@ -16,20 +16,19 @@ export class DragMarker extends Handle {
         this.getDragIconPoints(this.scaledIconPoints, 1.2);
     }
 
-    draw(ctx) {
+    public draw(ctx) {
         if (this.over || this.drag) {
             this.drawIcon(ctx, this.scaledIconPoints);
-        }
-        else {
+        } else {
             this.drawIcon(ctx, this.iconPoints);
         }
     }
 
-    getDragIconPoints(arr:Array<any>, scale:number) {
-        var maxLength = 17 * scale;
-        var arrowWidth = 14 * scale;
-        var arrowLength = 8 * scale;
-        var connectorThroat = 4 * scale;
+    public getDragIconPoints(arr: Array<any>, scale: number) {
+        let maxLength = 17 * scale;
+        let arrowWidth = 14 * scale;
+        let arrowLength = 8 * scale;
+        let connectorThroat = 4 * scale;
 
         arr.push(PointPool.instance.borrow(-connectorThroat / 2, maxLength - arrowLength));
         arr.push(PointPool.instance.borrow(-arrowWidth / 2, maxLength - arrowLength));
@@ -57,11 +56,11 @@ export class DragMarker extends Handle {
         arr.push(PointPool.instance.borrow(-connectorThroat / 2, connectorThroat / 2));
     }
 
-    drawIcon(ctx:any, points:Array<Point>) {
+    public drawIcon(ctx: any, points: Array<Point>) {
         ctx.beginPath();
         ctx.moveTo(points[0].x + this.position.x, points[0].y + this.position.y);
-        for (var k = 0; k < points.length; k++) {
-            var p = points[k];
+        for (let k = 0; k < points.length; k++) {
+            let p = points[k];
             ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
         }
         ctx.closePath();
@@ -69,9 +68,9 @@ export class DragMarker extends Handle {
         ctx.fill();
     }
 
-    recalculatePosition(bounds) {
+    public recalculatePosition(bounds) {
 
-        var c = bounds.getCentre();
+        let  c = bounds.getCentre();
         this.setPosition(c.x, c.y);
         PointPool.instance.returnPoint(c);
     }

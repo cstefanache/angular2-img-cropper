@@ -4,8 +4,7 @@ import {CropperSettings} from "./cropperSettings";
 import {Exif} from "./exif";
 
 @Component({
-    selector: "img-cropper",
-    template: `
+    selector: "img-cropper", template: `
     <span class="ng2-imgcrop">
       <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)" >
       <canvas #cropcanvas
@@ -19,6 +18,7 @@ import {Exif} from "./exif";
     </span>
   `
 })
+
 export class ImageCropperComponent extends Type {
 
     @ViewChild("cropcanvas", undefined) private cropcanvas: ElementRef;
@@ -29,27 +29,27 @@ export class ImageCropperComponent extends Type {
 
     @Output() private onCrop: EventEmitter<any> = new EventEmitter();
 
-    private croppedWidth: number;
-    private croppedHeight: number;
+    public croppedWidth: number;
+    public croppedHeight: number;
 
-    private intervalRef: number;
+    public intervalRef: number;
 
-    private renderer: Renderer;
+    public renderer: Renderer;
 
     constructor(renderer: Renderer) {
         super();
         this.renderer = renderer;
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit() {
         let canvas: any = this.cropcanvas.nativeElement;
 
         if (!this.settings) {
             this.settings = new CropperSettings();
         }
 
-        this.renderer.setElementAttribute(canvas, 'width', this.settings.canvasWidth.toString());
-        this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
+        this.renderer.setElementAttribute(canvas, "width", this.settings.canvasWidth.toString());
+        this.renderer.setElementAttribute(canvas, "height", this.settings.canvasHeight.toString());
 
         if (!this.cropper) {
             this.cropper = new ImageCropper(this.settings);
@@ -58,15 +58,15 @@ export class ImageCropperComponent extends Type {
         this.cropper.prepare(canvas);
     }
 
-    onTouchMove(event): void {
+    public onTouchMove(event): void {
         this.cropper.onTouchMove(event);
     }
 
-    onTouchStart(event: TouchEvent): void {
+    public onTouchStart(event: TouchEvent): void {
         this.cropper.onTouchStart(event);
     }
 
-    onTouchEnd(event): void {
+    public onTouchEnd(event): void {
         this.cropper.onTouchEnd(event);
         if (this.cropper.isImageSet()) {
             this.image.image = this.cropper.getCroppedImage().src;
@@ -74,11 +74,11 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    onMouseDown(): void {
+    public onMouseDown(): void {
         this.cropper.onMouseDown();
     }
 
-    onMouseUp(): void {
+    public onMouseUp(): void {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp();
             this.image.image = this.cropper.getCroppedImage().src;
@@ -86,18 +86,18 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    onMouseMove(event): void {
+    public onMouseMove(event): void {
         this.cropper.onMouseMove(event);
     }
 
-    fileChangeListener($event) {
-        var file: File = $event.target.files[0];
+    public fileChangeListener($event) {
+        let file: File = $event.target.files[0];
         if (this.settings.allowedFilesRegex.test(file.name)) {
-            var image: any = new Image();
-            var fileReader: FileReader = new FileReader();
-            var that = this;
+            let image: any = new Image();
+            let fileReader: FileReader = new FileReader();
+            let that = this;
 
-            fileReader.addEventListener('loadend', function (loadEvent: any) {
+            fileReader.addEventListener("loadend", function (loadEvent: any) {
                 image.src = loadEvent.target.result;
                 that.setImage(image);
             });
@@ -106,9 +106,8 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-
-    setImage(image) {
-        var self = this;
+    public setImage(image) {
+        let self = this;
 
         this.intervalRef = setInterval(function () {
             if (this.intervalRef) {
@@ -132,15 +131,20 @@ export class ImageCropperComponent extends Type {
     }
 
     private getOrientedImage(image, callback) {
-        var img: any;
+        let img: any;
 
         Exif.getData(image, function () {
-            var orientation = Exif.getTag(image, 'Orientation');
+            let orientation = Exif.getTag(image, "Orientation");
 
             if ([3, 6, 8].indexOf(orientation) > -1) {
-                var canvas: HTMLCanvasElement = document.createElement("canvas"),
+                let canvas: HTMLCanvasElement = document.createElement("canvas"),
                     ctx: CanvasRenderingContext2D = canvas.getContext("2d"),
-                    cw: number = image.width, ch: number = image.height, cx: number = 0, cy: number = 0, deg: number = 0;
+                    cw: number = image.width,
+                    ch: number = image.height,
+                    cx: number = 0,
+                    cy: number = 0,
+                    deg: number = 0;
+
                 switch (orientation) {
                     case 3:
                         cx = -image.width;
@@ -159,6 +163,8 @@ export class ImageCropperComponent extends Type {
                         cx = -image.width;
                         deg = 270;
                         break;
+                    default:
+                        break;
                 }
 
                 canvas.width = cw;
@@ -169,7 +175,6 @@ export class ImageCropperComponent extends Type {
                 img.width = cw;
                 img.height = ch;
                 img.src = canvas.toDataURL("image/png");
-
             } else {
                 img = image;
             }
@@ -177,6 +182,4 @@ export class ImageCropperComponent extends Type {
             callback(img);
         });
     }
-
 }
-

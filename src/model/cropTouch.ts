@@ -1,10 +1,10 @@
 export class CropTouch {
 
-    x:number;
-    y:number;
-    id:number;
+    private x: number;
+    private y: number;
+    private id: number;
 
-    constructor(x:number, y:number, id:number) {
+    constructor(x: number, y: number, id: number) {
         if (x === void 0) {
             x = 0;
         }
@@ -19,5 +19,4 @@ export class CropTouch {
         this.y = y;
         this.id = id;
     }
-
 }

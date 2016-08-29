@@ -21,11 +21,11 @@ export class ImageCropperModel {
     protected pointPool: PointPool;
     protected buffer: HTMLCanvasElement;
     protected cropCanvas: HTMLCanvasElement;
-    tl: CornerMarker;
-    tr: CornerMarker;
-    bl: CornerMarker;
-    br: CornerMarker;
-    markers: Array<CornerMarker>;
+    public tl: CornerMarker;
+    public tr: CornerMarker;
+    public bl: CornerMarker;
+    public br: CornerMarker;
+    public markers: Array<CornerMarker>;
     protected center: DragMarker;
     protected ctx: any;
     protected aspectRatio: number;

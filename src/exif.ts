@@ -1,6 +1,6 @@
 export class Exif {
 
-    private static debug: boolean = false;
+    public static debug: boolean = false;
 
     public static IptcFieldMap: Object = {
         0x78: "caption",
@@ -312,8 +312,9 @@ export class Exif {
     }
 
     public static base64ToArrayBuffer(base64, contentType?: any) {
-        contentType = contentType || base64.match(/^data\:([^\;]+)\;base64,/mi)[1] || ""; // e.g. 'data:image/jpeg;base64,...' => 'image/jpeg'
-        base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, "");
+        // e.g. 'data:image/jpeg;base64,...' => 'image/jpeg'
+        contentType = contentType || base64.match(/^data:([^;]+);base64,/mi)[1] || "";
+        base64 = base64.replace(/^data:([^;]+);base64,/gmi, "");
         let binary = atob(base64);
         let len = binary.length;
         let buffer = new ArrayBuffer(len);
@@ -329,13 +330,12 @@ export class Exif {
         http.open("GET", url, true);
         http.responseType = "blob";
         http.onload = function (e) {
-            if (this.status == 200 || this.status === 0) {
+            if (this.status === 200 || this.status === 0) {
                 callback(this.response);
             }
         };
         http.send();
     }
-
 
     public static getImageData(img, callback) {
         function handleBinaryFile(binFile) {
@@ -349,11 +349,11 @@ export class Exif {
         }
 
         if (img.src) {
-            if (/^data\:/i.test(img.src)) { // Data URI
+            if (/^data:/i.test(img.src)) { // Data URI
                 let arrayBuffer = Exif.base64ToArrayBuffer(img.src);
                 handleBinaryFile(arrayBuffer);
 
-            } else if (/^blob\:/i.test(img.src)) { // Object URL
+            } else if (/^blob:/i.test(img.src)) { // Object URL
                 let fileReader = new FileReader();
                 fileReader.onload = function (e: any) {
                     handleBinaryFile(e.target.result);
@@ -376,7 +376,7 @@ export class Exif {
                 http.send(null);
             }
         } else if (FileReader && (img instanceof Blob || img instanceof File)) {
-            let  fileReader = new FileReader();
+            let fileReader = new FileReader();
             fileReader.onload = function (e: any) {
                 if (Exif.debug) {
                     console.log("Got file of length " + e.target.result.byteLength);
@@ -388,14 +388,13 @@ export class Exif {
         }
     }
 
-
-    static findEXIFinJPEG(file) {
-        var dataView = new DataView(file);
+    public static findEXIFinJPEG(file) {
+        let dataView = new DataView(file);
 
         if (Exif.debug) {
             console.log("Got file of length " + file.byteLength);
         }
-        if ((dataView.getUint8(0) !== 0xFF) || (dataView.getUint8(1) != 0xD8)) {
+        if ((dataView.getUint8(0) !== 0xFF) || (dataView.getUint8(1) !== 0xD8)) {
             if (Exif.debug) {
                 console.log("Not a valid JPEG");
             }
@@ -428,7 +427,6 @@ export class Exif {
                 }
 
                 return Exif.readEXIFData(dataView, offset + 4); // , dataView.getUint16(offset + 2) - 2);
-
                 // offset += 2 + file.getShortAt(offset+2, true);
 
             } else {
@@ -437,13 +435,13 @@ export class Exif {
         }
     }
 
-    static findIPTCinJPEG(file) {
+    public static findIPTCinJPEG(file) {
         let dataView = new DataView(file);
 
         if (Exif.debug) {
             console.log("Got file of length " + file.byteLength);
         }
-        if ((dataView.getUint8(0) != 0xFF) || (dataView.getUint8(1) != 0xD8)) {
+        if ((dataView.getUint8(0) !== 0xFF) || (dataView.getUint8(1) !== 0xD8)) {
             if (Exif.debug) {
                 console.log("Not a valid JPEG");
             }
@@ -453,14 +451,14 @@ export class Exif {
         let offset = 2;
         let length = file.byteLength;
 
-        let isFieldSegmentStart = function (dataView: DataView, offset: number) {
+        let isFieldSegmentStart = function (_dataView: DataView, _offset: number) {
             return (
-                dataView.getUint8(offset) === 0x38 &&
-                dataView.getUint8(offset + 1) === 0x42 &&
-                dataView.getUint8(offset + 2) === 0x49 &&
-                dataView.getUint8(offset + 3) === 0x4D &&
-                dataView.getUint8(offset + 4) === 0x04 &&
-                dataView.getUint8(offset + 5) === 0x04
+                _dataView.getUint8(_offset) === 0x38 &&
+                _dataView.getUint8(_offset + 1) === 0x42 &&
+                _dataView.getUint8(_offset + 2) === 0x49 &&
+                _dataView.getUint8(_offset + 3) === 0x4D &&
+                _dataView.getUint8(_offset + 4) === 0x04 &&
+                _dataView.getUint8(_offset + 5) === 0x04
             );
         };
 
@@ -523,24 +521,24 @@ export class Exif {
         return data;
     }
 
-    static readTags(file, tiffStart, dirStart, strings, bigEnd) {
-        var entries = file.getUint16(dirStart, !bigEnd),
+    public static readTags(file, tiffStart, dirStart, strings, bigEnd) {
+        let entries = file.getUint16(dirStart, !bigEnd),
             tags = {},
-            entryOffset, tag,
-            i;
+            entryOffset, tag;
 
-        for (i = 0; i < entries; i++) {
+        for (let i = 0; i < entries; i++) {
             entryOffset = dirStart + i * 12 + 2;
             tag = strings[file.getUint16(entryOffset, !bigEnd)];
-            if (!tag && Exif.debug) console.log("Unknown tag: " + file.getUint16(entryOffset, !bigEnd));
+            if (!tag && Exif.debug) {
+                console.log("Unknown tag: " + file.getUint16(entryOffset, !bigEnd));
+            }
             tags[tag] = Exif.readTagValue(file, entryOffset, tiffStart, dirStart, bigEnd);
         }
         return tags;
     }
 
-
-    static readTagValue(file, entryOffset, tiffStart, dirStart, bigEnd) {
-        var type = file.getUint16(entryOffset + 2, !bigEnd),
+    public static readTagValue(file, entryOffset, tiffStart, dirStart, bigEnd) {
+        let type = file.getUint16(entryOffset + 2, !bigEnd),
             numValues = file.getUint32(entryOffset + 4, !bigEnd),
             valueOffset = file.getUint32(entryOffset + 8, !bigEnd) + tiffStart,
             offset,
@@ -550,7 +548,7 @@ export class Exif {
         switch (type) {
             case 1: // byte, 8-bit unsigned int
             case 7: // undefined, 8-bit byte, value depending on field
-                if (numValues == 1) {
+                if (numValues === 1) {
                     return file.getUint8(entryOffset + 8, !bigEnd);
                 } else {
                     offset = numValues > 4 ? valueOffset : (entryOffset + 8);
@@ -566,7 +564,7 @@ export class Exif {
                 return Exif.getStringFromDB(file, offset, numValues - 1);
 
             case 3: // short, 16 bit int
-                if (numValues == 1) {
+                if (numValues === 1) {
                     return file.getUint16(entryOffset + 8, !bigEnd);
                 } else {
                     offset = numValues > 2 ? valueOffset : (entryOffset + 8);
@@ -578,7 +576,7 @@ export class Exif {
                 }
 
             case 4: // long, 32 bit int
-                if (numValues == 1) {
+                if (numValues === 1) {
                     return file.getUint32(entryOffset + 8, !bigEnd);
                 } else {
                     vals = [];
@@ -589,7 +587,7 @@ export class Exif {
                 }
 
             case 5:    // rational = two long values, first is numerator, second is denominator
-                if (numValues == 1) {
+                if (numValues === 1) {
                     numerator = file.getUint32(valueOffset, !bigEnd);
                     denominator = file.getUint32(valueOffset + 4, !bigEnd);
                     val = Number(numerator / denominator);
@@ -609,7 +607,7 @@ export class Exif {
                 }
 
             case 9: // slong, 32 bit signed int
-                if (numValues == 1) {
+                if (numValues === 1) {
                     return file.getInt32(entryOffset + 8, !bigEnd);
                 } else {
                     vals = [];
@@ -620,58 +618,68 @@ export class Exif {
                 }
 
             case 10: // signed rational, two slongs, first is numerator, second is denominator
-                if (numValues == 1) {
-                    return file.getInt32(valueOffset, !bigEnd) / file.getInt32(valueOffset + 4, !bigEnd);
+                if (numValues === 1) {
+                    return file.getInt32(valueOffset, !bigEnd) /
+                        file.getInt32(valueOffset + 4, !bigEnd);
                 } else {
                     vals = [];
                     for (n = 0; n < numValues; n++) {
-                        vals[n] = file.getInt32(valueOffset + 8 * n, !bigEnd) / file.getInt32(valueOffset + 4 + 8 * n, !bigEnd);
+                        vals[n] = file.getInt32(valueOffset + 8 * n, !bigEnd) /
+                            file.getInt32(valueOffset + 4 + 8 * n, !bigEnd);
                     }
                     return vals;
                 }
+            default:
+                break;
         }
     }
 
-
-    static getStringFromDB(buffer, start, length) {
-        var outstr = "";
-        for (var n = start; n < start + length; n++) {
+    public static getStringFromDB(buffer, start, length) {
+        let outstr = "";
+        for (let n = start; n < start + length; n++) {
             outstr += String.fromCharCode(buffer.getUint8(n));
         }
         return outstr;
     }
 
-
-    static readEXIFData(file, start) {
-        if (Exif.getStringFromDB(file, start, 4) != "Exif") {
-            if (Exif.debug) console.log("Not valid EXIF data! " + Exif.getStringFromDB(file, start, 4));
+    public static readEXIFData(file, start) {
+        if (Exif.getStringFromDB(file, start, 4) !== "Exif") {
+            if (Exif.debug) {
+                console.log("Not valid EXIF data! " + Exif.getStringFromDB(file, start, 4));
+            }
             return false;
         }
 
-        var bigEnd,
+        let bigEnd,
             tags, tag,
             exifData, gpsData,
             tiffOffset = start + 6;
 
         // test for TIFF validity and endianness
-        if (file.getUint16(tiffOffset) == 0x4949) {
+        if (file.getUint16(tiffOffset) === 0x4949) {
             bigEnd = false;
-        } else if (file.getUint16(tiffOffset) == 0x4D4D) {
+        } else if (file.getUint16(tiffOffset) === 0x4D4D) {
             bigEnd = true;
         } else {
-            if (Exif.debug) console.log("Not valid TIFF data! (no 0x4949 or 0x4D4D)");
+            if (Exif.debug) {
+                console.log("Not valid TIFF data! (no 0x4949 or 0x4D4D)");
+            }
             return false;
         }
 
-        if (file.getUint16(tiffOffset + 2, !bigEnd) != 0x002A) {
-            if (Exif.debug) console.log("Not valid TIFF data! (no 0x002A)");
+        if (file.getUint16(tiffOffset + 2, !bigEnd) !== 0x002A) {
+            if (Exif.debug) {
+                console.log("Not valid TIFF data! (no 0x002A)");
+            }
             return false;
         }
 
-        var firstIFDOffset = file.getUint32(tiffOffset + 4, !bigEnd);
+        let firstIFDOffset = file.getUint32(tiffOffset + 4, !bigEnd);
 
         if (firstIFDOffset < 0x00000008) {
-            if (Exif.debug) console.log("Not valid TIFF data! (First offset less than 8)", file.getUint32(tiffOffset + 4, !bigEnd));
+            if (Exif.debug) {
+                console.log("Not valid TIFF data! (First offset less than 8)", file.getUint32(tiffOffset + 4, !bigEnd));
+            }
             return false;
         }
 
@@ -680,63 +688,76 @@ export class Exif {
         if (tags.ExifIFDPointer) {
             exifData = Exif.readTags(file, tiffOffset, tiffOffset + tags.ExifIFDPointer, Exif.Tags, bigEnd);
             for (tag in exifData) {
-                switch (tag) {
-                    case "LightSource" :
-                    case "Flash" :
-                    case "MeteringMode" :
-                    case "ExposureProgram" :
-                    case "SensingMethod" :
-                    case "SceneCaptureType" :
-                    case "SceneType" :
-                    case "CustomRendered" :
-                    case "WhiteBalance" :
-                    case "GainControl" :
-                    case "Contrast" :
-                    case "Saturation" :
-                    case "Sharpness" :
-                    case "SubjectDistanceRange" :
-                    case "FileSource" :
-                        exifData[tag] = Exif.StringValues[tag][exifData[tag]];
-                        break;
-
-                    case "ExifVersion" :
-                    case "FlashpixVersion" :
-                        exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3]);
-                        break;
-
-                    case "ComponentsConfiguration" :
-                        exifData[tag] =
-                            Exif.StringValues['Components'][exifData[tag][0]] +
-                            Exif.StringValues['Components'][exifData[tag][1]] +
-                            Exif.StringValues['Components'][exifData[tag][2]] +
-                            Exif.StringValues['Components'][exifData[tag][3]];
-                        break;
+                if ({}.hasOwnProperty.call(exifData, tag)) {
+                    switch (tag) {
+                        case "LightSource" :
+                        case "Flash" :
+                        case "MeteringMode" :
+                        case "ExposureProgram" :
+                        case "SensingMethod" :
+                        case "SceneCaptureType" :
+                        case "SceneType" :
+                        case "CustomRendered" :
+                        case "WhiteBalance" :
+                        case "GainControl" :
+                        case "Contrast" :
+                        case "Saturation" :
+                        case "Sharpness" :
+                        case "SubjectDistanceRange" :
+                        case "FileSource" :
+                            exifData[tag] = Exif.StringValues[tag][exifData[tag]];
+                            break;
+                        case "ExifVersion" :
+                        case "FlashpixVersion" :
+                            exifData[tag] = String.fromCharCode(
+                                exifData[tag][0],
+                                exifData[tag][1],
+                                exifData[tag][2],
+                                exifData[tag][3]);
+                            break;
+                        case "ComponentsConfiguration" :
+                            let compopents: string = "Components";
+                            exifData[tag] =
+                                Exif.StringValues[compopents][exifData[tag][0]] +
+                                Exif.StringValues[compopents][exifData[tag][1]] +
+                                Exif.StringValues[compopents][exifData[tag][2]] +
+                                Exif.StringValues[compopents][exifData[tag][3]];
+                            break;
+                        default:
+                            break;
+                    }
+                    tags[tag] = exifData[tag];
                 }
-                tags[tag] = exifData[tag];
             }
         }
 
         if (tags.GPSInfoIFDPointer) {
             gpsData = Exif.readTags(file, tiffOffset, tiffOffset + tags.GPSInfoIFDPointer, Exif.GPSTags, bigEnd);
             for (tag in gpsData) {
-                switch (tag) {
-                    case "GPSVersionID" :
-                        gpsData[tag] = gpsData[tag][0] +
-                            "." + gpsData[tag][1] +
-                            "." + gpsData[tag][2] +
-                            "." + gpsData[tag][3];
-                        break;
+                if ({}.hasOwnProperty.call(gpsData, tag)) {
+                    switch (tag) {
+                        case "GPSVersionID" :
+                            gpsData[tag] = gpsData[tag][0] +
+                                "." + gpsData[tag][1] +
+                                "." + gpsData[tag][2] +
+                                "." + gpsData[tag][3];
+                            break;
+                        default:
+                            break;
+                    }
+                    tags[tag] = gpsData[tag];
                 }
-                tags[tag] = gpsData[tag];
             }
         }
 
         return tags;
     }
 
-    static getData(img: any, callback: Function) {
+    public static getData(img: any, callback: Function) {
 
-        if ((img instanceof Image || img instanceof HTMLImageElement) && !img.complete) return false;
+        if ((img instanceof Image || img instanceof HTMLImageElement) && !img.complete) {
+            return false;
+        }
 
         if (!Exif.imageHasData(img)) {
             Exif.getImageData(img, callback);
@@ -748,14 +769,18 @@ export class Exif {
         return true;
     }
 
-    static getTag(img, tag) {
-        if (!Exif.imageHasData(img)) return;
+    public static getTag(img, tag) {
+        if (!Exif.imageHasData(img)) {
+            return;
+        }
         return img.exifdata[tag];
     };
 
-    static getAllTags(img) {
-        if (!Exif.imageHasData(img)) return {};
-        var a,
+    public static getAllTags(img) {
+        if (!Exif.imageHasData(img)) {
+            return {};
+        }
+        let a,
             data = img.exifdata,
             tags = {};
         for (a in data) {
@@ -766,16 +791,19 @@ export class Exif {
         return tags;
     };
 
-    static pretty(img) {
-        if (!Exif.imageHasData(img)) return "";
-        var a,
+    public static pretty(img) {
+        if (!Exif.imageHasData(img)) {
+            return "";
+        }
+        let a,
             data = img.exifdata,
             strPretty = "";
         for (a in data) {
             if (data.hasOwnProperty(a)) {
-                if (typeof data[a] == "object") {
+                if (typeof data[a] === "object") {
                     if (data[a] instanceof Number) {
-                        strPretty += a + " : " + data[a] + " [" + data[a].numerator + "/" + data[a].denominator + "]\r\n";
+                        strPretty += a + " : " + data[a] +
+                            " [" + data[a].numerator + "/" + data[a].denominator + "]\r\n";
                     } else {
                         strPretty += a + " : [" + data[a].length + " values]\r\n";
                     }
@@ -787,8 +815,7 @@ export class Exif {
         return strPretty;
     }
 
-    readFromBinaryFile(file) {
+    public static readFromBinaryFile(file) {
         return Exif.findEXIFinJPEG(file);
     }
-
 }
