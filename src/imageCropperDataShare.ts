@@ -20,8 +20,8 @@ export class ImageCropperDataShare {
     public static setStyle(canvas, style):void {
         if (this.pressed !== undefined) {
             if (this.pressed === canvas) {
-                //TODO: check this
-                //angular.element(document.documentElement).css('cursor', style);
+                // TODO: check this
+                // angular.element(document.documentElement).css('cursor', style);
             }
         }
         else {

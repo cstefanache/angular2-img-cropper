@@ -1,21 +1,21 @@
 export class Exif {
 
-    static debug:boolean = false;
+    private static debug: boolean = false;
 
-    static IptcFieldMap:Object = {
-        0x78: 'caption',
-        0x6E: 'credit',
-        0x19: 'keywords',
-        0x37: 'dateCreated',
-        0x50: 'byline',
-        0x55: 'bylineTitle',
-        0x7A: 'captionWriter',
-        0x69: 'headline',
-        0x74: 'copyright',
-        0x0F: 'category'
+    public static IptcFieldMap: Object = {
+        0x78: "caption",
+        0x6E: "credit",
+        0x19: "keywords",
+        0x37: "dateCreated",
+        0x50: "byline",
+        0x55: "bylineTitle",
+        0x7A: "captionWriter",
+        0x69: "headline",
+        0x74: "copyright",
+        0x0F: "category",
     };
 
-    static Tags:Object = {
+    public static Tags: Object = {
 
         // version tags
         0x9000: "ExifVersion",             // EXIF version
@@ -92,7 +92,7 @@ export class Exif {
     };
 
 
-    static TiffTags:Object = {
+    public static TiffTags: Object = {
         0x0100: "ImageWidth",
         0x0101: "ImageHeight",
         0x8769: "ExifIFDPointer",
@@ -128,7 +128,7 @@ export class Exif {
         0x8298: "Copyright"
     };
 
-    static  GPSTags:Object = {
+    public static GPSTags: Object = {
         0x0000: "GPSVersionID",
         0x0001: "GPSLatitudeRef",
         0x0002: "GPSLatitude",
@@ -163,7 +163,7 @@ export class Exif {
     };
 
 
-    static  StringValues:Object = {
+    public static StringValues: Object = {
         ExposureProgram: {
             0: "Not defined",
             1: "Manual",
@@ -316,7 +316,7 @@ export class Exif {
     }
 
 
-    static base64ToArrayBuffer(base64, contentType?:any) {
+    static base64ToArrayBuffer(base64, contentType?: any) {
         contentType = contentType || base64.match(/^data\:([^\;]+)\;base64,/mi)[1] || ''; // e.g. 'data:image/jpeg;base64,...' => 'image/jpeg'
         base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, '');
         var binary = atob(base64);
@@ -361,7 +361,7 @@ export class Exif {
 
             } else if (/^blob\:/i.test(img.src)) { // Object URL
                 var fileReader = new FileReader();
-                fileReader.onload = function (e:any) {
+                fileReader.onload = function (e: any) {
                     handleBinaryFile(e.target.result);
                 };
                 Exif.objectURLToBlob(img.src, function (blob) {
@@ -383,7 +383,7 @@ export class Exif {
             }
         } else if (FileReader && (img instanceof Blob || img instanceof File)) {
             var fileReader = new FileReader();
-            fileReader.onload = function (e:any) {
+            fileReader.onload = function (e: any) {
                 if (Exif.debug) console.log("Got file of length " + e.target.result.byteLength);
                 handleBinaryFile(e.target.result);
             };
@@ -495,10 +495,10 @@ export class Exif {
         while (segmentStartPos < startOffset + sectionLength) {
             if (dataView.getUint8(segmentStartPos) === 0x1C && dataView.getUint8(segmentStartPos + 1) === 0x02) {
                 segmentType = dataView.getUint8(segmentStartPos + 2);
-                if (segmentType in Exif.IptcFieldMap) {
+                if (segmentType in Exif.iptcFieldMap) {
                     dataSize = dataView.getInt16(segmentStartPos + 3);
                     segmentSize = dataSize + 5;
-                    fieldName = Exif.IptcFieldMap[segmentType];
+                    fieldName = Exif.iptcFieldMap[segmentType];
                     fieldValue = Exif.getStringFromDB(dataView, segmentStartPos + 5, dataSize);
                     // Check if we already stored a value with this name
                     if (data.hasOwnProperty(fieldName)) {
@@ -733,7 +733,7 @@ export class Exif {
         return tags;
     }
 
-    static getData(img:any, callback:Function) {
+    static getData(img: any, callback: Function) {
 
         if ((img instanceof Image || img instanceof HTMLImageElement) && !img.complete) return false;
 

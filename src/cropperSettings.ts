@@ -15,7 +15,6 @@ export class CropperSettings {
     public croppedWidth: number = 100;
     public croppedHeight: number = 100;
 
-
     public cropperDrawSettings: CropperDrawSettings = new CropperDrawSettings();
     public touchRadius: number = 20;
     public noFileInput: boolean = false;
@@ -47,5 +46,4 @@ export class CropperSettings {
     get keepAspect(): boolean {
         return this._keepAspect;
     }
-
 }

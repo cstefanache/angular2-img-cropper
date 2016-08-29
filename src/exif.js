@@ -156,10 +156,10 @@ var Exif = (function () {
         while (segmentStartPos < startOffset + sectionLength) {
             if (dataView.getUint8(segmentStartPos) === 0x1C && dataView.getUint8(segmentStartPos + 1) === 0x02) {
                 segmentType = dataView.getUint8(segmentStartPos + 2);
-                if (segmentType in Exif.IptcFieldMap) {
+                if (segmentType in Exif.iptcFieldMap) {
                     dataSize = dataView.getInt16(segmentStartPos + 3);
                     segmentSize = dataSize + 5;
-                    fieldName = Exif.IptcFieldMap[segmentType];
+                    fieldName = Exif.iptcFieldMap[segmentType];
                     fieldValue = Exif.getStringFromDB(dataView, segmentStartPos + 5, dataSize);
                     if (data.hasOwnProperty(fieldName)) {
                         if (data[fieldName] instanceof Array) {
@@ -421,16 +421,16 @@ var Exif = (function () {
     };
     Exif.debug = false;
     Exif.IptcFieldMap = {
-        0x78: 'caption',
-        0x6E: 'credit',
-        0x19: 'keywords',
-        0x37: 'dateCreated',
-        0x50: 'byline',
-        0x55: 'bylineTitle',
-        0x7A: 'captionWriter',
-        0x69: 'headline',
-        0x74: 'copyright',
-        0x0F: 'category'
+        0x78: "caption",
+        0x6E: "credit",
+        0x19: "keywords",
+        0x37: "dateCreated",
+        0x50: "byline",
+        0x55: "bylineTitle",
+        0x7A: "captionWriter",
+        0x69: "headline",
+        0x74: "copyright",
+        0x0F: "category",
     };
     Exif.Tags = {
         0x9000: "ExifVersion",

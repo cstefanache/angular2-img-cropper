@@ -1,5 +1,5 @@
 export declare class Exif {
-    static debug: boolean;
+    private static debug;
     static IptcFieldMap: Object;
     static Tags: Object;
     static TiffTags: Object;
