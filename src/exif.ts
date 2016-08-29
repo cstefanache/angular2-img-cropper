@@ -479,13 +479,11 @@ export class Exif {
                     nameHeaderLength = 4;
                 }
 
-                var startOffset = offset + 8 + nameHeaderLength;
-                var sectionLength = dataView.getUint16(offset + 6 + nameHeaderLength);
+                let startOffset = offset + 8 + nameHeaderLength;
+                let sectionLength = dataView.getUint16(offset + 6 + nameHeaderLength);
 
                 return Exif.readIPTCData(file, startOffset, sectionLength);
-
             }
-
 
             // Not the marker, continue searching
             offset++;
@@ -494,11 +492,11 @@ export class Exif {
 
     }
 
-    static readIPTCData(file, startOffset, sectionLength) {
-        var dataView = new DataView(file);
-        var data = {};
-        var fieldValue, fieldName, dataSize, segmentType, segmentSize;
-        var segmentStartPos = startOffset;
+    public static readIPTCData(file, startOffset, sectionLength) {
+        let dataView = new DataView(file);
+        let data = {};
+        let fieldValue, fieldName, dataSize, segmentType, segmentSize;
+        let segmentStartPos = startOffset;
         while (segmentStartPos < startOffset + sectionLength) {
             if (dataView.getUint8(segmentStartPos) === 0x1C && dataView.getUint8(segmentStartPos + 1) === 0x02) {
                 segmentType = dataView.getUint8(segmentStartPos + 2);
@@ -512,22 +510,18 @@ export class Exif {
                         // Value already stored with this name, create multivalue field
                         if (data[fieldName] instanceof Array) {
                             data[fieldName].push(fieldValue);
-                        }
-                        else {
+                        } else {
                             data[fieldName] = [data[fieldName], fieldValue];
                         }
-                    }
-                    else {
+                    } else {
                         data[fieldName] = fieldValue;
                     }
                 }
-
             }
             segmentStartPos++;
         }
         return data;
     }
-
 
     static readTags(file, tiffStart, dirStart, strings, bigEnd) {
         var entries = file.getUint16(dirStart, !bigEnd),
