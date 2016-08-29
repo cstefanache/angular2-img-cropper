@@ -26,6 +26,7 @@ export class Handle {
     }
 
     public draw(ctx) {
+        // this should't be empty though
     }
 
     public setOver(over) {
