@@ -42,7 +42,7 @@ export class ImageCropperComponent extends Type {
     }
 
     public ngAfterViewInit() {
-        let canvas: any = this.cropcanvas.nativeElement;
+        let canvas: HTMLCanvasElement = this.cropcanvas.nativeElement;
 
         if (!this.settings) {
             this.settings = new CropperSettings();

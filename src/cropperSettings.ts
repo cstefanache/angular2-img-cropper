@@ -1,5 +1,24 @@
 import {CropperDrawSettings} from "./cropperDrawSettings";
-export class CropperSettings {
+
+export interface ICropperSettings {
+    canvasWidth?: number;
+    canvasHeight?: number;
+    width?: number;
+    height?: number;
+    minWidth?: number;
+    minHeight?: number;
+    minWithRelativeToResolution?: boolean;
+    croppedWidth?: number;
+    croppedHeight?: number;
+    touchRadius?: number;
+    cropperDrawSettings?: any;
+    noFileInput?: boolean;
+    allowedFilesRegex?: RegExp;
+    rounded: boolean;
+    keepAspect: boolean;
+}
+
+export class CropperSettings implements ICropperSettings {
 
     public canvasWidth: number = 300;
     public canvasHeight: number = 300;
@@ -22,6 +41,9 @@ export class CropperSettings {
 
     private _rounded: boolean = false;
     private _keepAspect: boolean = true;
+
+    constructor() {
+    }
 
     set rounded(val: boolean) {
         this._rounded = val;

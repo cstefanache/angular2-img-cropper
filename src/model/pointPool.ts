@@ -16,7 +16,7 @@ export class PointPool {
                 prev = this.firstAvailable;
             } else {
                 let p = new Point();
-                prev.setNext(p);
+                prev.next = p;
                 prev = p;
             }
         }
@@ -32,7 +32,7 @@ export class PointPool {
         }
         this.borrowed++;
         let  p = this.firstAvailable;
-        this.firstAvailable = p.getNext();
+        this.firstAvailable = p.next;
         p.x = x;
         p.y = y;
         return p;
@@ -42,7 +42,7 @@ export class PointPool {
         this.borrowed--;
         p.x = 0;
         p.y = 0;
-        p.setNext(this.firstAvailable);
+        p.next = this.firstAvailable;
         this.firstAvailable = p;
     };
 }

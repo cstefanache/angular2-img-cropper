@@ -1,13 +1,13 @@
-export interface Fraction {
+export interface IFraction {
     numerator: number;
     denominator: number;
 }
 
-declare Fraction: {
-    new (value?: any): Fraction;
+declare var Fraction: {
+    new (value?: any): IFraction;
     (value?: any): number;
-    prototype: Fraction;
-}
+    prototype: IFraction;
+};
 
 export class Exif {
 
@@ -567,7 +567,7 @@ export class Exif {
                 if (numValues === 1) {
                     numerator = file.getUint32(valueOffset, !bigEnd);
                     denominator = file.getUint32(valueOffset + 4, !bigEnd);
-                    val = new FractionNumber(numerator / denominator);
+                    val = new Fraction(numerator / denominator);
                     val.numerator = numerator;
                     val.denominator = denominator;
                     return val;
@@ -576,7 +576,7 @@ export class Exif {
                     for (n = 0; n < numValues; n++) {
                         numerator = file.getUint32(valueOffset + 8 * n, !bigEnd);
                         denominator = file.getUint32(valueOffset + 4 + 8 * n, !bigEnd);
-                        vals[n] = new FractionNumber(numerator / denominator);
+                        vals[n] = new Fraction(numerator / denominator);
                         vals[n].numerator = numerator;
                         vals[n].denominator = denominator;
                     }

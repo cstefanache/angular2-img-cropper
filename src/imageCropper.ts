@@ -58,6 +58,7 @@ export class ImageCropper extends ImageCropperModel {
         this.imageSet = false;
         this.pointPool = new PointPool(200);
 
+
         this.tl = new CornerMarker(x, y, touchRadius, this.cropperSettings);
         this.tr = new CornerMarker(x + width, y, touchRadius, this.cropperSettings);
         this.bl = new CornerMarker(x, y + height, touchRadius, this.cropperSettings);
@@ -72,6 +73,8 @@ export class ImageCropper extends ImageCropperModel {
         this.br.addHorizontalNeighbour(this.bl);
         this.br.addVerticalNeighbour(this.tr);
         this.markers = [this.tl, this.tr, this.bl, this.br];
+
+
         this.center = new DragMarker(x + (width / 2), y + (height / 2), touchRadius, this.cropperSettings);
         this.keepAspect = keepAspect;
         this.aspectRatio = height / width;
@@ -147,10 +150,10 @@ export class ImageCropper extends ImageCropperModel {
         let bounds = this.getBounds();
         if (this.srcImage) {
             ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-            let sourceAspect = this.srcImage.height / this.srcImage.width;
-            let canvasAspect = this.canvasHeight / this.canvasWidth;
-            let w = this.canvasWidth;
-            let h = this.canvasHeight;
+            let sourceAspect: number = this.srcImage.height / this.srcImage.width;
+            let canvasAspect: number = this.canvasHeight / this.canvasWidth;
+            let w: number = this.canvasWidth;
+            let h: number = this.canvasHeight;
             if (canvasAspect > sourceAspect) {
                 w = this.canvasWidth;
                 h = this.canvasWidth * sourceAspect;
@@ -175,18 +178,19 @@ export class ImageCropper extends ImageCropperModel {
             if (!this.cropperSettings.rounded) {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
                 ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-                ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.getWidth(), 1),
-                    Math.max(bounds.getHeight(), 1), bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
-                ctx.strokeRect(bounds.left, bounds.top, bounds.getWidth(), bounds.getHeight());
+                ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.width, 1),
+                    Math.max(bounds.height , 1), bounds.left, bounds.top, bounds.width, bounds.height );
+                ctx.strokeRect(bounds.left, bounds.top, bounds.width, bounds.height );
             } else {
                 ctx.beginPath();
-                ctx.arc(bounds.left + bounds.getWidth() / 2, bounds.top + bounds.getHeight() / 2, bounds.getWidth() / 2,
+                ctx.arc(bounds.left + bounds.width / 2, bounds.top + bounds.height  / 2, bounds.width / 2,
                     0, Math.PI * 2, true);
                 ctx.closePath();
                 ctx.stroke();
             }
 
-            let marker: any;
+            let marker: CornerMarker;
+
             for (let i = 0; i < this.markers.length; i++) {
                 marker = this.markers[i];
                 marker.draw(ctx);
@@ -198,46 +202,45 @@ export class ImageCropper extends ImageCropperModel {
         }
     }
 
-    public dragCrop(x: number, y: number, marker: any) {
+    public dragCrop(x: number, y: number, marker: CornerMarker | DragMarker) {
         let bounds = this.getBounds();
-        let left = x - (bounds.getWidth() / 2);
-        let right = x + (bounds.getWidth() / 2);
-        let top = y - (bounds.getHeight() / 2);
-        let bottom = y + (bounds.getHeight() / 2);
+        let left = x - (bounds.width / 2);
+        let right = x + (bounds.width / 2);
+        let top = y - (bounds.height  / 2);
+        let bottom = y + (bounds.height  / 2);
         if (right >= this.maxXClamp) {
-            x = this.maxXClamp - bounds.getWidth() / 2;
+            x = this.maxXClamp - bounds.width / 2;
         }
         if (left <= this.minXClamp) {
-            x = bounds.getWidth() / 2 + this.minXClamp;
+            x = bounds.width / 2 + this.minXClamp;
         }
         if (top < this.minYClamp) {
-            y = bounds.getHeight() / 2 + this.minYClamp;
+            y = bounds.height  / 2 + this.minYClamp;
         }
         if (bottom >= this.maxYClamp) {
-            y = this.maxYClamp - bounds.getHeight() / 2;
+            y = this.maxYClamp - bounds.height  / 2;
         }
-        this.tl.moveX(x - (bounds.getWidth() / 2));
-        this.tl.moveY(y - (bounds.getHeight() / 2));
-        this.tr.moveX(x + (bounds.getWidth() / 2));
-        this.tr.moveY(y - (bounds.getHeight() / 2));
-        this.bl.moveX(x - (bounds.getWidth() / 2));
-        this.bl.moveY(y + (bounds.getHeight() / 2));
-        this.br.moveX(x + (bounds.getWidth() / 2));
-        this.br.moveY(y + (bounds.getHeight() / 2));
+        this.tl.moveX(x - (bounds.width / 2));
+        this.tl.moveY(y - (bounds.height  / 2));
+        this.tr.moveX(x + (bounds.width / 2));
+        this.tr.moveY(y - (bounds.height  / 2));
+        this.bl.moveX(x - (bounds.width / 2));
+        this.bl.moveY(y + (bounds.height  / 2));
+        this.br.moveX(x + (bounds.width / 2));
+        this.br.moveY(y + (bounds.height  / 2));
         marker.setPosition(x, y);
     }
 
-    // todo: marker shoud have specified type
-    public enforceMinSize(x: number, y: number, marker: any) {
+    public enforceMinSize(x: number, y: number, marker: CornerMarker) {
 
-        let xLength = x - marker.getHorizontalNeighbour().getPosition().x;
-        let yLength = y - marker.getVerticalNeighbour().getPosition().y;
+        let xLength = x - marker.getHorizontalNeighbour().position.x;
+        let yLength = y - marker.getVerticalNeighbour().position.y;
         let xOver = this.minWidth - Math.abs(xLength);
         let yOver = this.minHeight - Math.abs(yLength);
 
         if (xLength === 0 || yLength === 0) {
-            x = marker.getPosition().x;
-            y = marker.getPosition().y;
+            x = marker.position.x;
+            y = marker.position.y;
 
             return PointPool.instance.borrow(x, y);
         }
@@ -284,7 +287,6 @@ export class ImageCropper extends ImageCropperModel {
                 if (xOver > 0) {
                     if (xLength < 0) {
                         x -= xOver;
-
                         if (yLength < 0) {
                             y -= xOver * this.aspectRatio;
                         } else {
@@ -337,49 +339,49 @@ export class ImageCropper extends ImageCropperModel {
         }
 
         if (x < this.minXClamp || x > this.maxXClamp || y < this.minYClamp || y > this.maxYClamp) {
-            x = marker.getPosition().x;
-            y = marker.getPosition().y;
+            x = marker.position.x;
+            y = marker.position.y;
         }
 
         return PointPool.instance.borrow(x, y);
     }
 
-    public dragCorner(x: number, y: number, marker: any) {
-        let iX = 0;
-        let iY = 0;
-        let ax = 0;
-        let ay = 0;
-        let newHeight = 0;
-        let newWidth = 0;
-        let newY = 0;
-        let newX = 0;
+    public dragCorner(x: number, y: number, marker: CornerMarker) {
+        let iX: number = 0;
+        let iY: number = 0;
+        let ax: number = 0;
+        let ay: number = 0;
+        let newHeight: number = 0;
+        let newWidth: number = 0;
+        let newY: number = 0;
+        let newX: number = 0;
         let anchorMarker: CornerMarker;
-        let fold = 0;
+        let fold: number = 0;
 
         if (this.keepAspect) {
             anchorMarker = marker.getHorizontalNeighbour().getVerticalNeighbour();
-            ax = anchorMarker.getPosition().x;
-            ay = anchorMarker.getPosition().y;
-            if (x <= anchorMarker.getPosition().x) {
-                if (y <= anchorMarker.getPosition().y) {
+            ax = anchorMarker.position.x;
+            ay = anchorMarker.position.y;
+            if (x <= anchorMarker.position.x) {
+                if (y <= anchorMarker.position.y) {
                     iX = ax - (100 / this.aspectRatio);
                     iY = ay - (100 / this.aspectRatio * this.aspectRatio);
-                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.getPosition(),
+                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.position,
                         PointPool.instance.borrow(x, y));
                     if (fold > 0) {
-                        newHeight = Math.abs(anchorMarker.getPosition().y - y);
+                        newHeight = Math.abs(anchorMarker.position.y - y);
                         newWidth = newHeight / this.aspectRatio;
-                        newY = anchorMarker.getPosition().y - newHeight;
-                        newX = anchorMarker.getPosition().x - newWidth;
+                        newY = anchorMarker.position.y - newHeight;
+                        newX = anchorMarker.position.x - newWidth;
                         let min = this.enforceMinSize(newX, newY, marker);
                         marker.move(min.x, min.y);
                         PointPool.instance.returnPoint(min);
                     } else {
                         if (fold < 0) {
-                            newWidth = Math.abs(anchorMarker.getPosition().x - x);
+                            newWidth = Math.abs(anchorMarker.position.x - x);
                             newHeight = newWidth * this.aspectRatio;
-                            newY = anchorMarker.getPosition().y - newHeight;
-                            newX = anchorMarker.getPosition().x - newWidth;
+                            newY = anchorMarker.position.y - newHeight;
+                            newX = anchorMarker.position.x - newWidth;
                             let min = this.enforceMinSize(newX, newY, marker);
                             marker.move(min.x, min.y);
                             PointPool.instance.returnPoint(min);
@@ -388,22 +390,22 @@ export class ImageCropper extends ImageCropperModel {
                 } else {
                     iX = ax - (100 / this.aspectRatio);
                     iY = ay + (100 / this.aspectRatio * this.aspectRatio);
-                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.getPosition(),
+                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.position,
                         PointPool.instance.borrow(x, y));
                     if (fold > 0) {
-                        newWidth = Math.abs(anchorMarker.getPosition().x - x);
+                        newWidth = Math.abs(anchorMarker.position.x - x);
                         newHeight = newWidth * this.aspectRatio;
-                        newY = anchorMarker.getPosition().y + newHeight;
-                        newX = anchorMarker.getPosition().x - newWidth;
+                        newY = anchorMarker.position.y + newHeight;
+                        newX = anchorMarker.position.x - newWidth;
                         let min = this.enforceMinSize(newX, newY, marker);
                         marker.move(min.x, min.y);
                         PointPool.instance.returnPoint(min);
                     } else {
                         if (fold < 0) {
-                            newHeight = Math.abs(anchorMarker.getPosition().y - y);
+                            newHeight = Math.abs(anchorMarker.position.y - y);
                             newWidth = newHeight / this.aspectRatio;
-                            newY = anchorMarker.getPosition().y + newHeight;
-                            newX = anchorMarker.getPosition().x - newWidth;
+                            newY = anchorMarker.position.y + newHeight;
+                            newX = anchorMarker.position.x - newWidth;
                             let min = this.enforceMinSize(newX, newY, marker);
                             marker.move(min.x, min.y);
                             PointPool.instance.returnPoint(min);
@@ -411,25 +413,25 @@ export class ImageCropper extends ImageCropperModel {
                     }
                 }
             } else {
-                if (y <= anchorMarker.getPosition().y) {
+                if (y <= anchorMarker.position.y) {
                     iX = ax + (100 / this.aspectRatio);
                     iY = ay - (100 / this.aspectRatio * this.aspectRatio);
-                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.getPosition(),
+                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.position,
                         PointPool.instance.borrow(x, y));
                     if (fold < 0) {
-                        newHeight = Math.abs(anchorMarker.getPosition().y - y);
+                        newHeight = Math.abs(anchorMarker.position.y - y);
                         newWidth = newHeight / this.aspectRatio;
-                        newY = anchorMarker.getPosition().y - newHeight;
-                        newX = anchorMarker.getPosition().x + newWidth;
+                        newY = anchorMarker.position.y - newHeight;
+                        newX = anchorMarker.position.x + newWidth;
                         let min = this.enforceMinSize(newX, newY, marker);
                         marker.move(min.x, min.y);
                         PointPool.instance.returnPoint(min);
                     } else {
                         if (fold > 0) {
-                            newWidth = Math.abs(anchorMarker.getPosition().x - x);
+                            newWidth = Math.abs(anchorMarker.position.x - x);
                             newHeight = newWidth * this.aspectRatio;
-                            newY = anchorMarker.getPosition().y - newHeight;
-                            newX = anchorMarker.getPosition().x + newWidth;
+                            newY = anchorMarker.position.y - newHeight;
+                            newX = anchorMarker.position.x + newWidth;
                             let min = this.enforceMinSize(newX, newY, marker);
                             marker.move(min.x, min.y);
                             PointPool.instance.returnPoint(min);
@@ -438,22 +440,22 @@ export class ImageCropper extends ImageCropperModel {
                 } else {
                     iX = ax + (100 / this.aspectRatio);
                     iY = ay + (100 / this.aspectRatio * this.aspectRatio);
-                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.getPosition(),
+                    fold = this.getSide(PointPool.instance.borrow(iX, iY), anchorMarker.position,
                         PointPool.instance.borrow(x, y));
                     if (fold < 0) {
-                        newWidth = Math.abs(anchorMarker.getPosition().x - x);
+                        newWidth = Math.abs(anchorMarker.position.x - x);
                         newHeight = newWidth * this.aspectRatio;
-                        newY = anchorMarker.getPosition().y + newHeight;
-                        newX = anchorMarker.getPosition().x + newWidth;
+                        newY = anchorMarker.position.y + newHeight;
+                        newX = anchorMarker.position.x + newWidth;
                         let min = this.enforceMinSize(newX, newY, marker);
                         marker.move(min.x, min.y);
                         PointPool.instance.returnPoint(min);
                     } else {
                         if (fold > 0) {
-                            newHeight = Math.abs(anchorMarker.getPosition().y - y);
+                            newHeight = Math.abs(anchorMarker.position.y - y);
                             newWidth = newHeight / this.aspectRatio;
-                            newY = anchorMarker.getPosition().y + newHeight;
-                            newX = anchorMarker.getPosition().x + newWidth;
+                            newY = anchorMarker.position.y + newHeight;
+                            newX = anchorMarker.position.x + newWidth;
                             let min = this.enforceMinSize(newX, newY, marker);
                             marker.move(min.x, min.y);
                             PointPool.instance.returnPoint(min);
@@ -478,7 +480,7 @@ export class ImageCropper extends ImageCropperModel {
         return n;
     }
 
-    public handleRelease(newCropTouch: any) {
+    public handleRelease(newCropTouch: CropTouch) {
 
         if (newCropTouch == null) {
             return;
@@ -495,20 +497,20 @@ export class ImageCropper extends ImageCropperModel {
         this.draw(this.ctx);
     }
 
-    public handleMove(newCropTouch: any) {
+    public handleMove(newCropTouch: CropTouch) {
         let matched = false;
         for (let k = 0; k < this.currentDragTouches.length; k++) {
             if (newCropTouch.id === this.currentDragTouches[k].id && this.currentDragTouches[k].dragHandle != null) {
-                let dragTouch = this.currentDragTouches[k];
+                let dragTouch: CropTouch = this.currentDragTouches[k];
                 let clampedPositions = this.clampPosition(newCropTouch.x - dragTouch.dragHandle.offset.x,
                     newCropTouch.y - dragTouch.dragHandle.offset.y);
                 newCropTouch.x = clampedPositions.x;
                 newCropTouch.y = clampedPositions.y;
                 PointPool.instance.returnPoint(clampedPositions);
                 if (dragTouch.dragHandle instanceof CornerMarker) {
-                    this.dragCorner(newCropTouch.x, newCropTouch.y, dragTouch.dragHandle);
+                    this.dragCorner(newCropTouch.x, newCropTouch.y, (dragTouch.dragHandle as CornerMarker));
                 } else {
-                    this.dragCrop(newCropTouch.x, newCropTouch.y, dragTouch.dragHandle);
+                    this.dragCrop(newCropTouch.x, newCropTouch.y, (dragTouch.dragHandle as DragMarker));
                 }
                 this.currentlyInteracting = true;
                 matched = true;
@@ -518,27 +520,27 @@ export class ImageCropper extends ImageCropperModel {
         }
         if (!matched) {
             for (let i = 0; i < this.markers.length; i++) {
-                let marker: CornerMarker = this.markers[i];
+                let marker: CornerMarker | DragMarker = this.markers[i];
                 if (marker.touchInBounds(newCropTouch.x, newCropTouch.y)) {
                     newCropTouch.dragHandle = marker;
                     this.currentDragTouches.push(newCropTouch);
                     marker.setDrag(true);
-                    newCropTouch.dragHandle.offset.x = newCropTouch.x - newCropTouch.dragHandle.getPosition().x;
-                    newCropTouch.dragHandle.offset.y = newCropTouch.y - newCropTouch.dragHandle.getPosition().y;
+                    newCropTouch.dragHandle.offset.x = newCropTouch.x - newCropTouch.dragHandle.position.x;
+                    newCropTouch.dragHandle.offset.y = newCropTouch.y - newCropTouch.dragHandle.position.y;
                     this.dragCorner(newCropTouch.x - newCropTouch.dragHandle.offset.x,
-                        newCropTouch.y - newCropTouch.dragHandle.offset.y, newCropTouch.dragHandle);
+                        newCropTouch.y - newCropTouch.dragHandle.offset.y, (newCropTouch.dragHandle as CornerMarker));
                     break;
                 }
             }
-            if (newCropTouch.dragHandle == null) {
+            if (newCropTouch.dragHandle === null) {
                 if (this.center.touchInBounds(newCropTouch.x, newCropTouch.y)) {
                     newCropTouch.dragHandle = this.center;
                     this.currentDragTouches.push(newCropTouch);
                     newCropTouch.dragHandle.setDrag(true);
-                    newCropTouch.dragHandle.offset.x = newCropTouch.x - newCropTouch.dragHandle.getPosition().x;
-                    newCropTouch.dragHandle.offset.y = newCropTouch.y - newCropTouch.dragHandle.getPosition().y;
+                    newCropTouch.dragHandle.offset.x = newCropTouch.x - newCropTouch.dragHandle.position.x;
+                    newCropTouch.dragHandle.offset.y = newCropTouch.y - newCropTouch.dragHandle.position.y;
                     this.dragCrop(newCropTouch.x - newCropTouch.dragHandle.offset.x,
-                        newCropTouch.y - newCropTouch.dragHandle.offset.y, newCropTouch.dragHandle);
+                        newCropTouch.y - newCropTouch.dragHandle.offset.y, (newCropTouch.dragHandle as DragMarker));
                 }
             }
         }
@@ -618,17 +620,17 @@ export class ImageCropper extends ImageCropperModel {
         this.updateClampBounds();
         let sourceAspect = this.srcImage.height / this.srcImage.width;
         let cropBounds = this.getBounds();
-        let cropAspect = cropBounds.getHeight() / cropBounds.getWidth();
+        let cropAspect = cropBounds.height / cropBounds.width;
         let w = this.canvas.width;
         let h = this.canvas.height;
         this.canvasWidth = w;
         this.canvasHeight = h;
         let cX = this.canvas.width / 2;
         let cY = this.canvas.height / 2;
-        let tlPos = PointPool.instance.borrow(cX - cropBounds.getWidth() / 2, cY + cropBounds.getHeight() / 2);
-        let trPos = PointPool.instance.borrow(cX + cropBounds.getWidth() / 2, cY + cropBounds.getHeight() / 2);
-        let blPos = PointPool.instance.borrow(cX - cropBounds.getWidth() / 2, cY - cropBounds.getHeight() / 2);
-        let brPos = PointPool.instance.borrow(cX + cropBounds.getWidth() / 2, cY - cropBounds.getHeight() / 2);
+        let tlPos = PointPool.instance.borrow(cX - cropBounds.width / 2, cY + cropBounds.height  / 2);
+        let trPos = PointPool.instance.borrow(cX + cropBounds.width / 2, cY + cropBounds.height  / 2);
+        let blPos = PointPool.instance.borrow(cX - cropBounds.width / 2, cY - cropBounds.height  / 2);
+        let brPos = PointPool.instance.borrow(cX + cropBounds.width / 2, cY - cropBounds.height  / 2);
         this.tl.setPosition(tlPos.x, tlPos.y);
         this.tr.setPosition(trPos.x, trPos.y);
         this.bl.setPosition(blPos.x, blPos.y);
@@ -662,7 +664,6 @@ export class ImageCropper extends ImageCropperModel {
         PointPool.instance.returnPoint(trPos);
         PointPool.instance.returnPoint(blPos);
         PointPool.instance.returnPoint(brPos);
-
         this.vertSquashRatio = ImageCropper.detectVerticalSquash(this.srcImage);
         this.draw(this.ctx);
         this.croppedImage = this.getCroppedImage(this.cropWidth, this.cropHeight);
@@ -698,8 +699,8 @@ export class ImageCropper extends ImageCropperModel {
         this.drawImageIOSFix(this.cropCanvas.getContext("2d"), this.srcImage,
             Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0),
             Math.max(Math.round(bounds.top / this.ratioH - offsetH), 0),
-            Math.max(Math.round(bounds.getWidth() / this.ratioW), 1),
-            Math.max(Math.round(bounds.getHeight() / this.ratioH), 1), 0, 0, this.cropCanvas.width,
+            Math.max(Math.round(bounds.width / this.ratioW), 1),
+            Math.max(Math.round(bounds.height  / this.ratioH), 1), 0, 0, this.cropCanvas.width,
             this.cropCanvas.height);
 
         this.croppedImage.width = this.cropCanvas.width;
@@ -715,17 +716,17 @@ export class ImageCropper extends ImageCropperModel {
         let maxY = -Number.MAX_VALUE;
         for (let i = 0; i < this.markers.length; i++) {
             let marker = this.markers[i];
-            if (marker.getPosition().x < minX) {
-                minX = marker.getPosition().x;
+            if (marker.position.x < minX) {
+                minX = marker.position.x;
             }
-            if (marker.getPosition().x > maxX) {
-                maxX = marker.getPosition().x;
+            if (marker.position.x > maxX) {
+                maxX = marker.position.x;
             }
-            if (marker.getPosition().y < minY) {
-                minY = marker.getPosition().y;
+            if (marker.position.y < minY) {
+                minY = marker.position.y;
             }
-            if (marker.getPosition().y > maxY) {
-                maxY = marker.getPosition().y;
+            if (marker.position.y > maxY) {
+                maxY = marker.position.y;
             }
         }
         let bounds = new Bounds();
@@ -747,14 +748,14 @@ export class ImageCropper extends ImageCropperModel {
         for (let i = 0; i < this.markers.length; i++) {
             let marker = this.markers[i];
 
-            if (marker.getPosition().x === currentBounds.left) {
-                if (marker.getPosition().y === currentBounds.top) {
+            if (marker.position.x === currentBounds.left) {
+                if (marker.position.y === currentBounds.top) {
                     topLeft = marker;
                 } else {
                     bottomLeft = marker;
                 }
             } else {
-                if (marker.getPosition().y === currentBounds.top) {
+                if (marker.position.y === currentBounds.top) {
                     topRight = marker;
                 } else {
                     bottomRight = marker;
@@ -785,10 +786,7 @@ export class ImageCropper extends ImageCropperModel {
                 }
             } else {
                 if (event.touches.length === 2) {
-                    let distance = ((event.touches[0].clientX - event.touches[1].clientX) *
-                        (event.touches[0].clientX - event.touches[1].clientX)) +
-                        ((event.touches[0].clientY - event.touches[1].clientY) *
-                        (event.touches[0].clientY - event.touches[1].clientY));
+                    let distance = ((event.touches[0].clientX - event.touches[1].clientX) * (event.touches[0].clientX - event.touches[1].clientX)) + ((event.touches[0].clientY - event.touches[1].clientY) * (event.touches[0].clientY - event.touches[1].clientY));
                     if (this.previousDistance && this.previousDistance !== distance) {
                         let increment: number = distance < this.previousDistance ? 1 : -1;
                         let bounds: Bounds = this.getBounds();
@@ -848,8 +846,8 @@ export class ImageCropper extends ImageCropperModel {
             }
             if (cropTouch.dragHandle !== null && cropTouch.dragHandle instanceof CornerMarker) {
 
-                this.drawCornerCursor(cropTouch.dragHandle, cropTouch.dragHandle.getPosition().x,
-                    cropTouch.dragHandle.getPosition().y);
+                this.drawCornerCursor(cropTouch.dragHandle, cropTouch.dragHandle.position.x,
+                    cropTouch.dragHandle.position.y);
                 cursorDrawn = true;
             }
         }
@@ -874,8 +872,8 @@ export class ImageCropper extends ImageCropperModel {
     public drawCornerCursor(marker: any, x: number, y: number) {
         if (marker.touchInBounds(x, y)) {
             marker.setOver(true);
-            if (marker.getHorizontalNeighbour().getPosition().x > marker.getPosition().x) {
-                if (marker.getVerticalNeighbour().getPosition().y > marker.getPosition().y) {
+            if (marker.getHorizontalNeighbour().position.x > marker.position.x) {
+                if (marker.getVerticalNeighbour().position.y > marker.position.y) {
                     ImageCropperDataShare.setOver(this.canvas);
                     ImageCropperDataShare.setStyle(this.canvas, "nwse-resize");
                 } else {
@@ -883,7 +881,7 @@ export class ImageCropper extends ImageCropperModel {
                     ImageCropperDataShare.setStyle(this.canvas, "nesw-resize");
                 }
             } else {
-                if (marker.getVerticalNeighbour().getPosition().y > marker.getPosition().y) {
+                if (marker.getVerticalNeighbour().position.y > marker.position.y) {
                     ImageCropperDataShare.setOver(this.canvas);
                     ImageCropperDataShare.setStyle(this.canvas, "nesw-resize");
                 } else {
@@ -926,8 +924,8 @@ export class ImageCropper extends ImageCropperModel {
 
     // http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
     public drawImageIOSFix(ctx: CanvasRenderingContext2D, img: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
-                           sx: number, sy: number, sw: number, sh: number,
-                           dx: number, dy: number, dw: number, dh: number) {
+                           sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number,
+                           dh: number) {
 
         // Works only if whole image is displayed:
         // ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);

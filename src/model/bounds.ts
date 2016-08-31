@@ -27,17 +27,17 @@ export class Bounds {
         this.bottom = y + height;
     }
 
-    public getWidth(): number {
+    public get width(): number {
         return this.right - this.left;
     };
 
-    public getHeight(): number {
+    public get height(): number {
         return this.bottom - this.top;
     };
 
     public getCentre(): Point {
-        let w = this.getWidth();
-        let h = this.getHeight();
+        let w = this.width;
+        let h = this.height;
         return PointPool.instance.borrow(this.left + (w / 2), this.top + (h / 2));
     };
 }

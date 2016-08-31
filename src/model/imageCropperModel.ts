@@ -1,6 +1,7 @@
 import {PointPool} from "./pointPool";
 import {CornerMarker} from "./cornerMarker";
 import {DragMarker} from "./dragMarker";
+import {CropTouch} from "./cropTouch";
 
 export class ImageCropperModel {
     protected canvas: HTMLCanvasElement;
@@ -12,7 +13,7 @@ export class ImageCropperModel {
     protected canvasHeight: number;
     protected keepAspect: boolean;
     protected touchRadius: number;
-    protected currentDragTouches: Array<any>;
+    protected currentDragTouches: Array<CropTouch>;
     protected isMouseDown: boolean;
     protected ratioW: number;
     protected ratioH: number;
@@ -21,16 +22,16 @@ export class ImageCropperModel {
     protected pointPool: PointPool;
     protected buffer: HTMLCanvasElement;
     protected cropCanvas: HTMLCanvasElement;
-    public tl: CornerMarker;
-    public tr: CornerMarker;
-    public bl: CornerMarker;
-    public br: CornerMarker;
-    public markers: Array<CornerMarker>;
+    protected tl: CornerMarker;
+    protected tr: CornerMarker;
+    protected bl: CornerMarker;
+    protected br: CornerMarker;
+    protected markers: Array<CornerMarker>;
     protected center: DragMarker;
-    protected ctx: any;
+    protected ctx: CanvasRenderingContext2D;
     protected aspectRatio: number;
     protected currentlyInteracting: boolean;
-    protected srcImage: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement;
+    protected srcImage: HTMLImageElement;
     protected vertSquashRatio: number;
     protected minXClamp: number;
     protected minYClamp: number;

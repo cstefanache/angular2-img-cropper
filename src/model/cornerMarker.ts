@@ -1,11 +1,17 @@
-import {Handle} from "./handle";
+import {Handle, IHandle} from "./handle";
+import {CropperSettings} from "../cropperSettings";
 
-export class CornerMarker extends Handle {
+export interface ICornerMarker extends IHandle {
+    horizontalNeighbour: CornerMarker;
+    verticalNeighbour: CornerMarker;
+}
 
-    private horizontalNeighbour: CornerMarker;
-    private verticalNeighbour: CornerMarker;
+export class CornerMarker extends Handle implements ICornerMarker {
 
-    constructor(x: number, y: number, radius: number, cropperSettings: any) {
+    public horizontalNeighbour: CornerMarker;
+    public verticalNeighbour: CornerMarker;
+
+    constructor(x: number, y: number, radius: number, cropperSettings: CropperSettings) {
         super(x, y, radius, cropperSettings);
     }
 
@@ -23,6 +29,7 @@ export class CornerMarker extends Handle {
         if (this.verticalNeighbour.position.y < this.position.y) {
             vDirection = -1;
         }
+
         if (this.cropperSettings.rounded) {
             let width = this.position.x - this.horizontalNeighbour.position.x;
             let height = this.position.y - this.verticalNeighbour.position.y;
@@ -72,7 +79,7 @@ export class CornerMarker extends Handle {
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
-        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillStyle = "rgba(255,255,255,.7)";
         ctx.fill();
     }
 
