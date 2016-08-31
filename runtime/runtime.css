@@ -1,8 +1,2 @@
-.ng2-imgcrop canvas {
-    border: 1px solid #000;
-}
-
-.ng2-imgcrop input {
-    display: block;
-    margin-bottom: 10px;
-}
+.ng2-imgcrop canvas {   border-size: 1px;}
+.ng2-imgcrop input {   display: block;   margin-bottom: 1em;}

@@ -13,7 +13,7 @@ import {ImageCropperComponent, CropperSettings, Bounds} from "../index";
         <span class="result" *ngIf="data.image" >
             <img 
                 [src]="data.image" 
-                [width]="cropperSettings.croppedWidth"
+                [width]="cropperSettings.croppedWidth" 
                 [height]="cropperSettings.croppedHeight">
         </span>`,
     styles: [
