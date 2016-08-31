@@ -16,13 +16,13 @@ export class CornerMarker extends Handle implements ICornerMarker {
     }
 
     public drawCornerBorder(ctx: CanvasRenderingContext2D): void {
-        let sideLength = 10;
+        let sideLength: number = 10;
         if (this.over || this.drag) {
             sideLength = 12;
         }
 
-        let hDirection = 1;
-        let vDirection = 1;
+        let hDirection: number = 1;
+        let vDirection: number = 1;
         if (this.horizontalNeighbour.position.x < this.position.x) {
             hDirection = -1;
         }
@@ -31,11 +31,11 @@ export class CornerMarker extends Handle implements ICornerMarker {
         }
 
         if (this.cropperSettings.rounded) {
-            let width = this.position.x - this.horizontalNeighbour.position.x;
-            let height = this.position.y - this.verticalNeighbour.position.y;
+            let width: number = this.position.x - this.horizontalNeighbour.position.x;
+            let height: number = this.position.y - this.verticalNeighbour.position.y;
 
-            let offX = Math.round(Math.sin(Math.PI / 2) * Math.abs(width / 2)) / 4;
-            let offY = Math.round(Math.sin(Math.PI / 2) * Math.abs(height / 2)) / 4;
+            let offX: number = Math.round(Math.sin(Math.PI / 2) * Math.abs(width / 2)) / 4;
+            let offY: number = Math.round(Math.sin(Math.PI / 2) * Math.abs(height / 2)) / 4;
 
             this.offset.x = hDirection > 0 ? offX : -offX;
             this.offset.y = vDirection > 0 ? offY : -offY;
@@ -59,12 +59,12 @@ export class CornerMarker extends Handle implements ICornerMarker {
     }
 
     public drawCornerFill(ctx: CanvasRenderingContext2D): void {
-        let sideLength = 10;
+        let sideLength: number = 10;
         if (this.over || this.drag) {
             sideLength = 12;
         }
-        let hDirection = 1;
-        let vDirection = 1;
+        let hDirection: number = 1;
+        let vDirection: number = 1;
         if (this.horizontalNeighbour.position.x < this.position.x) {
             hDirection = -1;
         }

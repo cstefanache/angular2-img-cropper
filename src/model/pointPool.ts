@@ -31,7 +31,7 @@ export class PointPool {
             throw "Pool exhausted";
         }
         this.borrowed++;
-        let  p = this.firstAvailable;
+        let p: Point = this.firstAvailable;
         this.firstAvailable = p.next;
         p.x = x;
         p.y = y;
