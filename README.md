@@ -1,5 +1,8 @@
 # Changelog
 
+### Release 0.6.1
+ - Fixed issue #49 - Error on reading exif
+
 ### Release 0.6.0
 
  - Parsed EXIF information for image orientation
