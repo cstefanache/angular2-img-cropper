@@ -130,7 +130,7 @@ export class ImageCropper extends ImageCropperModel {
         this.cropCanvas = document.createElement("canvas");
 
         // todo get more reliable parent width value.
-        let responsiveWidth = canvas.parentElement.clientWidth;
+        let responsiveWidth: number = canvas.parentElement.clientWidth;
         if (responsiveWidth > 0 && this.cropperSettings.responsive) {
             this.cropCanvas.width = responsiveWidth;
             this.buffer.width = responsiveWidth;

@@ -13,8 +13,8 @@ import {ImageCropperComponent, CropperSettings, Bounds} from "../index";
         <span class="result" *ngIf="data.image" >
             <img 
                 [src]="data.image" 
-                [width]="cropperSettings.croppedWidth" 
-                [height]="cropperSettings.croppedHeight">
+                [width]="300" 
+                [height]="300">
         </span>`,
     styles: [
         ".result {margin-top: 30px;border: 1px solid gray;display: inline-block;padding: 1px;}" +
@@ -57,7 +57,7 @@ export class AppComponent extends Type {
         this.cropperSettings.rounded = false;
 
         this.cropperSettings.cropperDrawSettings.strokeColor = "rgba(255,255,255,1)";
-        this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
+        this.cropperSettings.cropperDrawSettings.strokeWidth = 1;
 
         this.data = {};
 
