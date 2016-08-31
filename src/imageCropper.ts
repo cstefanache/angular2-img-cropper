@@ -1,4 +1,3 @@
-/*tslint no-bitwise: ["error", { "allow": [">>"] }]*/
 import {Bounds} from "./model/bounds";
 import {CornerMarker} from "./model/cornerMarker";
 import {CropTouch} from "./model/cropTouch";

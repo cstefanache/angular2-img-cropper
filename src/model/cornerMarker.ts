@@ -1,14 +1,15 @@
-import {Handle} from './handle';
-import {PointPool} from './pointPool';
-import {Point} from './point';
-import {CropperDrawSettings} from "../cropperDrawSettings";
+import {Handle} from "./handle";
 
 export class CornerMarker extends Handle {
 
     private horizontalNeighbour: CornerMarker;
     private verticalNeighbour: CornerMarker;
 
-    public drawCornerBorder(ctx: any): void {
+    constructor(x: number, y: number, radius: number, cropperSettings: any) {
+        super(x, y, radius, cropperSettings);
+    }
+
+    public drawCornerBorder(ctx: CanvasRenderingContext2D): void {
         let sideLength = 10;
         if (this.over || this.drag) {
             sideLength = 12;
@@ -22,7 +23,6 @@ export class CornerMarker extends Handle {
         if (this.verticalNeighbour.position.y < this.position.y) {
             vDirection = -1;
         }
-
         if (this.cropperSettings.rounded) {
             let width = this.position.x - this.horizontalNeighbour.position.x;
             let height = this.position.y - this.verticalNeighbour.position.y;
@@ -51,7 +51,7 @@ export class CornerMarker extends Handle {
         ctx.stroke();
     }
 
-    public drawCornerFill(ctx: any): void {
+    public drawCornerFill(ctx: CanvasRenderingContext2D): void {
         let sideLength = 10;
         if (this.over || this.drag) {
             sideLength = 12;

@@ -1,3 +1,14 @@
+export interface Fraction {
+    numerator: number;
+    denominator: number;
+}
+
+declare Fraction: {
+    new (value?: any): Fraction;
+    (value?: any): number;
+    prototype: Fraction;
+}
+
 export class Exif {
 
     public static debug: boolean = false;
@@ -508,7 +519,8 @@ export class Exif {
         let valueOffset = file.getUint32(entryOffset + 8, !bigEnd) + tiffStart;
         let offset: number;
         let vals: any[], val: any, n: number;
-        let numerator: number, denominator: number;
+        let numerator: any;
+        let denominator: any;
 
         switch (type) {
             case 1: // byte, 8-bit unsigned int
@@ -555,7 +567,7 @@ export class Exif {
                 if (numValues === 1) {
                     numerator = file.getUint32(valueOffset, !bigEnd);
                     denominator = file.getUint32(valueOffset + 4, !bigEnd);
-                    val = Number(numerator / denominator);
+                    val = new FractionNumber(numerator / denominator);
                     val.numerator = numerator;
                     val.denominator = denominator;
                     return val;
@@ -564,7 +576,7 @@ export class Exif {
                     for (n = 0; n < numValues; n++) {
                         numerator = file.getUint32(valueOffset + 8 * n, !bigEnd);
                         denominator = file.getUint32(valueOffset + 4 + 8 * n, !bigEnd);
-                        vals[n] = Number(numerator / denominator);
+                        vals[n] = new FractionNumber(numerator / denominator);
                         vals[n].numerator = numerator;
                         vals[n].denominator = denominator;
                     }

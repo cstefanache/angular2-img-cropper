@@ -1,5 +1,4 @@
 import {CropperDrawSettings} from "./cropperDrawSettings";
-
 export class CropperSettings {
 
     public canvasWidth: number = 300;
@@ -31,7 +30,7 @@ export class CropperSettings {
         }
     }
 
-    get rounded() {
+    get rounded(): boolean {
         return this._rounded;
     }
 

@@ -1,15 +1,13 @@
 import {Point} from "./point";
 import {CropperSettings} from "../cropperSettings";
-
 export class Handle {
-
     public over: boolean;
     public drag: boolean;
     public position: Point;
     public offset: Point;
     public radius: number;
 
-    protected cropperSettings: CropperSettings;
+    public cropperSettings: CropperSettings;
 
     constructor(x: number, y: number, radius: number, cropperSettings: any) {
         this.over = false;
@@ -25,7 +23,7 @@ export class Handle {
     }
 
     public draw(ctx: CanvasRenderingContext2D) {
-        // this should't be empty though
+        // this should't be empty
     }
 
     public setOver(over: boolean): void {

@@ -8,8 +8,7 @@
     "experimentalDecorators": true,
     "declaration": true,
     "sourceMap": true,
-    "moduleResolution": "node",
-    "rootDir": "."
+    "moduleResolution": "node"
   },
   "files": [
     "../index.d.ts",
