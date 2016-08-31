@@ -128,12 +128,23 @@ export class ImageCropper extends ImageCropperModel {
     public prepare(canvas: HTMLCanvasElement) {
         this.buffer = document.createElement("canvas");
         this.cropCanvas = document.createElement("canvas");
-        this.cropCanvas.width = this.cropWidth;
+
+        // todo get more reliable parent width value.
+        let responsiveWidth = canvas.parentElement.clientWidth;
+        if (responsiveWidth > 0 && this.cropperSettings.responsive) {
+            this.cropCanvas.width = responsiveWidth;
+            this.buffer.width = responsiveWidth;
+            canvas.width = responsiveWidth;
+        } else {
+            this.cropCanvas.width = this.cropWidth;
+            this.buffer.width = canvas.width;
+        }
+
         this.cropCanvas.height = this.cropHeight;
-        this.buffer.width = canvas.width;
         this.buffer.height = canvas.height;
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
+
         this.draw(this.ctx);
     }
 
@@ -518,12 +529,10 @@ export class ImageCropper extends ImageCropperModel {
             }
         }
         if (!matched) {
-            console.log("Not mutched, handler", newCropTouch.dragHandle);
             for (let i = 0; i < this.markers.length; i++) {
                 let marker: CornerMarker | DragMarker = this.markers[i];
                 if (marker.touchInBounds(newCropTouch.x, newCropTouch.y)) {
                     newCropTouch.dragHandle = marker;
-                    console.log("IN BOUNDS");
                     this.currentDragTouches.push(newCropTouch);
                     marker.setDrag(true);
                     newCropTouch.dragHandle.offset.x = newCropTouch.x - newCropTouch.dragHandle.position.x;
@@ -534,9 +543,7 @@ export class ImageCropper extends ImageCropperModel {
                 }
             }
             if (newCropTouch.dragHandle === null || typeof newCropTouch.dragHandle === "undefined") {
-                console.log("Nohandle");
                 if (this.center.touchInBounds(newCropTouch.x, newCropTouch.y)) {
-                    console.log("CENTER IN BOUNDS");
                     newCropTouch.dragHandle = this.center;
                     this.currentDragTouches.push(newCropTouch);
                     newCropTouch.dragHandle.setDrag(true);

@@ -30,6 +30,8 @@ export class CropperSettings implements ICropperSettings {
     public minHeight: number = 50;
     public minWithRelativeToResolution: boolean = true;
 
+    public responsive: boolean = false;
+
     public croppedWidth: number = 100;
     public croppedHeight: number = 100;
 
@@ -43,6 +45,7 @@ export class CropperSettings implements ICropperSettings {
     private _keepAspect: boolean = true;
 
     constructor() {
+        // init
     }
 
     set rounded(val: boolean) {

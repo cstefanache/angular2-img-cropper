@@ -52,6 +52,8 @@ export class AppComponent extends Type {
         this.cropperSettings.minWidth = 100;
         this.cropperSettings.minHeight = 100;
 
+        this.cropperSettings.responsive = true;
+
         this.cropperSettings.rounded = false;
 
         this.cropperSettings.cropperDrawSettings.strokeColor = "rgba(255,255,255,1)";
