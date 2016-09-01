@@ -117,7 +117,7 @@ export class ImageCropperComponent extends Type {
     setImage(image) {
         var self = this;
 
-        this.intervalRef = setInterval(function () {
+        this.intervalRef = window.setInterval(function () {
             if (this.intervalRef) {
                 clearInterval(this.intervalRef);
             }
