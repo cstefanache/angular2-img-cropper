@@ -9,6 +9,7 @@
 		"declaration": true,
 		"sourceMap": true,
 		"moduleResolution": "node",
+		"outDir": "dist",
 		"rootDir": "."
 	},
 	"files": [
