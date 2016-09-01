@@ -9,7 +9,7 @@
   "scripts": {
     "tsc": "tsc",
     "postinstall": "typings install",
-    "build": "tsc -p .",
+    "build": "tsc -p ./",
     "preversion": "npm test && npm run build",
     "version": "git commit -am \"Prerelease updates\" && git checkout -b release && git add -f ./",
     "postversion": "git push --tags && git checkout master && git branch -D release && git push && npm publish",
@@ -17,7 +17,7 @@
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
     "compile": "npm run compile:ts",
-    "compile:ts": "tsc --outDir ./dist --module commonjs",
+    "compile:ts": "tsc",
     "typings": "typings",
     "all": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "start": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
