@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "out": "dist/img-cropper-test-app.js",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "module": "system",
     "target": "es5",
     "emitDecoratorMetadata": true,

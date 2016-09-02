@@ -6,16 +6,14 @@
         'rxjs': 'node_modules/rxjs',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
         '@angular': 'node_modules/@angular',
-        'ng2-img-cropper': 'ng2-img-cropper',
-        'ng2-styler': 'node_modules/ng2-styler'
+        'ng2-img-cropper': 'ng2-img-cropper'
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
         'app': {main: 'main.js', defaultExtension: 'js'},
         'rxjs': {defaultExtension: 'js'},
-        'angular2-in-memory-web-api': {defaultExtension: 'js'},
-        'ng2-styler' : { main: 'index.js', defaultExtension: 'js' }
+        'angular2-in-memory-web-api': {defaultExtension: 'js'}
     };
 
     var packageNames = [

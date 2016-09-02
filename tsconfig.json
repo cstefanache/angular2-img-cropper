@@ -1,25 +1,25 @@
 {
-  "compilerOptions": {
-    "removeComments": true,
-    "noImplicitAny": false,
-    "module": "commonjs",
-    "target": "es5",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "declaration": true,
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "rootDir": "."
-  },
-  "files": [
-    "typings/index.d.ts",
-    "index.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "runtime",
-    "typings/main",
-    "typings/main.d.ts"
-  ]
+	"compilerOptions": {
+		"removeComments": true,
+		"noImplicitAny": true,
+		"module": "commonjs",
+		"target": "es5",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"declaration": true,
+		"sourceMap": true,
+		"moduleResolution": "node",
+		"rootDir": "."
+	},
+	"files": [
+		"typings/index.d.ts",
+		"index.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"runtime",
+		"typings/main",
+		"typings/main.d.ts"
+	]
 }
