@@ -1,32 +1,36 @@
-export class Point {
+export interface IPoint {
+    x: number;
+    y: number;
+    next: Point;
+    prev: Point;
+}
 
-    public x:number;
-    public y:number;
+export class Point implements IPoint {
 
-    private _next:Point;
-    private _prev:Point;
+    public x: number;
+    public y: number;
 
+    private _next: Point;
+    private _prev: Point;
 
-    constructor(x?:number, y?:number) {
+    constructor(x?: number, y?: number) {
         this.x = x;
         this.y = y;
     }
 
-    getNext():Point {
+    public get next(): Point {
         return this._next;
     }
 
-    setNext(p:Point) {
+    public set next(p: Point) {
         this._next = p;
     }
 
-    getPrev():Point {
+    public get prev(): Point {
         return this._prev;
     }
 
-    setPrev(p:Point) {
+    public set prev(p: Point) {
         this._prev = p;
     }
-
-
 }

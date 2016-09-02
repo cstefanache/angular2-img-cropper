@@ -1,33 +1,32 @@
 export class ImageCropperDataShare {
-    public static share:any = {};
-    public static pressed;
-    public static over;
+    public static share: any = {};
+    public static pressed: HTMLCanvasElement;
+    public static over: HTMLCanvasElement;
 
-    public static setPressed(canvas):void {
+    public static setPressed(canvas: HTMLCanvasElement): void {
         this.pressed = canvas;
     };
 
-    public static setReleased(canvas):void {
+    public static setReleased(canvas: HTMLCanvasElement): void {
         if (canvas === this.pressed) {
             this.pressed = undefined;
         }
     };
 
-    public static setOver(canvas):void {
+    public static setOver(canvas: HTMLCanvasElement): void {
         this.over = canvas;
     };
 
-    public static setStyle(canvas, style):void {
+    public static setStyle(canvas: HTMLCanvasElement, style: any): void {
         if (this.pressed !== undefined) {
             if (this.pressed === canvas) {
-                //TODO: check this
-                //angular.element(document.documentElement).css('cursor', style);
+                // TODO: check this
+                // angular.element(document.documentElement).css('cursor', style);
             }
-        }
-        else {
+        } else {
             if (canvas === this.over) {
-                //TODO: check this
-                //angular.element(document.documentElement).css('cursor', style);
+                // TODO: check this
+                // angular.element(document.documentElement).css('cursor', style);
             }
         }
     };
