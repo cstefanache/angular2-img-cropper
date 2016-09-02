@@ -1,19 +1,13 @@
-export interface IFraction {
+export class Fraction extends Number {
     numerator: number;
     denominator: number;
 }
 
-declare var Fraction: {
-    new (value?: number): IFraction;
-    (value?: number): number;
-    prototype: IFraction;
-};
 
 export interface IImageExtended extends HTMLImageElement {
     exifdata: any;
     iptcdata: any;
 }
-;
 
 // Console debug wrapper that makes code looks a little bit cleaner
 export class Debug {
