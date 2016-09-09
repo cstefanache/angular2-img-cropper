@@ -1,44 +1,65 @@
-import {Point} from './point';
+import {Point} from "./point";
+import {CropperSettings} from "../cropperSettings";
 
-export class Handle {
+export interface IHandle {
+    over: boolean;
+    drag: boolean;
+    position: Point;
+    setPosition(x: number, y: number): void;
+    offset: Point;
+    radius: number;
+    cropperSettings: CropperSettings;
+    setDrag(value: boolean): void;
+    draw(ctx: CanvasRenderingContext2D): void;
+    setOver(over: boolean): void;
+    touchInBounds(x: number, y: number): boolean;
+}
 
-    over:Boolean;
-    drag:Boolean;
-    position:Point;
-    offset:Point;
-    radius:number;
+export class Handle implements IHandle {
+    public over: boolean;
+    public drag: boolean;
+    private _position: Point;
+    public offset: Point;
+    public radius: number;
 
-    constructor(x, y, radius) {
+    public cropperSettings: CropperSettings = new CropperSettings();
+
+    constructor(x: number, y: number, radius: number, settings: CropperSettings) {
         this.over = false;
         this.drag = false;
-        this.position = new Point(x, y);
+        this._position = new Point(x, y);
         this.offset = new Point(0, 0);
         this.radius = radius;
+        this.cropperSettings = settings;
     }
 
-    setDrag(value) {
+    public setDrag(value: boolean) {
         this.drag = value;
         this.setOver(value);
-    };
+    }
 
-    draw(ctx) {
-    };
+    public draw(ctx: CanvasRenderingContext2D) {
+        // this should't be empty
+    }
 
-    setOver(over) {
+    public setOver(over: boolean): void {
         this.over = over;
-    };
+    }
 
-    touchInBounds(x, y) {
-        return (x > this.position.x - this.radius && x < this.position.x + this.radius && y > this.position.y - this.radius && y < this.position.y + this.radius);
-    };
+    public touchInBounds(x: number, y: number): boolean {
+        return (x > this.position.x - this.radius + this.offset.x) &&
+            (x < this.position.x + this.radius + this.offset.x) &&
+            (y > this.position.y - this.radius + this.offset.y) &&
+            (y < this.position.y + this.radius + this.offset.y);
+    }
 
-    getPosition() {
-        return this.position;
-    };
+    public get position(): Point {
+        return this._position;
+    }
 
-    setPosition(x, y) {
-        this.position.x = x;
-        this.position.y = y;
-    };
+    public setPosition(x: number, y: number) {
+        this._position.x = x;
+        this._position.y = y;
+    }
 
 }

@@ -1,0 +1,23 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "no-constructor-vars": true,
+    "ordered-imports": false,
+    "member-ordering": false,
+    "max-line-length": false,
+    "variable-name": false,
+    "only-arrow-functions": false,
+    "no-inferrable-types": true,
+    "one-variable-per-declaration": false,
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ]
+  },
+  "rulesDirectory": []
+}

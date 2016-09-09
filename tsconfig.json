@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-
-    "noImplicitAny": false,
+    "removeComments": true,
+    "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
     "emitDecoratorMetadata": true,
@@ -12,12 +12,14 @@
     "rootDir": "."
   },
   "files": [
+    "typings/index.d.ts",
     "index.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "runtime",
-    "typings"
+    "typings/main",
+    "typings/main.d.ts"
   ]
 }

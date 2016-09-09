@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
     "out": "dist/img-cropper-test-app.js",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "module": "system",
     "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "rootDir": "."
   },
+  "files": [
+    "../index.d.ts",
+    "../typings/index.d.ts",
+    "./main.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
