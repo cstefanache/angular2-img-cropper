@@ -1,5 +1,5 @@
-import {bootstrap}    from "@angular/platform-browser-dynamic";
-import {AppComponent} from "./app";
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-// todo: update to angular2 rc.5 with ngModule.
-bootstrap(AppComponent, []);
+import {AppModule} from "./app.module";
+
+platformBrowserDynamic().bootstrapModule(AppModule);
