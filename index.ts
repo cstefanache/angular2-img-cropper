@@ -1,5 +1,3 @@
-export * from "./src/imageCropperComponent";
-export * from "./src/imageCropper";
-export * from "./src/cropperSettings";
-export * from "./src/cropperDrawSettings";
-export * from "./src/model/bounds";
+export { ImageCropperModule } from './src/imageCropperModule';
+export { CropperSettings } from './src/cropperSettings';
+export { ImageCropperComponent } from './src/imageCropperComponent';
