@@ -706,7 +706,9 @@ export class ImageCropper extends ImageCropperModel {
         let offsetH: number = (this.buffer.height - h) / 2 / this.ratioH;
         let offsetW: number = (this.buffer.width - w) / 2 / this.ratioW;
 
-        this.drawImageIOSFix(this.cropCanvas.getContext("2d"), this.srcImage,
+        let ctx = this.cropCanvas.getContext("2d");
+        ctx.clearRect(0, 0, this.cropCanvas.width, this.cropCanvas.height);
+        this.drawImageIOSFix(ctx, this.srcImage,
             Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0),
             Math.max(Math.round(bounds.top / this.ratioH - offsetH), 0),
             Math.max(Math.round(bounds.width / this.ratioW), 1), Math.max(Math.round(bounds.height / this.ratioH), 1),
