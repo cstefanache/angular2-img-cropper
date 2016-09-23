@@ -18,7 +18,6 @@ import {Exif} from "./exif";
     </span>
   `
 })
-
 export class ImageCropperComponent extends Type {
 
     @ViewChild("cropcanvas", undefined) private cropcanvas: ElementRef;
