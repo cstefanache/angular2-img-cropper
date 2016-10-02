@@ -1,35 +1,43 @@
-import {Component, ViewChild, Type} from '@angular/core';
-import {ImageCropperComponent, CropperSettings, Bounds} from '../index';
+import { Component, ViewChild, Type, OnInit, Inject, ElementRef } from '@angular/core';
+import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
 
 @Component({
     selector: 'test-app',
     template: `
-    <div class="row">
-      <h2>Sample cropper 1</h2>
-      <div class="col s6">
-        <div class="card">
-          <div class="card-image">
-            <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
-            <span class="card-title">source image</span>
-          </div>
-          <div class="card-content">
-          </div>
+
+
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr style="vertical-align:middle;">
+          <td class="mui--appbar-height" style="color: white;">angular2-img-cropper - demo</td>
+        </tr>
+      </table>
+    </div>
+
+    <ul class="mui-tabs__bar mui-tabs__bar--justified">
+      <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Settings demo 1</a></li>
+      <li><a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Settings demo 2</a></li>
+    </ul>
+    <div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+    <div class="mui-container-fluid">
+      <div class="mui-row">
+        <div class="mui-col-md-6">
+          <div class="mui--text-dark mui--text-headline">source:</div>
+          <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
         </div>
-      </div>
-
-
-    <div class="col s6">
-      <div class="card horizontal">
-        <div class="card-image">
-        <span class="result" *ngIf="data1.image" >
+        <div class="mui-col-md-6">
+            <div class="mui--text-title">result:</div>
+            <br/>
+            <span *ngIf="data1.image" >
             <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
-        </span>
+            </span>
         </div>
-        <div class="card-stacked">
-          <div class="card-content">
-          <span class="card-title">settings</span>
-<div>
-<pre><code>this.cropperSettings1 = new CropperSettings();
+        </div>
+        <br/>
+          <div class="mui--text-title">settings:</div>
+<pre>
+<code>
+this.cropperSettings1 = new CropperSettings();
 this.cropperSettings1.width = 200;
 this.cropperSettings1.height = 200;
 
@@ -46,32 +54,37 @@ this.cropperSettings1.rounded = false;
 
 this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
 this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
-</code></pre>
-            </div>
-          </div>
-        </div>
+</code>
+</pre>
       </div>
     </div>
 
-  </div>
 
-
-        <div class="pull-left">
-            <h3>
-                Sample cropper 2
-            </h3>
-           <div class="file-upload">
-                <span class="text">upload</span>
-                <input id="custom-input" type="file" (change)="fileChangeListener($event)">
-            </div>
-
+    <div class="mui-tabs__pane" id="pane-justified-2">
+    <div class="mui-container-fluid">
+      <div class="mui-row">
+        <div class="mui-col-md-6">
+          <div class="mui--text-dark mui--text-headline">source:</div>
             <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
-            <br>
-            <span class="result rounded" *ngIf="data2.image" >
-                <img [src]="data2.image" [width]="cropperSettings2.croppedWidth" [height]="cropperSettings2.croppedHeight">
+            <div class="file-upload">
+                  <label class="mui-btn mui-btn--raised mui-btn--primary">
+                    upload
+                    <input id="file_input_file" class="none" type="file" style="display: none;" (change)="fileChangeListener($event)"/>
+                  </label>
+              </div>
+        </div>
+        <div class="mui-col-md-6">
+            <div class="mui--text-title">result:</div>
+            <br/>
+            <span *ngIf="data2.image" >
+              <img [src]="data2.image" [width]="cropperSettings2.croppedWidth" [height]="cropperSettings2.croppedHeight" style="border-radius: 100px">
             </span>
-            <h4>Settings:</h4>
-            <pre>
+        </div>
+        </div>
+        <br/>
+          <div class="mui--text-title">settings:</div>
+<pre>
+<code>
 this.cropperSettings2 = new CropperSettings();
 this.cropperSettings2.width = 200;
 this.cropperSettings2.height = 200;
@@ -92,24 +105,27 @@ this.cropperSettings2.minWithRelativeToResolution = false;
 this.cropperSettings2.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
 this.cropperSettings2.cropperDrawSettings.strokeWidth = 2;
 this.cropperSettings2.noFileInput = true;
-            </pre>
-        </div>
+</code>
+</pre>
+      </div>
+    </div>
     `
 })
 export class AppComponent extends Type {
 
     //Cropper 1 data
-    data1:any;
-    cropperSettings1:CropperSettings;
+    data1: any;
+    cropperSettings1: CropperSettings;
 
     //Cropper 2 data
-    data2:any;
-    cropperSettings2:CropperSettings;
-    @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
+    data2: any;
+    cropperSettings2: CropperSettings;
+    @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
 
 
-    constructor() {
+    constructor( @Inject(ElementRef) elementRef: ElementRef) {
         super();
+        this.elementRef = elementRef;
 
         this.cropperSettings1 = new CropperSettings();
         this.cropperSettings1.width = 200;
@@ -129,7 +145,7 @@ export class AppComponent extends Type {
         this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
         this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
 
-        this.cropperSettings1.keepAspect = true;
+        this.cropperSettings1.keepAspect = false;
 
         this.cropperSettings1.initialX = 305;
         this.cropperSettings1.initialY = 60;
@@ -165,7 +181,7 @@ export class AppComponent extends Type {
 
     }
 
-    cropped(bounds:Bounds) {
+    cropped(bounds: Bounds) {
         //console.log(bounds);
     }
 
@@ -174,11 +190,11 @@ export class AppComponent extends Type {
      * @param $event
      */
     fileChangeListener($event) {
-        var image:any = new Image();
-        var file:File = $event.target.files[0];
-        var myReader:FileReader = new FileReader();
+        var image: any = new Image();
+        var file: File = $event.target.files[0];
+        var myReader: FileReader = new FileReader();
         var that = this;
-        myReader.addEventListener('loadend', function (loadEvent:any) {
+        myReader.addEventListener('loadend', function(loadEvent: any) {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
         });
