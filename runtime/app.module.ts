@@ -7,8 +7,10 @@ import 'rxjs/Rx';
 
 import { AppComponent } from './app';
 
+import { MaterialModule } from '@angular/material';
+
 @NgModule({
-    imports: [ BrowserModule ],
+    imports: [ BrowserModule, MaterialModule.forRoot() ],
     declarations: [
         AppComponent, ImageCropperComponent
     ],

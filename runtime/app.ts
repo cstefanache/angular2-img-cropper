@@ -4,7 +4,26 @@ import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
 @Component({
     selector: 'test-app',
     template: `
-
+    <md-toolbar color="primary">
+      Angular Material 2 App
+    </md-toolbar>
+    <div style="padding: 7px">
+      <md-tab-group [class.fix]="fix">
+        <md-tab>
+          <template md-tab-label>a very very loooong label</template>
+          <template md-tab-content>
+            <h1>some contentasd</h1>
+            <button md-raised-button color="primary" (click)="fix = !fix">Fix problem</button>
+          </template>
+        </md-tab>
+        <md-tab>
+          <template md-tab-label>a very very loooong label long long long</template>
+          <template md-tab-content>
+            <h1>some content</h1>
+          </template>
+        </md-tab>
+      </md-tab-group>
+    </div>
 
     <div class="mui-appbar">
       <table width="100%">
