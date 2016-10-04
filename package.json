@@ -4,11 +4,10 @@
   "description": "Angular2 Image Cropper Component",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
+    "url": "git+https://github.com/TwanoO67/angular2-img-cropper.git"
   },
   "scripts": {
     "tsc": "tsc",
-    "postinstall": "typings install",
     "build": "tsc -p ./",
     "preversion": "npm test && npm run build",
     "version": "git commit -am \"Prerelease updates\" && git checkout -b release && git add -f ./",

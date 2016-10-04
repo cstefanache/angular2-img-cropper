@@ -24,7 +24,7 @@ export class ImageCropperComponent extends Type {
 
     @Input() private settings: CropperSettings;
     @Input() private image: any;
-    @Input() private cropper: ImageCropper;
+    @Input() public cropper: ImageCropper;
 
     @Output() private onCrop: EventEmitter<any> = new EventEmitter();
 

@@ -12,14 +12,11 @@
     "rootDir": "."
   },
   "files": [
-    "typings/index.d.ts",
     "index.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "runtime",
-    "typings/main",
-    "typings/main.d.ts"
+    "runtime"
   ]
 }
