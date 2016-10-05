@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["es6", "dom", "es2017.object"],
     "out": "dist/img-cropper-test-app.js",
     "noImplicitAny": true,
     "module": "system",
@@ -13,7 +14,6 @@
   },
   "files": [
     "../index.d.ts",
-    "../typings/index.d.ts",
     "./main.ts"
   ],
   "exclude": [
