@@ -4,7 +4,7 @@
   "description": "Angular2 Image Cropper Component",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TwanoO67/angular2-img-cropper.git"
+    "url": "git+https://github.com/cstefanache/angular2-img-cropper.git"
   },
   "scripts": {
     "tsc": "tsc",
@@ -17,7 +17,6 @@
     "release:major": "npm version major && npm publish",
     "compile": "npm run compile:ts",
     "compile:ts": "tsc",
-    "typings": "typings",
     "all": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "start": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "watch": "tsc -w ",
@@ -28,18 +27,18 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "2.0.0",
-    "@angular/compiler": "2.0.0",
-    "@angular/core": "2.0.0"
+    "@angular/common": "2.0.1",
+    "@angular/compiler": "2.0.1",
+    "@angular/core": "2.0.1"
   },
   "devDependencies": {
-    "@angular/common": "2.0.0",
-    "@angular/compiler": "2.0.0",
-    "@angular/core": "2.0.0",
-    "@angular/http": "2.0.0",
-    "@angular/platform-browser": "2.0.0",
-    "@angular/platform-browser-dynamic": "2.0.0",
-    "@angular/upgrade": "2.0.0",
+    "@angular/common": "2.0.1",
+    "@angular/compiler": "2.0.1",
+    "@angular/core": "2.0.1",
+    "@angular/http": "2.0.1",
+    "@angular/platform-browser": "2.0.1",
+    "@angular/platform-browser-dynamic": "2.0.1",
+    "@angular/upgrade": "2.0.1",
     "angular2-in-memory-web-api": "0.0.20",
     "concurrently": "^2.2.0",
     "core-js": "^2.4.1",
@@ -49,12 +48,14 @@
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
     "typescript": "^2.0.2",
-    "typings": "^1.3.2",
     "zone.js": "^0.6.23"
   },
   "bugs": {
     "url": "https://github.com/cstefanache/angular2-img-cropper/issues"
   },
   "homepage": "https://github.com/cstefanache/angular2-img-cropper#readme",
-  "author": "Cornel Stefanache"
+  "author": "Cornel Stefanache",
+  "dependencies": {
+    "es6-shim": "^0.35.1"
+  }
 }
