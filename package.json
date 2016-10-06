@@ -28,11 +28,6 @@
     "angular2"
   ],
   "license": "MIT",
-  "peerDependencies": {
-    "@angular/common": "^2.0.0",
-    "@angular/compiler": "^2.0.0",
-    "@angular/core": "^2.0.0"
-  },
   "devDependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
@@ -41,6 +36,8 @@
     "@angular/platform-browser": "^2.0.0",
     "@angular/platform-browser-dynamic": "^2.0.0",
     "@angular/upgrade": "^2.0.0",
+    "@angular/forms": "^2.0.0",
+    "@angular/material": "^2.0.0-alpha.9-3",
     "angular2-in-memory-web-api": "0.0.20",
     "concurrently": "^2.2.0",
     "core-js": "^2.4.1",
@@ -59,8 +56,7 @@
   "homepage": "https://github.com/cstefanache/angular2-img-cropper#readme",
   "author": "Cornel Stefanache",
   "dependencies": {
-    "@angular/forms": "^2.0.1",
-    "@angular/http": "^2.0.1",
-    "@angular/material": "^2.0.0-alpha.9-3"
+    "es6-shim": "^0.35.1",
+    "ng2-tabs": "0.0.7"
   }
 }

@@ -6,11 +6,10 @@ import { HttpModule } from '@angular/http';
 import 'rxjs/Rx';
 
 import { AppComponent } from './app';
-
-import { MaterialModule } from '@angular/material';
+import {TabsModule} from "ng2-tabs";
 
 @NgModule({
-    imports: [ BrowserModule, MaterialModule.forRoot() ],
+    imports: [ BrowserModule, TabsModule ],
     declarations: [
         AppComponent, ImageCropperComponent
     ],

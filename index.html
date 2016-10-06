@@ -1,11 +1,11 @@
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0;">
-  <link rel="stylesheet" href="runtime/runtime.css" >
+  <link rel="stylesheet" href="runtime/runtime.css">
 
-  <!-- Load the Angular Material 2 stylesheets -->
-  <link href="https://unpkg.com/@angular2-material/core/style/core.css" rel="stylesheet">
-  <link href="https://unpkg.com/@angular/material/core/theming/prebuilt/indigo-pink.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
 
   <script src="node_modules/es6-shim/es6-shim.min.js"></script>
   <script src="node_modules/zone.js/dist/zone.js"></script>
@@ -13,12 +13,17 @@
   <script src="node_modules/systemjs/dist/system.src.js"></script>
   <script src="system.config.js"></script>
   <script src="dist/img-cropper-test-app.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
-  <test-app>Loading...</test-app>
-  <script>
+  <div class="container">
+    <test-app>Loading...</test-app>
+    <script>
     System.import('runtime/main').then(null, function(err) {console.log(err)});
   </script>
+  </div>
+
 </body>
+
 </html>

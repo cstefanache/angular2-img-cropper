@@ -4,56 +4,16 @@ import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
 @Component({
     selector: 'test-app',
     template: `
-    <md-toolbar color="primary">
-      Angular Material 2 App
-    </md-toolbar>
-    <div style="padding: 7px">
-      <md-tab-group [class.fix]="fix">
-        <md-tab>
-          <template md-tab-label>a very very loooong label</template>
-          <template md-tab-content>
-            <h1>some contentasd</h1>
-            <button md-raised-button color="primary" (click)="fix = !fix">Fix problem</button>
-          </template>
-        </md-tab>
-        <md-tab>
-          <template md-tab-label>a very very loooong label long long long</template>
-          <template md-tab-content>
-            <h1>some content</h1>
-          </template>
-        </md-tab>
-      </md-tab-group>
-    </div>
-
-    <div class="mui-appbar">
-      <table width="100%">
-        <tr style="vertical-align:middle;">
-          <td class="mui--appbar-height" style="color: white;">angular2-img-cropper - demo</td>
-        </tr>
-      </table>
-    </div>
-
-    <ul class="mui-tabs__bar mui-tabs__bar--justified">
-      <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="pane-justified-1">Settings demo 1</a></li>
-      <li><a data-mui-toggle="tab" data-mui-controls="pane-justified-2">Settings demo 2</a></li>
-    </ul>
-    <div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
-    <div class="mui-container-fluid">
-      <div class="mui-row">
-        <div class="mui-col-md-6">
-          <div class="mui--text-dark mui--text-headline">source:</div>
-          <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
-        </div>
-        <div class="mui-col-md-6">
-            <div class="mui--text-title">result:</div>
-            <br/>
-            <span *ngIf="data1.image" >
-            <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
-            </span>
-        </div>
-        </div>
-        <br/>
-          <div class="mui--text-title">settings:</div>
+<div class="page-header">
+  <h1>Example page header <small>Subtext for header</small></h1>
+</div>
+<tabset [pills]="false" >
+    <tab title="Tab title1" [disabled]="false">
+        Tab contents123.
+        <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+        <span *ngIf="data1.image" >
+        <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
+        </span>
 <pre>
 <code>
 this.cropperSettings1 = new CropperSettings();
@@ -75,33 +35,21 @@ this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
 this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
 </code>
 </pre>
-      </div>
-    </div>
+    </tab>
 
 
-    <div class="mui-tabs__pane" id="pane-justified-2">
-    <div class="mui-container-fluid">
-      <div class="mui-row">
-        <div class="mui-col-md-6">
-          <div class="mui--text-dark mui--text-headline">source:</div>
-            <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
-            <div class="file-upload">
-                  <label class="mui-btn mui-btn--raised mui-btn--primary">
-                    upload
-                    <input id="file_input_file" class="none" type="file" style="display: none;" (change)="fileChangeListener($event)"/>
-                  </label>
-              </div>
-        </div>
-        <div class="mui-col-md-6">
-            <div class="mui--text-title">result:</div>
-            <br/>
+    <tab title="Tab title2" [disabled]="false">
+        Tab contents456.
+        <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
+        <div class="file-upload">
+              <label class="mui-btn mui-btn--raised mui-btn--primary">
+                upload
+                <input id="file_input_file" class="none" type="file" style="display: none;" (change)="fileChangeListener($event)"/>
+              </label>
+          </div>     
             <span *ngIf="data2.image" >
               <img [src]="data2.image" [width]="cropperSettings2.croppedWidth" [height]="cropperSettings2.croppedHeight" style="border-radius: 100px">
             </span>
-        </div>
-        </div>
-        <br/>
-          <div class="mui--text-title">settings:</div>
 <pre>
 <code>
 this.cropperSettings2 = new CropperSettings();
@@ -126,7 +74,21 @@ this.cropperSettings2.cropperDrawSettings.strokeWidth = 2;
 this.cropperSettings2.noFileInput = true;
 </code>
 </pre>
-      </div>
+
+    </tab>
+
+
+   <tab title="Tab title3" [disabled]="false">
+        Tab contents789.
+    </tab>
+</tabset>
+
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr style="vertical-align:middle;">
+          <td class="mui--appbar-height" style="color: white;">angular2-img-cropper - demo</td>
+        </tr>
+      </table>
     </div>
     `
 })
