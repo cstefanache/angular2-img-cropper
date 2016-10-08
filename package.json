@@ -28,10 +28,12 @@
     "angular2"
   ],
   "license": "MIT",
-  "devDependencies": {
+  "peerDependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
-    "@angular/core": "^2.0.0",
+    "@angular/core": "^2.0.0"
+  },  
+  "devDependencies": {
     "@angular/http": "^2.0.0",
     "@angular/platform-browser": "^2.0.0",
     "@angular/platform-browser-dynamic": "^2.0.0",
