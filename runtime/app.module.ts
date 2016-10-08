@@ -6,9 +6,10 @@ import { HttpModule } from '@angular/http';
 import 'rxjs/Rx';
 
 import { AppComponent } from './app';
+import {TabsModule} from "ng2-tabs";
 
 @NgModule({
-    imports: [ BrowserModule ],
+    imports: [ BrowserModule, TabsModule ],
     declarations: [
         AppComponent, ImageCropperComponent
     ],
