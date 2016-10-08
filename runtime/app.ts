@@ -1,19 +1,27 @@
-import { Component, ViewChild, Type, OnInit, Inject, ElementRef } from '@angular/core';
+import { Component, ViewChild, Type } from '@angular/core';
 import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
 
 @Component({
     selector: 'test-app',
     template: `
 <div class="page-header">
-  <h1>Example page header <small>Subtext for header</small></h1>
+  <h1>angular2-img-cropper <small>samples</small></h1>
 </div>
 <tabset [pills]="false" >
-    <tab title="Tab title1" [disabled]="false">
-        Tab contents123.
-        <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
-        <span *ngIf="data1.image" >
-        <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
-        </span>
+    <tab title="Sample 1" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
+            <span *ngIf="data1.image" >
+            <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
+            </span>
+        </div>
+        </div>
+<h3>settings</h3>
 <pre>
 <code>
 this.cropperSettings1 = new CropperSettings();
@@ -23,8 +31,8 @@ this.cropperSettings1.height = 200;
 this.cropperSettings1.croppedWidth = 200;
 this.cropperSettings1.croppedHeight = 200;
 
-this.cropperSettings1.canvasWidth = 691;
-this.cropperSettings1.canvasHeight = 377;
+this.cropperSettings1.canvasWidth = 500;
+this.cropperSettings1.canvasHeight = 300;
 
 this.cropperSettings1.minWidth = 100;
 this.cropperSettings1.minHeight = 100;
@@ -36,20 +44,26 @@ this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
 </code>
 </pre>
     </tab>
-
-
-    <tab title="Tab title2" [disabled]="false">
-        Tab contents456.
-        <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
-        <div class="file-upload">
-              <label class="mui-btn mui-btn--raised mui-btn--primary">
-                upload
-                <input id="file_input_file" class="none" type="file" style="display: none;" (change)="fileChangeListener($event)"/>
-              </label>
-          </div>     
+    <tab title="Sample 2" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
+            <div>
+                <label class="btn btn-primary">
+                    Upload
+                    <input id="file_input_file" class="none" type="file" style="display: none;" (change)="fileChangeListener($event)"/>
+                </label>
+            </div>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
             <span *ngIf="data2.image" >
               <img [src]="data2.image" [width]="cropperSettings2.croppedWidth" [height]="cropperSettings2.croppedHeight" style="border-radius: 100px">
             </span>
+        </div>
+        </div>
+<h3>settings</h3>
 <pre>
 <code>
 this.cropperSettings2 = new CropperSettings();
@@ -76,47 +90,34 @@ this.cropperSettings2.noFileInput = true;
 </pre>
 
     </tab>
-
-
-   <tab title="Tab title3" [disabled]="false">
-        Tab contents789.
-    </tab>
-</tabset>
-
-    <div class="mui-appbar">
-      <table width="100%">
-        <tr style="vertical-align:middle;">
-          <td class="mui--appbar-height" style="color: white;">angular2-img-cropper - demo</td>
-        </tr>
-      </table>
-    </div>
+</tabset>    
     `
 })
 export class AppComponent extends Type {
 
     //Cropper 1 data
-    data1: any;
-    cropperSettings1: CropperSettings;
+    public data1: any;
+    public cropperSettings1: CropperSettings;
 
     //Cropper 2 data
-    data2: any;
-    cropperSettings2: CropperSettings;
-    @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
+    public data2: any;
+    public cropperSettings2: CropperSettings;
+    @ViewChild('cropper', undefined)
+    public cropper: ImageCropperComponent;
 
 
-    constructor( @Inject(ElementRef) elementRef: ElementRef) {
+    constructor() {
         super();
-        this.elementRef = elementRef;
 
         this.cropperSettings1 = new CropperSettings();
         this.cropperSettings1.width = 200;
-        this.cropperSettings1.height = 300;
+        this.cropperSettings1.height = 200;
 
         this.cropperSettings1.croppedWidth = 200;
-        this.cropperSettings1.croppedHeight = 300;
+        this.cropperSettings1.croppedHeight = 200;
 
-        this.cropperSettings1.canvasWidth = 691;
-        this.cropperSettings1.canvasHeight = 377;
+        this.cropperSettings1.canvasWidth = 500;
+        this.cropperSettings1.canvasHeight = 300;
 
         this.cropperSettings1.minWidth = 100;
         this.cropperSettings1.minHeight = 100;
@@ -162,7 +163,7 @@ export class AppComponent extends Type {
 
     }
 
-    cropped(bounds: Bounds) {
+    public cropped(bounds: Bounds) {
         //console.log(bounds);
     }
 
@@ -170,7 +171,7 @@ export class AppComponent extends Type {
      * Used to send image to second cropper
      * @param $event
      */
-    fileChangeListener($event) {
+    public fileChangeListener($event: any) {
         var image: any = new Image();
         var file: File = $event.target.files[0];
         var myReader: FileReader = new FileReader();
