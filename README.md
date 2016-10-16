@@ -112,6 +112,8 @@ Checkout this [sample plunker](https://embed.plnkr.co/V91mKCNkBQZB5QO2MUP4/)
     * **strokeWidth**:*number* - box/ellipsis stroke width
     * **strokeColor**:*string* - box/ellipsis stroke color
 * **allowedFilesRegex**:*RegExp* - (default: /\.(jpe?g|png|gif)$/i) - Regex for allowed images
+* **cropWidth**:*number - actual cropped image width
+* **cropHeight**:*number - actual cropped image height
 
 ## Customizing Image cropper
 

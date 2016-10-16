@@ -17,7 +17,10 @@ import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
         <h3>result</h3>
         <div class="col-md-3">
             <span *ngIf="data1.image" >
-            <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
+                <img [src]="data1.image"
+                    [width]="cropperSettings1.cropWidth"
+                    [height]="cropperSettings1.cropHeight"
+                    style="max-width: 200px; height: auto;">
             </span>
         </div>
         </div>
@@ -96,14 +99,14 @@ this.cropperSettings2.noFileInput = true;
 export class AppComponent extends Type {
 
     //Cropper 1 data
-    public data1: any;
-    public cropperSettings1: CropperSettings;
+    public data1:any;
+    public cropperSettings1:CropperSettings;
 
     //Cropper 2 data
-    public data2: any;
-    public cropperSettings2: CropperSettings;
+    public data2:any;
+    public cropperSettings2:CropperSettings;
     @ViewChild('cropper', undefined)
-    public cropper: ImageCropperComponent;
+    public cropper:ImageCropperComponent;
 
 
     constructor() {
@@ -158,7 +161,8 @@ export class AppComponent extends Type {
 
     }
 
-    public cropped(bounds: Bounds) {
+    public cropped(bounds:Bounds) {
+        console.log(this);
         //console.log(bounds);
     }
 
@@ -166,12 +170,12 @@ export class AppComponent extends Type {
      * Used to send image to second cropper
      * @param $event
      */
-    public fileChangeListener($event: any) {
-        var image: any = new Image();
-        var file: File = $event.target.files[0];
-        var myReader: FileReader = new FileReader();
+    public fileChangeListener($event:any) {
+        var image:any = new Image();
+        var file:File = $event.target.files[0];
+        var myReader:FileReader = new FileReader();
         var that = this;
-        myReader.addEventListener('loadend', function(loadEvent: any) {
+        myReader.addEventListener('loadend', function (loadEvent:any) {
             image.src = loadEvent.target.result;
             that.cropper.setImage(image);
         });

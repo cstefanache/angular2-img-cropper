@@ -44,6 +44,9 @@ export class CropperSettings implements ICropperSettings {
     private _rounded: boolean = false;
     private _keepAspect: boolean = true;
 
+    public cropWidth: number = 0;
+    public cropHeight: number = 0;
+
     constructor() {
         // init
     }
