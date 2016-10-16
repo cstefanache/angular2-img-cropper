@@ -92,7 +92,7 @@ export class AppComponent {
 
 ```
 
-Checkout this [sample plunker](https://embed.plnkr.co/V91mKCNkBQZB5QO2MUP4/)
+Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 
 
 ## Settings
