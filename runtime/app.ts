@@ -129,11 +129,6 @@ export class AppComponent extends Type {
 
         this.cropperSettings1.keepAspect = false;
 
-        this.cropperSettings1.initialX = 305;
-        this.cropperSettings1.initialY = 60;
-        this.cropperSettings1.initialW = 119;
-        this.cropperSettings1.initialH = 119;
-
         this.data1 = {};
 
 

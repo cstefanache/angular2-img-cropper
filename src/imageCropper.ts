@@ -840,12 +840,14 @@ export class ImageCropper extends ImageCropperModel {
         }
     }
 
-    public getDragTouchForID(id: any) {
+    public getDragTouchForID(id: any):CropTouch {
+        let currentDragTouch:CropTouch;
         for (let i = 0; i < this.currentDragTouches.length; i++) {
             if (id === this.currentDragTouches[i].id) {
-                return this.currentDragTouches[i];
+                currentDragTouch = this.currentDragTouches[i];
             }
         }
+        return currentDragTouch;
     }
 
     public drawCursors(cropTouch: CropTouch) {
