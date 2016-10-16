@@ -11,6 +11,7 @@ import {Exif} from "./exif";
               (mousedown)="onMouseDown($event)"
               (mouseup)="onMouseUp($event)"
               (mousemove)="onMouseMove($event)"
+              (mouseleave)="onMouseUp($event)"
               (touchmove)="onTouchMove($event)"
               (touchend)="onTouchEnd($event)"
               (touchstart)="onTouchStart($event)">
