@@ -1,5 +1,12 @@
 # Changelog
 
+### Release 0.7.0
+ - update for AngularJS 2.0.1
+ - removed typings
+ - fixed aspect ratio issue
+ - made cropper property public
+ - added onmouseleave behavior
+
 ### Release 0.6.1
  - Fixed issue #49 - Error on reading exif
 
