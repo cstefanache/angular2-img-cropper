@@ -951,13 +951,13 @@ export class ImageCropper extends ImageCropperModel {
         ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
 
-    public onMouseDown() {
+    public onMouseDown(event: MouseEvent) {
         if (this.crop.isImageSet()) {
             this.isMouseDown = true;
         }
     }
 
-    public onMouseUp() {
+    public onMouseUp(event: MouseEvent) {
         if (this.crop.isImageSet()) {
             ImageCropperDataShare.setReleased(this.canvas);
             this.isMouseDown = false;
