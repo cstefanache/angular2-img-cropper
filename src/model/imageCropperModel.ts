@@ -4,6 +4,7 @@ import {DragMarker} from "./dragMarker";
 import {CropTouch} from "./cropTouch";
 
 export class ImageCropperModel {
+    public isMouseDown: boolean;
     protected canvas: HTMLCanvasElement;
     protected x: number;
     protected y: number;
@@ -14,7 +15,6 @@ export class ImageCropperModel {
     protected keepAspect: boolean;
     protected touchRadius: number;
     protected currentDragTouches: Array<CropTouch>;
-    protected isMouseDown: boolean;
     protected ratioW: number;
     protected ratioH: number;
     protected fileType: string;

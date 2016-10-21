@@ -18,9 +18,8 @@ import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
         <div class="col-md-3">
             <span *ngIf="data1.image" >
                 <img [src]="data1.image"
-                    [width]="cropperSettings1.cropWidth"
-                    [height]="cropperSettings1.cropHeight"
-                    style="max-width: 200px; height: auto;">
+                    [width]="cropperSettings1.croppedWidth"
+                    [height]="cropperSettings1.croppedHeight">
             </span>
         </div>
         </div>
@@ -130,7 +129,8 @@ export class AppComponent extends Type {
         this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
         this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
 
-        this.cropperSettings1.keepAspect = false;
+        this.cropperSettings1.keepAspect = true;
+        this.cropperSettings1.preserveSize = false;
 
         this.data1 = {};
 
@@ -162,8 +162,7 @@ export class AppComponent extends Type {
     }
 
     public cropped(bounds:Bounds) {
-        console.log(this);
-        //console.log(bounds);
+        console.log(bounds);
     }
 
     /**

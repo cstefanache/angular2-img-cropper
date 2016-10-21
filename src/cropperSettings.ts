@@ -16,6 +16,7 @@ export interface ICropperSettings {
     allowedFilesRegex?: RegExp;
     rounded: boolean;
     keepAspect: boolean;
+    preserveSize: boolean;
 }
 
 export class CropperSettings implements ICropperSettings {
@@ -40,12 +41,11 @@ export class CropperSettings implements ICropperSettings {
     public noFileInput: boolean = false;
 
     public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif)$/i;
+    public preserveSize: boolean = false;
 
     private _rounded: boolean = false;
     private _keepAspect: boolean = true;
 
-    public cropWidth: number = 0;
-    public cropHeight: number = 0;
 
     constructor() {
         // init
