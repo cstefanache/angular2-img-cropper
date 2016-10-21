@@ -10,7 +10,7 @@ Thumbs.db
 !/**/*.d.ts
 !index.js
 !/src/**/*.js
-!/src/**/*.d.ts
+!/src/**/*.js.map
 runtime
 typings
 /system.config.js
