@@ -937,7 +937,7 @@ export class ImageCropper extends ImageCropperModel {
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
                 let dragTouch = this.getDragTouchForID(touch.identifier);
-                if (dragTouch !== null) {
+                if (dragTouch && dragTouch !== null) {
                     if (dragTouch.dragHandle instanceof CornerMarker || dragTouch.dragHandle instanceof DragMarker) {
                         dragTouch.dragHandle.setOver(false);
                     }
