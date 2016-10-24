@@ -8,10 +8,14 @@ Thumbs.db
 /.idea
 !/**/*.ts
 !/**/*.d.ts
+!index.js
+!/src/**/*.js
+!/src/**/*.js.map
 runtime
 typings
 /system.config.js
 /typings.json
+*.ngFactory.ts
 /tsconfig.json
 /index.html
 /.npmignore
