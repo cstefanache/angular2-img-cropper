@@ -125,7 +125,24 @@ export class ImageCropper extends ImageCropperModel {
         return (ratio === 0) ? 1 : ratio;
     }
 
-    public prepare(canvas:HTMLCanvasElement) {
+    private getDataUriMimeType(dataUri: string){
+        // Get a substring because the regex does not perform well on very large strings. Cater for optional charset. Length 50 shoould be enough.
+        let dataUriSubstring = dataUri.substring(0, 50);
+        let mimeType = 'image/png';
+            // data-uri scheme
+            // data:[<media type>][;charset=<character set>][;base64],<data>
+        let regEx = RegExp(/^(data:)([\w\/\+]+);(charset=[\w-]+|base64).*,(.*)/gi);
+        let matches = regEx.exec(dataUriSubstring);
+        if (matches && matches[2]) {
+            mimeType = matches[2];
+            if (mimeType == 'image/jpg') {
+                mimeType = 'image/jpeg';
+            }
+        }
+        return mimeType;
+    }
+
+    public prepare(canvas: HTMLCanvasElement) {
         this.buffer = document.createElement("canvas");
         this.cropCanvas = document.createElement("canvas");
 
@@ -614,14 +631,8 @@ export class ImageCropper extends ImageCropperModel {
         let bufferContext = this.buffer.getContext("2d");
         bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
 
-        let splitName = img.src.split(".");
-        let fileType = splitName[1];
-        if (fileType === "png" || fileType === "jpg") {
-            this.fileType = fileType;
-        }
+        this.fileType = this.getDataUriMimeType(img.src);
 
-        // TODO: investigate better solution
-        // this.fileType = img.src.match(/^data:.+\/(.+);base64,(.*)$/)[1];
         if (this.cropperSettings.minWithRelativeToResolution) {
             this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);
             this.minHeight = (this.canvas.height * this.minHeight / this.srcImage.height);
@@ -733,7 +744,7 @@ export class ImageCropper extends ImageCropperModel {
 
         this.croppedImage.width = this.cropCanvas.width;
         this.croppedImage.height = this.cropCanvas.height;
-        this.croppedImage.src = this.cropCanvas.toDataURL("image/" + this.fileType);
+        this.croppedImage.src = this.cropCanvas.toDataURL( this.fileType );
         return this.croppedImage;
     }
 
