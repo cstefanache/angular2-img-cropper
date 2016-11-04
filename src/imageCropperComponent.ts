@@ -109,9 +109,9 @@ export class ImageCropperComponent extends Type {
     public setImage(image: HTMLImageElement) {
         let self = this;
 
-        this.intervalRef = window.setInterval(() => {
-            if (this.intervalRef) {
-                clearInterval(this.intervalRef);
+        this.intervalRef = window.setInterval(function() {
+            if (self.intervalRef) {
+                clearInterval(self.intervalRef);
             }
             if (image.naturalHeight > 0) {
 
