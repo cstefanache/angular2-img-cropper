@@ -21,13 +21,13 @@ import {Exif} from "./exif";
 })
 export class ImageCropperComponent extends Type {
 
-    @ViewChild("cropcanvas", undefined) private cropcanvas: ElementRef;
+    @ViewChild("cropcanvas", undefined) cropcanvas: ElementRef;
 
-    @Input() private settings: CropperSettings;
-    @Input() private image: any;
+    @Input() public settings: CropperSettings;
+    @Input() public image: any;
     @Input() public cropper: ImageCropper;
 
-    @Output() private onCrop: EventEmitter<any> = new EventEmitter();
+    @Output() public onCrop: EventEmitter<any> = new EventEmitter();
 
     public croppedWidth: number;
     public croppedHeight: number;
@@ -74,11 +74,11 @@ export class ImageCropperComponent extends Type {
         }
     }
 
-    public onMouseDown(): void {
+    public onMouseDown(event: MouseEvent): void {
         this.cropper.onMouseDown();
     }
 
-    public onMouseUp(): void {
+    public onMouseUp(event: MouseEvent): void {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp();
             this.image.image = this.cropper.getCroppedImage().src;
@@ -109,7 +109,7 @@ export class ImageCropperComponent extends Type {
     public setImage(image: HTMLImageElement) {
         let self = this;
 
-        this.intervalRef = window.setInterval(function () {
+        this.intervalRef = window.setInterval(() => {
             if (this.intervalRef) {
                 clearInterval(this.intervalRef);
             }
