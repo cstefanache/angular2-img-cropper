@@ -80,7 +80,7 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
         <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper><br>
         <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
     </div>`,
-    directives: [ImageCropperComponent]
+    declarations: [ImageCropperComponent]
 })
 export class AppComponent {
     data: any;
