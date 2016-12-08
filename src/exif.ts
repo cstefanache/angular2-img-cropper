@@ -314,7 +314,7 @@ export class Exif {
         http.open("GET", url, true);
         http.responseType = "blob";
         http.onload = function () {
-            if (this.status === 200 || this.status === 0) {
+            if (http.status === 200 || http.status === 0) {
                 callback(http.response);
             }
         };
@@ -348,7 +348,7 @@ export class Exif {
                 } else {
                     let http = new XMLHttpRequest();
                     http.onload = function () {
-                        if (this.status === 200 || this.status === 0) {
+                        if (http.status === 200 || http.status === 0) {
                             handleBinaryFile(http.response);
                         } else {
                             throw "Could not load image";
