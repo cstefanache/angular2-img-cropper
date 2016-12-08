@@ -22,7 +22,7 @@ import {Exif} from "./exif";
 })
 export class ImageCropperComponent implements AfterViewInit {
 
-    @ViewChild("cropcanvas", undefined) public cropcanvas: ElementRef;
+    @ViewChild("cropcanvas", undefined) cropcanvas: ElementRef;
 
     @Input() public settings: CropperSettings;
     @Input() public image: any;
