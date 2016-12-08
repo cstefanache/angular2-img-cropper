@@ -54,7 +54,7 @@ export class ImageCropper extends ImageCropperModel {
         this.isMouseDown = false;
         this.ratioW = 1;
         this.ratioH = 1;
-        this.fileType = "png";
+        this.fileType = cropperSettings.fileType;
         this.imageSet = false;
         this.pointPool = new PointPool(200);
 
@@ -125,12 +125,12 @@ export class ImageCropper extends ImageCropperModel {
         return (ratio === 0) ? 1 : ratio;
     }
 
-    private getDataUriMimeType(dataUri: string){
+    private getDataUriMimeType(dataUri:string) {
         // Get a substring because the regex does not perform well on very large strings. Cater for optional charset. Length 50 shoould be enough.
         let dataUriSubstring = dataUri.substring(0, 50);
         let mimeType = 'image/png';
-            // data-uri scheme
-            // data:[<media type>][;charset=<character set>][;base64],<data>
+        // data-uri scheme
+        // data:[<media type>][;charset=<character set>][;base64],<data>
         let regEx = RegExp(/^(data:)([\w\/\+]+);(charset=[\w-]+|base64).*,(.*)/gi);
         let matches = regEx.exec(dataUriSubstring);
         if (matches && matches[2]) {
@@ -142,7 +142,7 @@ export class ImageCropper extends ImageCropperModel {
         return mimeType;
     }
 
-    public prepare(canvas: HTMLCanvasElement) {
+    public prepare(canvas:HTMLCanvasElement) {
         this.buffer = document.createElement("canvas");
         this.cropCanvas = document.createElement("canvas");
 
@@ -720,10 +720,10 @@ export class ImageCropper extends ImageCropperModel {
         let ctx = this.cropCanvas.getContext("2d");
 
         if (this.cropperSettings.preserveSize) {
-            var left =  Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
-            var width =  Math.max(Math.round((bounds.right) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
-            var top =  Math.max(Math.round((bounds.top) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
-            var height =  Math.max(Math.round((bounds.bottom) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
+            var left = Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
+            var width = Math.max(Math.round((bounds.right) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
+            var top = Math.max(Math.round((bounds.top) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
+            var height = Math.max(Math.round((bounds.bottom) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
 
 
             this.cropCanvas.width = width;
@@ -739,12 +739,11 @@ export class ImageCropper extends ImageCropperModel {
             Math.max(Math.round(bounds.top / this.ratioH - offsetH), 0),
             Math.max(Math.round(bounds.width / this.ratioW), 1), Math.max(Math.round(bounds.height / this.ratioH), 1),
             0, 0, this.cropCanvas.width, this.cropCanvas.height
-
         );
 
         this.croppedImage.width = this.cropCanvas.width;
         this.croppedImage.height = this.cropCanvas.height;
-        this.croppedImage.src = this.cropCanvas.toDataURL( this.fileType );
+        this.croppedImage.src = this.cropCanvas.toDataURL(this.fileType);
         return this.croppedImage;
     }
 
@@ -976,13 +975,13 @@ export class ImageCropper extends ImageCropperModel {
         ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
 
-    public onMouseDown(event: MouseEvent) {
+    public onMouseDown(event:MouseEvent) {
         if (this.crop.isImageSet()) {
             this.isMouseDown = true;
         }
     }
 
-    public onMouseUp(event: MouseEvent) {
+    public onMouseUp(event:MouseEvent) {
         if (this.crop.isImageSet()) {
             ImageCropperDataShare.setReleased(this.canvas);
             this.isMouseDown = false;

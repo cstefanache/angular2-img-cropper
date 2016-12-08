@@ -40,6 +40,8 @@ export class CropperSettings implements ICropperSettings {
     public touchRadius: number = 20;
     public noFileInput: boolean = false;
 
+    public fileType:string = "png";
+
     public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif)$/i;
     public preserveSize: boolean = false;
 
