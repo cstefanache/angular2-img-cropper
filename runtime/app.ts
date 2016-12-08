@@ -12,7 +12,7 @@ import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
         <div class="row">
         <div class="col-md-9">
             <h3>source</h3>
-            <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+            <img-cropper [image]="data1" [settings]="cropperSettings1"></img-cropper>
         </div>
         <h3>result</h3>
         <div class="col-md-3">
@@ -54,7 +54,8 @@ this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
             <div>
                 <label class="btn btn-primary">
                     Upload
-                    <input id="file_input_file" class="none" type="file" style="display: none;" (change)="fileChangeListener($event)"/>
+                    <input id="file_input_file" class="none" type="file" style="display: none;"
+                    (change)="onChange($event)"/>
                 </label>
             </div>
         </div>
@@ -92,7 +93,7 @@ this.cropperSettings2.noFileInput = true;
 </pre>
 
     </tab>
-</tabset>    
+</tabset>
     `
 })
 export class AppComponent extends Type {
@@ -106,6 +107,8 @@ export class AppComponent extends Type {
     public cropperSettings2:CropperSettings;
     @ViewChild('cropper', undefined)
     public cropper:ImageCropperComponent;
+
+    public onChange: Function;
 
 
     constructor() {
@@ -159,26 +162,21 @@ export class AppComponent extends Type {
 
         this.data2 = {};
 
+        this.onChange = ($event:any) => {
+            console.log('called');
+            var image:any = new Image();
+            var file:File = $event.target.files[0];
+            var myReader:FileReader = new FileReader();
+            var that = this;
+            myReader.addEventListener('loadend', function (loadEvent:any) {
+                image.src = loadEvent.target.result;
+                that.cropper.setImage(image);
+            });
+
+            myReader.readAsDataURL(file);
+        }
+
     }
 
-    public cropped(bounds:Bounds) {
-        console.log(bounds);
-    }
 
-    /**
-     * Used to send image to second cropper
-     * @param $event
-     */
-    public fileChangeListener($event:any) {
-        var image:any = new Image();
-        var file:File = $event.target.files[0];
-        var myReader:FileReader = new FileReader();
-        var that = this;
-        myReader.addEventListener('loadend', function (loadEvent:any) {
-            image.src = loadEvent.target.result;
-            that.cropper.setImage(image);
-        });
-
-        myReader.readAsDataURL(file);
-    }
 }

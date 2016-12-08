@@ -21,6 +21,7 @@
     var packageNames = [
         'common',
         'compiler',
+        'forms',
         'core',
         'platform-browser',
         'platform-browser-dynamic'
