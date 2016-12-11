@@ -33,7 +33,7 @@ export class Handle implements IHandle {
         this.cropperSettings = settings;
     }
 
-    public setDrag(value: boolean) {
+    public setDrag(value: boolean):void {
         this.drag = value;
         this.setOver(value);
     }

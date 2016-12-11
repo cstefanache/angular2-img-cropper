@@ -7,6 +7,7 @@ import {ImageCropperModel} from "./model/imageCropperModel";
 import {ImageCropperDataShare} from "./imageCropperDataShare";
 import {PointPool} from "./model/pointPool";
 import {Point} from "./model/point";
+import {ICornerMarker} from "./model/cornerMarker";
 
 export class ImageCropper extends ImageCropperModel {
 
@@ -547,7 +548,7 @@ export class ImageCropper extends ImageCropperModel {
         }
         if (!matched) {
             for (let i = 0; i < this.markers.length; i++) {
-                let marker:CornerMarker | DragMarker = this.markers[i];
+                let marker:ICornerMarker = this.markers[i];
                 if (marker.touchInBounds(newCropTouch.x, newCropTouch.y)) {
                     newCropTouch.dragHandle = marker;
                     this.currentDragTouches.push(newCropTouch);
@@ -720,9 +721,9 @@ export class ImageCropper extends ImageCropperModel {
         let ctx = this.cropCanvas.getContext("2d");
 
         if (this.cropperSettings.preserveSize) {
-            var left = Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
+            //var left = Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
             var width = Math.max(Math.round((bounds.right) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
-            var top = Math.max(Math.round((bounds.top) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
+            //var top = Math.max(Math.round((bounds.top) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
             var height = Math.max(Math.round((bounds.bottom) / this.ratioH - offsetH), 0) * this.srcImage.height / this.canvas.height;
 
 
@@ -845,7 +846,7 @@ export class ImageCropper extends ImageCropperModel {
 
     public onMouseMove(e:MouseEvent) {
 
-        if (this.crop.isImageSet()) {
+        if (this.crop.isImageSet() && this.isMouseDown) {
             let mousePosition = ImageCropper.getMousePos(this.canvas, e);
             this.move(new CropTouch(mousePosition.x, mousePosition.y, 0));
             let dragTouch = this.getDragTouchForID(0);

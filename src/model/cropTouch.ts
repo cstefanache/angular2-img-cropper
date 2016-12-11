@@ -1,5 +1,6 @@
 import {DragMarker} from "./dragMarker";
 import {CornerMarker} from "./cornerMarker";
+import {IHandle} from "./handle";
 
 export class CropTouch {
 
@@ -7,7 +8,7 @@ export class CropTouch {
     public y: number;
     public id: number;
 
-    public dragHandle: CornerMarker | DragMarker;
+    public dragHandle: IHandle;
 
     constructor(x: number, y: number, id: number) {
         this.id = id || 0;

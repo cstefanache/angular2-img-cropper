@@ -163,14 +163,12 @@ export class AppComponent extends Type {
         this.data2 = {};
 
         this.onChange = ($event:any) => {
-            console.log('called');
             var image:any = new Image();
             var file:File = $event.target.files[0];
             var myReader:FileReader = new FileReader();
-            var that = this;
-            myReader.addEventListener('loadend', function (loadEvent:any) {
+            myReader.addEventListener('loadend', (loadEvent:any) => {
                 image.src = loadEvent.target.result;
-                that.cropper.setImage(image);
+                this.cropper.setImage(image);
             });
 
             myReader.readAsDataURL(file);

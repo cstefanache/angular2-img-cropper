@@ -5,12 +5,9 @@ npm-debug.log
 # OS generated files
 Thumbs.db
 .DS_Store
-/.idea
+.idea
 !/**/*.ts
 !/**/*.d.ts
-!index.js
-!/src/**/*.js
-!/src/**/*.js.map
 runtime
 typings
 /system.config.js

@@ -68,7 +68,7 @@ export class ImageCropperComponent implements AfterViewInit {
 
     public onTouchEnd(event: TouchEvent): void {
         this.cropper.onTouchEnd(event);
-        if (this.cropper.isImageSet() && this.cropper.isMouseDown) {
+        if (this.cropper.isImageSet()) {
             this.image.image = this.cropper.getCroppedImage().src;
             this.onCrop.emit(this.cropper.getCropBounds());
         }

@@ -1,6 +1,6 @@
 {
   "name": "ng2-img-cropper",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "Angular2 Image Cropper Component",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "lite": "lite-server"
   },
   "keywords": [
-    "angular2"
+    "angular2", "image", "cropper"
   ],
   "license": "MIT",
   "peerDependencies": {
