@@ -12,15 +12,6 @@
     "moduleResolution": "node",
     "rootDir": "."
   },
-  "files": [
-    "index.ts",
-    "src/imageCropperModule.ts",
-    "src/imageCropperComponent.ts",
-    "src/imageCropper.ts",
-    "src/cropperSettings.ts",
-    "src/cropperDrawSettings.ts",
-    "src/model/bounds.ts"
-  ],
   "exclude": [
     "node_modules",
     "dist",
