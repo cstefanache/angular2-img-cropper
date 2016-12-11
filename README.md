@@ -1,5 +1,9 @@
 # Changelog
 
+### Release 0.7.6
+
+ - 21 Bugs in the code, I fixed 3, (hopefully not) 30 Bugs in the code
+
 ### Release 0.7.1
  - Fixed #87 get unsacled crop of image
  
@@ -123,7 +127,8 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
     * **strokeWidth**:*number* - box/ellipsis stroke width
     * **strokeColor**:*string* - box/ellipsis stroke color
 * **allowedFilesRegex**:*RegExp* - (default: /\.(jpe?g|png|gif)$/i) - Regex for allowed images
-* **preserveSize**:*boolean - will not scale the resulting image to the croppedWidth/croppedHeight and will output the exact crop size from original
+* **preserveSize**:*boolean* - will not scale the resulting image to the croppedWidth/croppedHeight and will output the exact crop size from original
+* **fileType**:*string* (default: 'png') - default image format
 
 
 ## Customizing Image cropper
