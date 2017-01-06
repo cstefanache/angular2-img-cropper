@@ -107,13 +107,14 @@ export class ImageCropperComponent implements AfterViewInit {
     }
 
     public setImage(image: HTMLImageElement) {
+
         let self = this;
 
         this.intervalRef = window.setInterval(function() {
             if (self.intervalRef) {
                 clearInterval(self.intervalRef);
             }
-            if (image.naturalHeight > 0) {
+            if (image.naturalHeight > 0 && image.naturalWidth > 0) {
 
                 image.height = image.naturalHeight;
                 image.width = image.naturalWidth;
@@ -128,7 +129,6 @@ export class ImageCropperComponent implements AfterViewInit {
                 });
             }
         }, 10);
-
     }
 
     private getOrientedImage(image: HTMLImageElement, callback: Function) {
