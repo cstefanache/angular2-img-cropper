@@ -7,7 +7,7 @@ import {Exif} from "./exif";
     selector: "img-cropper",
     template: `
         <span class="ng2-imgcrop">
-          <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)" >
+          <input *ngIf="!settings.noFileInput" type="file" accept="image/*" (change)="fileChangeListener($event)" >
           <canvas #cropcanvas
                   (mousedown)="onMouseDown($event)"
                   (mouseup)="onMouseUp($event)"
