@@ -736,9 +736,6 @@ export class ImageCropper extends ImageCropperModel {
             }
         }
 
-        // actualX = actualX + marginLeft;
-        // actualY = actualY + marginTop;
-
         let tlPos: Point = PointPool.instance.borrow(actualX, actualY + actualH);
         let trPos: Point = PointPool.instance.borrow(actualX + actualW, actualY + actualH);
         let blPos: Point = PointPool.instance.borrow(actualX, actualY);

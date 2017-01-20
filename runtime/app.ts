@@ -144,8 +144,8 @@ this.cropperSettings3.cropperDrawSettings.strokeWidth = 2;
 this.cropPosition = new CropPosition();
 this.cropPosition.x = 10;
 this.cropPosition.y = 10;
-this.cropPosition.w = 400;
-this.cropPosition.h = 500;
+this.cropPosition.w = 200;
+this.cropPosition.h = 250;
 </code>
 </pre>
 </tab>    
@@ -247,8 +247,8 @@ export class AppComponent extends Type {
         this.cropPosition = new CropPosition();
         this.cropPosition.x = 10;
         this.cropPosition.y = 10;
-        this.cropPosition.w = 400;
-        this.cropPosition.h = 500;
+        this.cropPosition.w = 200;
+        this.cropPosition.h = 250;
 
         this.data3 = {};
 

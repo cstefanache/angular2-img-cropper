@@ -36,12 +36,10 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
     public croppedWidth: number;
     public croppedHeight: number;
-
     public intervalRef: number;
-
     public renderer: Renderer;
 
-    private isMouseOrTouchEvent: boolean = false;
+    private isCropPositionUpdateNeeded: boolean;
 
     constructor(renderer: Renderer) {
         this.renderer = renderer;
@@ -65,19 +63,14 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (!this.isMouseOrTouchEvent) {
-            if (this.cropper && changes["cropPosition"]) {
-                console.log("onchanges" + this.cropPosition.h + " " + this.cropPosition.w);
-                this.cropper.updateCropPosition(this.cropPosition.toBounds());
-                if (this.cropper.isImageSet()) {
-                    let bounds = this.cropper.getCropBounds();
-                    this.image.image = this.cropper.getCroppedImage().src;
-                    this.onCrop.emit(bounds);
-                }
-                this.updateCropBounds(true);
+        if (this.isCropPositionChanged(changes)) {
+            this.cropper.updateCropPosition(this.cropPosition.toBounds());
+            if (this.cropper.isImageSet()) {
+                let bounds = this.cropper.getCropBounds();
+                this.image.image = this.cropper.getCroppedImage().src;
+                this.onCrop.emit(bounds);
             }
-        } else {
-            this.isMouseOrTouchEvent = false;
+            this.updateCropBounds();
         }
     }
 
@@ -94,7 +87,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         if (this.cropper.isImageSet()) {
             this.image.image = this.cropper.getCroppedImage().src;
             this.onCrop.emit(this.cropper.getCropBounds());
-            this.updateCropBounds(true);
+            this.updateCropBounds();
         }
     }
 
@@ -107,7 +100,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
             this.cropper.onMouseUp(event);
             this.image.image = this.cropper.getCroppedImage().src;
             this.onCrop.emit(this.cropper.getCropBounds());
-            this.updateCropBounds(true);
+            this.updateCropBounds();
         }
     }
 
@@ -146,7 +139,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                 clearInterval(self.intervalRef);
                 self.getOrientedImage(image, (img: HTMLImageElement) => {
                     self.cropper.setImage(img);
-                    if (self.cropPosition.isInitialized()) {
+                    if (self.cropPosition && self.cropPosition.isInitialized()) {
                         self.cropper.updateCropPosition(self.cropPosition.toBounds());
                     }
                     self.image.original = img;
@@ -158,11 +151,19 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }, 10);
     }
 
-    private updateCropBounds(isMouseOrTouchEvent: boolean): void {
+    private isCropPositionChanged(changes: SimpleChanges): boolean {
+        if (this.cropper && changes["cropPosition"] && this.isCropPositionUpdateNeeded) {
+            return true;
+        } else {
+            this.isCropPositionUpdateNeeded = true;
+            return false;
+        }
+    }
+
+    private updateCropBounds(): void {
         let cropBound: Bounds = this.cropper.getCropBounds();
         this.cropPositionChange.emit(new CropPosition(cropBound.left, cropBound.top, cropBound.width, cropBound.height));
-        this.isMouseOrTouchEvent = isMouseOrTouchEvent;
-        console.log("updateCropPosition emit");
+        this.isCropPositionUpdateNeeded = false;
     }
 
     private getOrientedImage(image: HTMLImageElement, callback: Function) {
