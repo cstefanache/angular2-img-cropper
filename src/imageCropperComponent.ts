@@ -9,7 +9,7 @@ import {CropPosition} from "./model/cropPosition";
     selector: "img-cropper",
     template: `
         <span class="ng2-imgcrop">
-          <input *ngIf="!settings.noFileInput" type="file" (change)="fileChangeListener($event)" >
+          <input *ngIf="!settings.noFileInput" type="file" accept="image/*" (change)="fileChangeListener($event)" >
           <canvas #cropcanvas
                   (mousedown)="onMouseDown($event)"
                   (mouseup)="onMouseUp($event)"
@@ -131,7 +131,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
             if (self.intervalRef) {
                 clearInterval(self.intervalRef);
             }
-            if (image.naturalHeight > 0) {
+            if (image.naturalHeight > 0 && image.naturalWidth > 0) {
 
                 image.height = image.naturalHeight;
                 image.width = image.naturalWidth;
