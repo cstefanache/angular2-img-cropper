@@ -9,3 +9,4 @@ export { CropperDrawSettings } from './src/cropperDrawSettings';
 
 // models
 export { Bounds } from './src/model/bounds';
+export { CropPosition } from './src/model/cropPosition';
