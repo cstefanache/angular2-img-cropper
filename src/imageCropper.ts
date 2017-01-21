@@ -576,8 +576,8 @@ export class ImageCropper extends ImageCropperModel {
 
     public getCropBounds() {
         let bounds = this.getBounds();
-        bounds.top = Math.round(( bounds.top + this.minYClamp) / this.ratioH);
-        bounds.bottom = Math.round(( bounds.bottom + this.minYClamp) / this.ratioH);
+        bounds.top = Math.round(( bounds.top - this.minYClamp) / this.ratioH);
+        bounds.bottom = Math.round(( bounds.bottom - this.minYClamp) / this.ratioH);
         bounds.left = Math.round((bounds.left - this.minXClamp) / this.ratioW);
         bounds.right = Math.round((bounds.right - this.minXClamp) / this.ratioW);
         return bounds;
