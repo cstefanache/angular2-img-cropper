@@ -640,28 +640,44 @@ export class ImageCropper extends ImageCropperModel {
         }
 
         this.updateClampBounds();
-        let sourceAspect:number = this.srcImage.height / this.srcImage.width;
-        let cropBounds:Bounds = this.getBounds();
-        let cropAspect:number = cropBounds.height / cropBounds.width;
-        let w:number = this.canvas.width;
-        let h:number = this.canvas.height;
-        this.canvasWidth = w;
-        this.canvasHeight = h;
-        let cX:number = this.canvas.width / 2;
-        let cY:number = this.canvas.height / 2;
-        let tlPos:Point = PointPool.instance.borrow(cX - cropBounds.width / 2, cY + cropBounds.height / 2);
-        let trPos:Point = PointPool.instance.borrow(cX + cropBounds.width / 2, cY + cropBounds.height / 2);
-        let blPos:Point = PointPool.instance.borrow(cX - cropBounds.width / 2, cY - cropBounds.height / 2);
-        let brPos:Point = PointPool.instance.borrow(cX + cropBounds.width / 2, cY - cropBounds.height / 2);
-        this.tl.setPosition(tlPos.x, tlPos.y);
-        this.tr.setPosition(trPos.x, trPos.y);
-        this.bl.setPosition(blPos.x, blPos.y);
-        this.br.setPosition(brPos.x, brPos.y);
-        PointPool.instance.returnPoint(tlPos);
-        PointPool.instance.returnPoint(trPos);
-        PointPool.instance.returnPoint(blPos);
-        PointPool.instance.returnPoint(brPos);
-        this.center.setPosition(cX, cY);
+        this.canvasWidth = this.canvas.width;
+        this.canvasHeight = this.canvas.height;
+
+        let cropPosition: Point[] = this.getCropPositionFromMarkers();
+        this.setCropPosition(cropPosition);
+    }
+
+    public updateCropPosition(cropBounds: Bounds): void {
+        let cropPosition: Point[] = this.getCropPositionFromBounds(cropBounds);
+        this.setCropPosition(cropPosition);
+    }
+
+    private setCropPosition(cropPosition: Point[]): void{
+        this.tl.setPosition(cropPosition[0].x, cropPosition[0].y);
+        this.tr.setPosition(cropPosition[1].x, cropPosition[1].y);
+        this.bl.setPosition(cropPosition[2].x, cropPosition[2].y);
+        this.br.setPosition(cropPosition[3].x, cropPosition[3].y);
+        this.center.setPosition(cropPosition[4].x, cropPosition[4].y);
+
+        for (let position of cropPosition) {
+            PointPool.instance.returnPoint(position);
+        }
+
+        this.vertSquashRatio = ImageCropper.detectVerticalSquash(this.srcImage);
+        this.draw(this.ctx);
+        this.croppedImage = this.getCroppedImage(this.cropWidth, this.cropHeight);
+    }
+
+    private getCropPositionFromMarkers(): Point[] {
+        let w: number = this.canvas.width;
+        let h: number = this.canvas.height;
+        let tlPos: Point, trPos: Point, blPos: Point, brPos: Point, center: Point;
+        let sourceAspect: number = this.srcImage.height / this.srcImage.width;
+        let cropBounds: Bounds = this.getBounds();
+        let cropAspect: number = cropBounds.height / cropBounds.width;
+        let cX: number = this.canvas.width / 2;
+        let cY: number = this.canvas.height / 2;
+
         if (cropAspect > sourceAspect) {
             let imageH = Math.min(w * sourceAspect, h);
             let cropW = imageH / cropAspect;
@@ -678,17 +694,56 @@ export class ImageCropper extends ImageCropperModel {
             brPos = PointPool.instance.borrow(cX + imageW / 2, cY - cropH / 2);
         }
 
-        this.tl.setPosition(tlPos.x, tlPos.y);
-        this.tr.setPosition(trPos.x, trPos.y);
-        this.bl.setPosition(blPos.x, blPos.y);
-        this.br.setPosition(brPos.x, brPos.y);
-        PointPool.instance.returnPoint(tlPos);
-        PointPool.instance.returnPoint(trPos);
-        PointPool.instance.returnPoint(blPos);
-        PointPool.instance.returnPoint(brPos);
-        this.vertSquashRatio = ImageCropper.detectVerticalSquash(this.srcImage);
-        this.draw(this.ctx);
-        this.croppedImage = this.getCroppedImage(this.cropWidth, this.cropHeight);
+        center = PointPool.instance.borrow(cX, cY);
+        let positions: Point[] = [tlPos, trPos, blPos, brPos, center];
+        return positions;
+    }
+
+    private getCropPositionFromBounds(cropPosition: Bounds): Point[] {
+        let marginTop = 0;
+        let marginLeft = 0;
+        let canvasAspect: number = this.canvasHeight / this.canvasWidth;
+        let sourceAspect: number = this.srcImage.height / this.srcImage.width;
+
+        if (canvasAspect > sourceAspect) {
+            marginTop = this.buffer.height / 2 - (this.canvasWidth * sourceAspect) / 2;
+        } else {
+            marginLeft = this.buffer.width / 2 - (this.canvasHeight / sourceAspect) / 2;
+        }
+
+        let ratioW: number = (this.canvasWidth - marginLeft * 2) / this.srcImage.width;
+        let ratioH: number = (this.canvasHeight - marginTop * 2) / this.srcImage.height;
+
+        let actualH: number = cropPosition.height * ratioH;
+        let actualW: number = cropPosition.width * ratioW;
+        let actualX: number = cropPosition.left * ratioW + marginLeft;
+        let actualY: number = cropPosition.top * ratioH + marginTop;
+
+        if (this.keepAspect) {
+            let scaledW: number = actualH / this.aspectRatio;
+            let scaledH: number = actualW * this.aspectRatio;
+
+            if (this.getCropBounds().height === cropPosition.height) { // only width changed
+                actualH = scaledH;
+            } else if (this.getCropBounds().width === cropPosition.width) { // only height changed
+                actualW = scaledW;
+            } else { // height and width changed
+                if (Math.abs(scaledH - actualH) < Math.abs(scaledW - actualW)) {
+                    actualW = scaledW;
+                } else {
+                    actualH = scaledH;
+                }
+            }
+        }
+
+        let tlPos: Point = PointPool.instance.borrow(actualX, actualY + actualH);
+        let trPos: Point = PointPool.instance.borrow(actualX + actualW, actualY + actualH);
+        let blPos: Point = PointPool.instance.borrow(actualX, actualY);
+        let brPos: Point = PointPool.instance.borrow(actualX + actualW, actualY);
+        let center: Point = PointPool.instance.borrow(actualX + actualW / 2, actualY + actualH / 2);
+
+        let positions: Point[] = [tlPos, trPos, blPos, brPos, center];
+        return positions;
     }
 
     // todo: Unused parameters?

@@ -1,5 +1,7 @@
+import { AfterViewInit } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Component, ViewChild, Type } from '@angular/core';
-import { ImageCropperComponent, CropperSettings, Bounds } from '../index';
+import { ImageCropperComponent, CropperSettings, CropPosition } from '../index';
 
 @Component({
     selector: 'test-app',
@@ -91,8 +93,62 @@ this.cropperSettings2.cropperDrawSettings.strokeWidth = 2;
 this.cropperSettings2.noFileInput = true;
 </code>
 </pre>
-
     </tab>
+
+    <tab title="Crop position" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper #cropper [image]="data3" [settings]="cropperSettings3" [(cropPosition)]="cropPosition"></img-cropper>
+        <br/>
+        Crop position:
+        <br/>
+        X <input type="text" [(ngModel)]="cropPosition.x">
+        Y <input type="text" [(ngModel)]="cropPosition.y">
+        W <input type="text" [(ngModel)]="cropPosition.w">
+        H <input type="text" [(ngModel)]="cropPosition.h">
+        <label class="btn btn-primary" (click)="updateCropPosition()">
+            update
+        </label>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
+            <span *ngIf="data3.image" >
+              <img [src]="data3.image" [width]="cropperSettings3.croppedWidth" [height]="cropperSettings3.croppedHeight">
+            </span>
+        </div>
+        </div>
+<h3>settings</h3>
+<pre>
+<code>
+this.cropperSettings3 = new CropperSettings();
+this.cropperSettings3.width = 200;
+this.cropperSettings3.height = 250;
+this.cropperSettings3.keepAspect = true;
+
+this.cropperSettings3.croppedWidth = 200;
+this.cropperSettings3.croppedHeight = 250;
+
+this.cropperSettings3.canvasWidth = 500;
+this.cropperSettings3.canvasHeight = 300;
+
+this.cropperSettings3.minWidth = 100;
+this.cropperSettings3.minHeight = 100;
+
+this.cropperSettings3.rounded = false;
+this.cropperSettings3.minWithRelativeToResolution = false;
+
+this.cropperSettings3.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+this.cropperSettings3.cropperDrawSettings.strokeWidth = 2;
+
+this.cropPosition = new CropPosition();
+this.cropPosition.x = 10;
+this.cropPosition.y = 10;
+this.cropPosition.w = 200;
+this.cropPosition.h = 250;
+</code>
+</pre>
+</tab>    
 </tabset>
     `
 })
@@ -109,7 +165,12 @@ export class AppComponent extends Type {
     public cropper:ImageCropperComponent;
 
     public onChange: Function;
+    public updateCropPosition: Function;
 
+    //Cropper 3 data
+    public data3: any;
+    public cropperSettings3: CropperSettings;
+    public cropPosition: CropPosition;
 
     constructor() {
         super();
@@ -137,7 +198,6 @@ export class AppComponent extends Type {
 
         this.data1 = {};
 
-
         //Cropper settings 2
         this.cropperSettings2 = new CropperSettings();
         this.cropperSettings2.width = 200;
@@ -162,6 +222,36 @@ export class AppComponent extends Type {
 
         this.data2 = {};
 
+        //Cropper settings 3
+        this.cropperSettings3 = new CropperSettings();
+        this.cropperSettings3.width = 200;
+        this.cropperSettings3.height = 250;
+        this.cropperSettings3.keepAspect = true;
+
+        this.cropperSettings3.croppedWidth = 200;
+        this.cropperSettings3.croppedHeight = 250;
+
+        this.cropperSettings3.canvasWidth = 500;
+        this.cropperSettings3.canvasHeight = 300;
+
+        this.cropperSettings3.minWidth = 100;
+        this.cropperSettings3.minHeight = 100;
+
+        this.cropperSettings3.rounded = false;
+        this.cropperSettings3.minWithRelativeToResolution = false;
+
+        this.cropperSettings3.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings3.cropperDrawSettings.strokeWidth = 2;
+        this.cropperSettings3.noFileInput = false;
+
+        this.cropPosition = new CropPosition();
+        this.cropPosition.x = 10;
+        this.cropPosition.y = 10;
+        this.cropPosition.w = 200;
+        this.cropPosition.h = 250;
+
+        this.data3 = {};
+
         this.onChange = ($event:any) => {
             var image:any = new Image();
             var file:File = $event.target.files[0];
@@ -174,7 +264,9 @@ export class AppComponent extends Type {
             myReader.readAsDataURL(file);
         }
 
+        this.updateCropPosition = () => {
+            this.cropPosition = new CropPosition(this.cropPosition.x, this.cropPosition.y, this.cropPosition.w, this.cropPosition.h);
+        }
+
     }
-
-
 }
