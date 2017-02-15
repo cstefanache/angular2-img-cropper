@@ -864,7 +864,7 @@ export class ImageCropper extends ImageCropperModel {
 
         this.center.recalculatePosition(bounds);
         this.center.draw(this.ctx);
-
+		this.draw(this.ctx); // we need to redraw all canvas if we have changed bounds
     }
 
     public onTouchMove(event:TouchEvent) {
