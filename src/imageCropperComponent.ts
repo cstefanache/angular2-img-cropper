@@ -124,7 +124,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    public setImage(image: HTMLImageElement) {
+    public setImage(image: HTMLImageElement, bounds: any = null) {
         let self = this;
 
         this.intervalRef = window.setInterval(function() {
@@ -145,6 +145,10 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                     self.image.original = img;
                     let bounds = self.cropper.getCropBounds();
                     self.image.image = self.cropper.getCroppedImage().src;
+					if (newBounds != null) {
+                        bounds = newBounds;
+                        self.cropper.setBounds(bounds);
+                    }
                     self.onCrop.emit(bounds);
                 });
             }
