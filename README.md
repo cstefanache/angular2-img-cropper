@@ -3,7 +3,7 @@
 ### Release 0.8
 
  - added reset() method on ImageCropperComponent - fix for  #118   
- - 
+ - added compressRatio as parameter in the cropper settings 
 
 ### Release 0.7.6
 
