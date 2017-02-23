@@ -1,5 +1,9 @@
 # Changelog
 
+### Release 0.8
+
+added reset method - fix for  #118
+
 ### Release 0.7.6
 
  - 21 Bugs in the code, I fixed 3, (hopefully not) 30 Bugs in the code

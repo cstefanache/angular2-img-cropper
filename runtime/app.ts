@@ -1,20 +1,23 @@
 import { AfterViewInit } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Component, ViewChild, Type } from '@angular/core';
-import { ImageCropperComponent, CropperSettings, CropPosition } from '../index';
+import {ImageCropperComponent} from '../src/imageCropperComponent';
+import {CropperSettings} from '../src/cropperSettings';
+import {Bounds} from '../src/model/bounds';
+import {CropPosition} from '../src/model/cropPosition';
 
 @Component({
     selector: 'test-app',
     template: `
 <div class="page-header">
-  <h1>angular2-img-cropper <small>samples</small></h1>
+  <h1>angular2-img-cropper <small>samples</small>   <button class="btn btn-primary" (click)="resetCroppers()">Reset</button></h1>
 </div>
 <tabset [pills]="false" >
     <tab title="Sample 1" [disabled]="false">
         <div class="row">
         <div class="col-md-9">
             <h3>source</h3>
-            <img-cropper [image]="data1" [settings]="cropperSettings1"></img-cropper>
+            <img-cropper #cropper1 [image]="data1" [settings]="cropperSettings1"></img-cropper>
         </div>
         <h3>result</h3>
         <div class="col-md-3">
@@ -52,7 +55,7 @@ this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
         <div class="row">
         <div class="col-md-9">
             <h3>source</h3>
-            <img-cropper #cropper [image]="data2" [settings]="cropperSettings2"></img-cropper>
+            <img-cropper #cropper2 [image]="data2" [settings]="cropperSettings2"></img-cropper>
             <div>
                 <label class="btn btn-primary">
                     Upload
@@ -99,7 +102,7 @@ this.cropperSettings2.noFileInput = true;
         <div class="row">
         <div class="col-md-9">
             <h3>source</h3>
-            <img-cropper #cropper [image]="data3" [settings]="cropperSettings3" [(cropPosition)]="cropPosition"></img-cropper>
+            <img-cropper #cropper3 [image]="data3" [settings]="cropperSettings3" [(cropPosition)]="cropPosition"></img-cropper>
         <br/>
         Crop position:
         <br/>
@@ -161,16 +164,25 @@ export class AppComponent extends Type {
     //Cropper 2 data
     public data2:any;
     public cropperSettings2:CropperSettings;
-    @ViewChild('cropper', undefined)
-    public cropper:ImageCropperComponent;
 
-    public onChange: Function;
-    public updateCropPosition: Function;
+    @ViewChild('cropper1', undefined)
+    public cropper1:ImageCropperComponent;
+
+    @ViewChild('cropper2', undefined)
+    public cropper2:ImageCropperComponent;
+
+    @ViewChild('cropper3', undefined)
+    public cropper3:ImageCropperComponent;
+
+    public onChange:Function;
+    public updateCropPosition:Function;
+    public resetCroppers:Function;
 
     //Cropper 3 data
-    public data3: any;
-    public cropperSettings3: CropperSettings;
-    public cropPosition: CropPosition;
+    public data3:any;
+    public cropperSettings3:CropperSettings;
+    public cropPosition:CropPosition;
+
 
     constructor() {
         super();
@@ -258,7 +270,7 @@ export class AppComponent extends Type {
             var myReader:FileReader = new FileReader();
             myReader.addEventListener('loadend', (loadEvent:any) => {
                 image.src = loadEvent.target.result;
-                this.cropper.setImage(image);
+                this.cropper2.setImage(image);
             });
 
             myReader.readAsDataURL(file);
@@ -268,5 +280,15 @@ export class AppComponent extends Type {
             this.cropPosition = new CropPosition(this.cropPosition.x, this.cropPosition.y, this.cropPosition.w, this.cropPosition.h);
         }
 
+        this.resetCroppers = () => {
+            this.cropper1.reset();
+            this.cropper2.reset();
+            this.cropper3.reset();
+        }
+
+
     }
+
+
+
 }

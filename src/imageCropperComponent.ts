@@ -124,7 +124,12 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    public setImage(image: HTMLImageElement, bounds: any = null) {
+    public reset():void {
+        this.cropper.reset();
+        this.image.image = this.cropper.getCroppedImage().src;
+    }
+
+    public setImage(image: HTMLImageElement, newBounds: any = null) {
         let self = this;
 
         this.intervalRef = window.setInterval(function() {
