@@ -17,9 +17,11 @@ export interface ICropperSettings {
     rounded: boolean;
     keepAspect: boolean;
     preserveSize: boolean;
+    compressRatio: number;
 }
 
 export class CropperSettings implements ICropperSettings {
+
 
     public canvasWidth: number = 300;
     public canvasHeight: number = 300;
@@ -44,6 +46,8 @@ export class CropperSettings implements ICropperSettings {
 
     public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif)$/i;
     public preserveSize: boolean = false;
+
+    public compressRatio:number = 1.0;
 
     private _rounded: boolean = false;
     private _keepAspect: boolean = true;

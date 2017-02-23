@@ -2,7 +2,8 @@
 
 ### Release 0.8
 
-added reset method - fix for  #118
+ - added reset() method on ImageCropperComponent - fix for  #118   
+ - 
 
 ### Release 0.7.6
 
@@ -133,6 +134,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **allowedFilesRegex**:*RegExp* - (default: /\.(jpe?g|png|gif)$/i) - Regex for allowed images
 * **preserveSize**:*boolean* - will not scale the resulting image to the croppedWidth/croppedHeight and will output the exact crop size from original
 * **fileType**:*string* (default: 'png') - default image format
+* **compressRatio**:*number* (default: 1.0) - default compress ratio
 
 
 ## Customizing Image cropper

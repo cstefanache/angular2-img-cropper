@@ -804,7 +804,7 @@ export class ImageCropper extends ImageCropperModel {
 
             this.croppedImage.width = this.cropCanvas.width;
             this.croppedImage.height = this.cropCanvas.height;
-            this.croppedImage.src = this.cropCanvas.toDataURL(this.fileType);
+            this.croppedImage.src = this.cropCanvas.toDataURL(this.fileType, this.cropperSettings.compressRatio);
             return this.croppedImage;
         }
     }
