@@ -7,3 +7,8 @@
     display: block;
     margin-bottom: 10px;
 }
+
+.custom-class {
+    width: 100%;
+    max-height: 300px;
+}

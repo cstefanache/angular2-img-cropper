@@ -149,7 +149,7 @@ export class ImageCropper extends ImageCropperModel {
 
         // todo get more reliable parent width value.
         let responsiveWidth:number = canvas.parentElement.clientWidth;
-        if (responsiveWidth > 0 && this.cropperSettings.responsive) {
+        if (responsiveWidth > 0 && this.cropperSettings.dynamicSizing) {
             this.cropCanvas.width = responsiveWidth;
             this.buffer.width = responsiveWidth;
             canvas.width = responsiveWidth;
@@ -166,12 +166,12 @@ export class ImageCropper extends ImageCropperModel {
         this.draw(this.ctx);
     }
 
-    public resizeCanvas(width:number, height:number):void {
-        this.canvas.width = width;
-        this.canvas.height = height;
-        this.buffer.width = width;
-        this.buffer.height = height;
-        this.draw(this.ctx);
+    public resizeCanvas(width:number, height:number, setImage: boolean = false):void {
+        this.canvas.width = this.cropCanvas.width = this.width = this.canvasWidth = this.buffer.width = width;
+        this.canvas.height = this.cropCanvas.height = this.height = this.canvasHeight = this.buffer.height = height;
+        if (setImage) {
+            this.setImage(this.srcImage);
+        }
     }
 
     public reset():void {

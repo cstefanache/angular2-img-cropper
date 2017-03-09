@@ -26,14 +26,15 @@ export class CropperSettings implements ICropperSettings {
     public canvasWidth: number = 300;
     public canvasHeight: number = 300;
 
+    public dynamicSizing: boolean = false;
+    public cropperClass: string;
+
     public width: number = 200;
     public height: number = 200;
 
     public minWidth: number = 50;
     public minHeight: number = 50;
     public minWithRelativeToResolution: boolean = true;
-
-    public responsive: boolean = false;
 
     public croppedWidth: number = 100;
     public croppedHeight: number = 100;

@@ -24,36 +24,48 @@ import {CropPosition} from "./model/cropPosition";
 })
 export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
-    @ViewChild("cropcanvas", undefined) cropcanvas: ElementRef;
+    @ViewChild("cropcanvas", undefined) cropcanvas:ElementRef;
 
-    @Input() public settings: CropperSettings;
-    @Input() public image: any;
-    @Input() public cropper: ImageCropper;
-    @Input() public cropPosition: CropPosition;
-    @Output() public cropPositionChange: EventEmitter<CropPosition> = new EventEmitter<CropPosition>();
+    @Input() public settings:CropperSettings;
+    @Input() public image:any;
+    @Input() public cropper:ImageCropper;
+    @Input() public cropPosition:CropPosition;
+    @Output() public cropPositionChange:EventEmitter<CropPosition> = new EventEmitter<CropPosition>();
 
-    @Output() public onCrop: EventEmitter<any> = new EventEmitter();
+    @Output() public onCrop:EventEmitter<any> = new EventEmitter();
 
-    public croppedWidth: number;
-    public croppedHeight: number;
-    public intervalRef: number;
-    public renderer: Renderer;
+    public croppedWidth:number;
+    public croppedHeight:number;
+    public intervalRef:number;
+    public renderer:Renderer;
 
-    private isCropPositionUpdateNeeded: boolean;
+    private isCropPositionUpdateNeeded:boolean;
 
-    constructor(renderer: Renderer) {
+    constructor(renderer:Renderer) {
         this.renderer = renderer;
     }
 
-    public ngAfterViewInit(): void {
-        let canvas: HTMLCanvasElement = this.cropcanvas.nativeElement;
+    public ngAfterViewInit():void {
+        let canvas:HTMLCanvasElement = this.cropcanvas.nativeElement;
 
         if (!this.settings) {
             this.settings = new CropperSettings();
         }
 
-        this.renderer.setElementAttribute(canvas, "width", this.settings.canvasWidth.toString());
-        this.renderer.setElementAttribute(canvas, "height", this.settings.canvasHeight.toString());
+        if (this.settings.cropperClass) {
+            this.renderer.setElementAttribute(canvas, "class", this.settings.cropperClass);
+        }
+
+        if (!this.settings.dynamicSizing) {
+            this.renderer.setElementAttribute(canvas, "width", this.settings.canvasWidth.toString());
+            this.renderer.setElementAttribute(canvas, "height", this.settings.canvasHeight.toString());
+        } else {
+            window.addEventListener('resize', () => {
+                this.settings.canvasWidth = canvas.offsetWidth;
+                this.settings.canvasHeight = canvas.offsetHeight;
+                this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, true);
+            });
+        }
 
         if (!this.cropper) {
             this.cropper = new ImageCropper(this.settings);
@@ -62,7 +74,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         this.cropper.prepare(canvas);
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes:SimpleChanges):void {
         if (this.isCropPositionChanged(changes)) {
             this.cropper.updateCropPosition(this.cropPosition.toBounds());
             if (this.cropper.isImageSet()) {
@@ -74,15 +86,15 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    public onTouchMove(event: TouchEvent): void {
+    public onTouchMove(event:TouchEvent):void {
         this.cropper.onTouchMove(event);
     }
 
-    public onTouchStart(event: TouchEvent): void {
+    public onTouchStart(event:TouchEvent):void {
         this.cropper.onTouchStart(event);
     }
 
-    public onTouchEnd(event: TouchEvent): void {
+    public onTouchEnd(event:TouchEvent):void {
         this.cropper.onTouchEnd(event);
         if (this.cropper.isImageSet()) {
             this.image.image = this.cropper.getCroppedImage().src;
@@ -91,11 +103,11 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    public onMouseDown(event: MouseEvent): void {
+    public onMouseDown(event:MouseEvent):void {
         this.cropper.onMouseDown(event);
     }
 
-    public onMouseUp(event: MouseEvent): void {
+    public onMouseUp(event:MouseEvent):void {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp(event);
             this.image.image = this.cropper.getCroppedImage().src;
@@ -104,18 +116,18 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    public onMouseMove(event: MouseEvent): void {
+    public onMouseMove(event:MouseEvent):void {
         this.cropper.onMouseMove(event);
     }
 
-    public fileChangeListener($event: any) {
-        let file: File = $event.target.files[0];
+    public fileChangeListener($event:any) {
+        let file:File = $event.target.files[0];
         if (this.settings.allowedFilesRegex.test(file.name)) {
-            let image: any = new Image();
-            let fileReader: FileReader = new FileReader();
+            let image:any = new Image();
+            let fileReader:FileReader = new FileReader();
             let that = this;
 
-            fileReader.addEventListener("loadend", function (loadEvent: any) {
+            fileReader.addEventListener("loadend", function (loadEvent:any) {
                 image.src = loadEvent.target.result;
                 that.setImage(image);
             });
@@ -129,20 +141,28 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         this.image.image = this.cropper.getCroppedImage().src;
     }
 
-    public setImage(image: HTMLImageElement, newBounds: any = null) {
+    public setImage(image:HTMLImageElement, newBounds:any = null) {
         let self = this;
 
-        this.intervalRef = window.setInterval(function() {
+        this.intervalRef = window.setInterval( () => {
             if (self.intervalRef) {
                 clearInterval(self.intervalRef);
             }
             if (image.naturalHeight > 0 && image.naturalWidth > 0) {
 
+
+
                 image.height = image.naturalHeight;
                 image.width = image.naturalWidth;
 
                 clearInterval(self.intervalRef);
-                self.getOrientedImage(image, (img: HTMLImageElement) => {
+                self.getOrientedImage(image, (img:HTMLImageElement) => {
+                    if (this.settings.dynamicSizing) {
+                        let canvas:HTMLCanvasElement = this.cropcanvas.nativeElement;
+                        this.settings.canvasWidth = canvas.offsetWidth;
+                        this.settings.canvasHeight = canvas.offsetHeight;
+                        this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, false);
+                    }
                     self.cropper.setImage(img);
                     if (self.cropPosition && self.cropPosition.isInitialized()) {
                         self.cropper.updateCropPosition(self.cropPosition.toBounds());
@@ -150,7 +170,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                     self.image.original = img;
                     let bounds = self.cropper.getCropBounds();
                     self.image.image = self.cropper.getCroppedImage().src;
-					if (newBounds != null) {
+                    if (newBounds != null) {
                         bounds = newBounds;
                         self.cropper.setBounds(bounds);
                     }
@@ -160,7 +180,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }, 10);
     }
 
-    private isCropPositionChanged(changes: SimpleChanges): boolean {
+    private isCropPositionChanged(changes:SimpleChanges):boolean {
         if (this.cropper && changes["cropPosition"] && this.isCropPositionUpdateNeeded) {
             return true;
         } else {
@@ -169,26 +189,26 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    private updateCropBounds(): void {
-        let cropBound: Bounds = this.cropper.getCropBounds();
+    private updateCropBounds():void {
+        let cropBound:Bounds = this.cropper.getCropBounds();
         this.cropPositionChange.emit(new CropPosition(cropBound.left, cropBound.top, cropBound.width, cropBound.height));
         this.isCropPositionUpdateNeeded = false;
     }
 
-    private getOrientedImage(image: HTMLImageElement, callback: Function) {
-        let img: any;
+    private getOrientedImage(image:HTMLImageElement, callback:Function) {
+        let img:any;
 
         Exif.getData(image, function () {
             let orientation = Exif.getTag(image, "Orientation");
 
             if ([3, 6, 8].indexOf(orientation) > -1) {
-                let canvas: HTMLCanvasElement = document.createElement("canvas"),
-                    ctx: CanvasRenderingContext2D = canvas.getContext("2d"),
-                    cw: number = image.width,
-                    ch: number = image.height,
-                    cx: number = 0,
-                    cy: number = 0,
-                    deg: number = 0;
+                let canvas:HTMLCanvasElement = document.createElement("canvas"),
+                    ctx:CanvasRenderingContext2D = canvas.getContext("2d"),
+                    cw:number = image.width,
+                    ch:number = image.height,
+                    cx:number = 0,
+                    cy:number = 0,
+                    deg:number = 0;
 
                 switch (orientation) {
                     case 3:

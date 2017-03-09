@@ -1,5 +1,8 @@
 # Changelog
 
+### Release 0.8.1
+ - added dynamicSizing, cropperClass for responsive purposes
+
 ### Release 0.8
 
  - added reset() method on ImageCropperComponent - fix for  #118   
@@ -135,6 +138,8 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **preserveSize**:*boolean* - will not scale the resulting image to the croppedWidth/croppedHeight and will output the exact crop size from original
 * **fileType**:*string* (default: 'png') - default image format
 * **compressRatio**:*number* (default: 1.0) - default compress ratio
+* **dynamicSizing**: (default: false) - if true then the cropper becomes responsive - might introduce performance issues on resize;
+* **cropperClass**: string - set class on canvas element;
 
 
 ## Customizing Image cropper
