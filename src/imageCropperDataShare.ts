@@ -9,7 +9,7 @@ export class ImageCropperDataShare {
 
     public static setReleased(canvas: HTMLCanvasElement): void {
         if (canvas === this.pressed) {
-            this.pressed = undefined;
+          //  this.pressed = undefined;
         }
     };
 

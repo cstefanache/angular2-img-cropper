@@ -4,16 +4,15 @@ import {IHandle} from "./handle";
 
 export class CropTouch {
 
-    public x: number;
-    public y: number;
-    public id: number;
+    public x:number;
+    public y:number;
+    public id:number;
 
-    public dragHandle: IHandle;
+    public dragHandle:IHandle;
 
-    constructor(x: number, y: number, id: number) {
-        this.id = id || 0;
-        this.x = x || 0;
-        this.y = y || 0;
-        this.dragHandle = null;
+    constructor(x:number = 0, y:number = 0, id:number = 0) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
     }
 }

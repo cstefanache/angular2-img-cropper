@@ -203,7 +203,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
             if ([3, 6, 8].indexOf(orientation) > -1) {
                 let canvas:HTMLCanvasElement = document.createElement("canvas"),
-                    ctx:CanvasRenderingContext2D = canvas.getContext("2d"),
+                    ctx:CanvasRenderingContext2D = <CanvasRenderingContext2D> canvas.getContext("2d"),
                     cw:number = image.width,
                     ch:number = image.height,
                     cx:number = 0,

@@ -8,6 +8,6 @@ export class CropService {
 
     public init(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
+        this.ctx = <CanvasRenderingContext2D> this.canvas.getContext("2d");
     };
 }

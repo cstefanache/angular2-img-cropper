@@ -106,24 +106,29 @@ export class ImageCropper extends ImageCropperModel {
         let canvas = document.createElement("canvas");
         canvas.width = 1;
         canvas.height = ih;
-        let ctx = canvas.getContext("2d");
+        let ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
-        let data = ctx.getImageData(0, 0, 1, ih).data;
-        // search image edge pixel position in case it is squashed vertically.
-        let sy = 0;
-        let ey = ih;
-        let py = ih;
-        while (py > sy) {
-            let alpha = data[(py - 1) * 4 + 3];
-            if (alpha === 0) {
-                ey = py;
-            } else {
-                sy = py;
+        let imageData:any = ctx.getImageData(0, 0, 1, ih)
+        if (imageData) {
+            let data = imageData.data;
+            // search image edge pixel position in case it is squashed vertically.
+            let sy = 0;
+            let ey = ih;
+            let py = ih;
+            while (py > sy) {
+                let alpha = data[(py - 1) * 4 + 3];
+                if (alpha === 0) {
+                    ey = py;
+                } else {
+                    sy = py;
+                }
+                py = (ey + sy) >> 1;
             }
-            py = (ey + sy) >> 1;
+            let ratio = (py / ih);
+            return (ratio === 0) ? 1 : ratio;
+        } else {
+            return 1;
         }
-        let ratio = (py / ih);
-        return (ratio === 0) ? 1 : ratio;
     }
 
     private getDataUriMimeType(dataUri:string) {
@@ -148,7 +153,7 @@ export class ImageCropper extends ImageCropperModel {
         this.cropCanvas = document.createElement("canvas");
 
         // todo get more reliable parent width value.
-        let responsiveWidth:number = canvas.parentElement.clientWidth;
+        let responsiveWidth:number = canvas.parentElement ? canvas.parentElement.clientWidth : 0;
         if (responsiveWidth > 0 && this.cropperSettings.dynamicSizing) {
             this.cropCanvas.width = responsiveWidth;
             this.buffer.width = responsiveWidth;
@@ -161,7 +166,7 @@ export class ImageCropper extends ImageCropperModel {
         this.cropCanvas.height = this.cropHeight;
         this.buffer.height = canvas.height;
         this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
+        this.ctx = <CanvasRenderingContext2D> this.canvas.getContext("2d");
 
         this.draw(this.ctx);
     }
@@ -202,7 +207,8 @@ export class ImageCropper extends ImageCropperModel {
                 this.drawImageIOSFix(ctx, this.srcImage, 0, 0, this.srcImage.width, this.srcImage.height, 0,
                     this.buffer.height / 2 - h / 2, w, h);
             }
-            this.buffer.getContext("2d").drawImage(this.canvas, 0, 0, this.canvasWidth, this.canvasHeight);
+            (<CanvasRenderingContext2D> this.buffer.getContext("2d"))
+                .drawImage(this.canvas, 0, 0, this.canvasWidth, this.canvasHeight);
 
             ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
             ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor; // "rgba(255,228,0,1)";
@@ -521,7 +527,6 @@ export class ImageCropper extends ImageCropperModel {
         for (let k = 0; k < this.currentDragTouches.length; k++) {
             if (newCropTouch.id === this.currentDragTouches[k].id) {
                 this.currentDragTouches[k].dragHandle.setDrag(false);
-                newCropTouch.dragHandle = null;
                 index = k;
             }
         }
@@ -633,7 +638,7 @@ export class ImageCropper extends ImageCropperModel {
         } else {
             this.imageSet = true;
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            let bufferContext = this.buffer.getContext("2d");
+            let bufferContext = <CanvasRenderingContext2D> this.buffer.getContext("2d");
             bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
 
             this.fileType = this.getDataUriMimeType(img.src);
@@ -778,7 +783,7 @@ export class ImageCropper extends ImageCropperModel {
             let offsetH:number = (this.buffer.height - h) / 2 / this.ratioH;
             let offsetW:number = (this.buffer.width - w) / 2 / this.ratioW;
 
-            let ctx = this.cropCanvas.getContext("2d");
+            let ctx = <CanvasRenderingContext2D> this.cropCanvas.getContext("2d");
 
             if (this.cropperSettings.preserveSize) {
                 //var left = Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
@@ -850,23 +855,18 @@ export class ImageCropper extends ImageCropperModel {
 
             if (marker.position.x === currentBounds.left) {
                 if (marker.position.y === currentBounds.top) {
-                    topLeft = marker;
+                    marker.setPosition(bounds.left, bounds.top);
                 } else {
-                    bottomLeft = marker;
+                    marker.setPosition(bounds.left, bounds.bottom);
                 }
             } else {
                 if (marker.position.y === currentBounds.top) {
-                    topRight = marker;
+                    marker.setPosition(bounds.right, bounds.top);
                 } else {
-                    bottomRight = marker;
+                    marker.setPosition(bounds.right, bounds.bottom);
                 }
             }
         }
-
-        topLeft.setPosition(bounds.left, bounds.top);
-        topRight.setPosition(bounds.right, bounds.top);
-        bottomLeft.setPosition(bounds.left, bounds.bottom);
-        bottomRight.setPosition(bounds.right, bounds.bottom);
 
         this.center.recalculatePosition(bounds);
         this.center.draw(this.ctx);
@@ -929,14 +929,12 @@ export class ImageCropper extends ImageCropperModel {
         }
     }
 
-    public getDragTouchForID(id:any):CropTouch {
-        let currentDragTouch:CropTouch;
+    public getDragTouchForID(id:any):CropTouch | undefined {
         for (let i = 0; i < this.currentDragTouches.length; i++) {
             if (id === this.currentDragTouches[i].id) {
-                currentDragTouch = this.currentDragTouches[i];
+                return this.currentDragTouches[i];
             }
         }
-        return currentDragTouch;
     }
 
     public drawCursors(cropTouch:CropTouch) {

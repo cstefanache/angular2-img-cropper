@@ -9,16 +9,13 @@ export class PointPool {
 
     constructor(initialSize: number) {
         PointPool._instance = this;
-        let prev: Point = null;
-        for (let i = 0; i < initialSize; i++) {
-            if (i === 0) {
-                this.firstAvailable = new Point();
-                prev = this.firstAvailable;
-            } else {
-                let p = new Point();
-                prev.next = p;
-                prev = p;
-            }
+        let prev:Point = this.firstAvailable = new Point();
+
+        for (let i = 1; i < initialSize; i++) {
+
+            let p = new Point();
+            prev.next = p;
+            prev = p;
         }
     }
 

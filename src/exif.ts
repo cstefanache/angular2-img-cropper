@@ -295,9 +295,7 @@ export class Exif {
         return !!(img.exifdata);
     }
 
-    public static base64ToArrayBuffer(base64: string, contentType?: string): ArrayBuffer {
-        // e.g. 'data:image/jpeg;base64,...' => 'image/jpeg'
-        contentType = contentType || base64.match(/^data:([^;]+);base64,/mi)[1] || "";
+    public static base64ToArrayBuffer(base64: string): ArrayBuffer {
         base64 = base64.replace(/^data:([^;]+);base64,/gmi, "");
         let binary: string = atob(base64);
         let len: number = binary.length;
@@ -353,7 +351,6 @@ export class Exif {
                         } else {
                             throw "Could not load image";
                         }
-                        http = null;
                     };
                     http.open("GET", (img as IImageExtended).src, true);
                     http.responseType = "arraybuffer";
