@@ -65,8 +65,11 @@ export class DragMarker extends Handle {
             ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
         }
         ctx.closePath();
-        ctx.fillStyle = this.cropperSettings.cropperDrawSettings.strokeColor;
+        ctx.fillStyle = this.cropperSettings.cropperDrawSettings.dragIconFillColor;
         ctx.fill();
+        ctx.lineWidth = this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth;
+        ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.dragIconStrokeColor;
+        ctx.stroke();
     }
 
     public recalculatePosition(bounds: Bounds) {
