@@ -239,12 +239,14 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                 img = document.createElement("img");
                 img.width = cw;
                 img.height = ch;
+                img.addEventListener('load', function () {
+                    callback(img);
+                });
                 img.src = canvas.toDataURL("image/png");
             } else {
                 img = image;
+                callback(img);
             }
-
-            callback(img);
         });
     }
 }
