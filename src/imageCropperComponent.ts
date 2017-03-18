@@ -161,6 +161,8 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                         this.settings.canvasHeight = canvas.offsetHeight;
                         this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, false);
                     }
+
+
                     self.cropper.setImage(img);
                     if (self.cropPosition && self.cropPosition.isInitialized()) {
                         self.cropper.updateCropPosition(self.cropPosition.toBounds());

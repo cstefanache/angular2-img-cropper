@@ -171,7 +171,7 @@ export class ImageCropper extends ImageCropperModel {
         this.draw(this.ctx);
     }
 
-    public resizeCanvas(width:number, height:number, setImage: boolean = false):void {
+    public resizeCanvas(width:number, height:number, setImage:boolean = false):void {
         this.canvas.width = this.cropCanvas.width = this.width = this.canvasWidth = this.buffer.width = width;
         this.canvas.height = this.cropCanvas.height = this.height = this.canvasHeight = this.buffer.height = height;
         if (setImage) {
@@ -657,12 +657,12 @@ export class ImageCropper extends ImageCropperModel {
         }
     }
 
-    public updateCropPosition(cropBounds: Bounds): void {
-        let cropPosition: Point[] = this.getCropPositionFromBounds(cropBounds);
+    public updateCropPosition(cropBounds:Bounds):void {
+        let cropPosition:Point[] = this.getCropPositionFromBounds(cropBounds);
         this.setCropPosition(cropPosition);
     }
 
-    private setCropPosition(cropPosition: Point[]): void{
+    private setCropPosition(cropPosition:Point[]):void {
         this.tl.setPosition(cropPosition[0].x, cropPosition[0].y);
         this.tr.setPosition(cropPosition[1].x, cropPosition[1].y);
         this.bl.setPosition(cropPosition[2].x, cropPosition[2].y);
@@ -678,15 +678,15 @@ export class ImageCropper extends ImageCropperModel {
         this.croppedImage = this.getCroppedImage(this.cropWidth, this.cropHeight);
     }
 
-    private getCropPositionFromMarkers(): Point[] {
-        let w: number = this.canvas.width;
-        let h: number = this.canvas.height;
-        let tlPos: Point, trPos: Point, blPos: Point, brPos: Point, center: Point;
-        let sourceAspect: number = this.srcImage.height / this.srcImage.width;
-        let cropBounds: Bounds = this.getBounds();
-        let cropAspect: number = cropBounds.height / cropBounds.width;
-        let cX: number = this.canvas.width / 2;
-        let cY: number = this.canvas.height / 2;
+    private getCropPositionFromMarkers():Point[] {
+        let w:number = this.canvas.width;
+        let h:number = this.canvas.height;
+        let tlPos:Point, trPos:Point, blPos:Point, brPos:Point, center:Point;
+        let sourceAspect:number = this.srcImage.height / this.srcImage.width;
+        let cropBounds:Bounds = this.getBounds();
+        let cropAspect:number = cropBounds.height / cropBounds.width;
+        let cX:number = this.canvas.width / 2;
+        let cY:number = this.canvas.height / 2;
 
         if (cropAspect > sourceAspect) {
             let imageH = Math.min(w * sourceAspect, h);
@@ -705,15 +705,15 @@ export class ImageCropper extends ImageCropperModel {
         }
 
         center = PointPool.instance.borrow(cX, cY);
-        let positions: Point[] = [tlPos, trPos, blPos, brPos, center];
+        let positions:Point[] = [tlPos, trPos, blPos, brPos, center];
         return positions;
     }
 
-    private getCropPositionFromBounds(cropPosition: Bounds): Point[] {
+    private getCropPositionFromBounds(cropPosition:Bounds):Point[] {
         let marginTop = 0;
         let marginLeft = 0;
-        let canvasAspect: number = this.canvasHeight / this.canvasWidth;
-        let sourceAspect: number = this.srcImage.height / this.srcImage.width;
+        let canvasAspect:number = this.canvasHeight / this.canvasWidth;
+        let sourceAspect:number = this.srcImage.height / this.srcImage.width;
 
         if (canvasAspect > sourceAspect) {
             marginTop = this.buffer.height / 2 - (this.canvasWidth * sourceAspect) / 2;
@@ -721,17 +721,17 @@ export class ImageCropper extends ImageCropperModel {
             marginLeft = this.buffer.width / 2 - (this.canvasHeight / sourceAspect) / 2;
         }
 
-        let ratioW: number = (this.canvasWidth - marginLeft * 2) / this.srcImage.width;
-        let ratioH: number = (this.canvasHeight - marginTop * 2) / this.srcImage.height;
+        let ratioW:number = (this.canvasWidth - marginLeft * 2) / this.srcImage.width;
+        let ratioH:number = (this.canvasHeight - marginTop * 2) / this.srcImage.height;
 
-        let actualH: number = cropPosition.height * ratioH;
-        let actualW: number = cropPosition.width * ratioW;
-        let actualX: number = cropPosition.left * ratioW + marginLeft;
-        let actualY: number = cropPosition.top * ratioH + marginTop;
+        let actualH:number = cropPosition.height * ratioH;
+        let actualW:number = cropPosition.width * ratioW;
+        let actualX:number = cropPosition.left * ratioW + marginLeft;
+        let actualY:number = cropPosition.top * ratioH + marginTop;
 
         if (this.keepAspect) {
-            let scaledW: number = actualH / this.aspectRatio;
-            let scaledH: number = actualW * this.aspectRatio;
+            let scaledW:number = actualH / this.aspectRatio;
+            let scaledH:number = actualW * this.aspectRatio;
 
             if (this.getCropBounds().height === cropPosition.height) { // only width changed
                 actualH = scaledH;
@@ -746,13 +746,13 @@ export class ImageCropper extends ImageCropperModel {
             }
         }
 
-        let tlPos: Point = PointPool.instance.borrow(actualX, actualY + actualH);
-        let trPos: Point = PointPool.instance.borrow(actualX + actualW, actualY + actualH);
-        let blPos: Point = PointPool.instance.borrow(actualX, actualY);
-        let brPos: Point = PointPool.instance.borrow(actualX + actualW, actualY);
-        let center: Point = PointPool.instance.borrow(actualX + actualW / 2, actualY + actualH / 2);
+        let tlPos:Point = PointPool.instance.borrow(actualX, actualY + actualH);
+        let trPos:Point = PointPool.instance.borrow(actualX + actualW, actualY + actualH);
+        let blPos:Point = PointPool.instance.borrow(actualX, actualY);
+        let brPos:Point = PointPool.instance.borrow(actualX + actualW, actualY);
+        let center:Point = PointPool.instance.borrow(actualX + actualW / 2, actualY + actualH / 2);
 
-        let positions: Point[] = [tlPos, trPos, blPos, brPos, center];
+        let positions:Point[] = [tlPos, trPos, blPos, brPos, center];
         return positions;
     }
 
@@ -785,6 +785,7 @@ export class ImageCropper extends ImageCropperModel {
 
             let ctx = <CanvasRenderingContext2D> this.cropCanvas.getContext("2d");
 
+
             if (this.cropperSettings.preserveSize) {
                 //var left = Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
                 var width = Math.max(Math.round((bounds.right) / this.ratioW - offsetW), 0) * this.srcImage.width / this.canvas.width;
@@ -806,6 +807,10 @@ export class ImageCropper extends ImageCropperModel {
                 Math.max(Math.round(bounds.width / this.ratioW), 1), Math.max(Math.round(bounds.height / this.ratioH), 1),
                 0, 0, this.cropCanvas.width, this.cropCanvas.height
             );
+
+            if (this.cropperSettings.resampleFn) {
+                this.cropperSettings.resampleFn(this.cropCanvas);
+            }
 
             this.croppedImage.width = this.cropCanvas.width;
             this.croppedImage.height = this.cropCanvas.height;
@@ -870,7 +875,7 @@ export class ImageCropper extends ImageCropperModel {
 
         this.center.recalculatePosition(bounds);
         this.center.draw(this.ctx);
-		this.draw(this.ctx); // we need to redraw all canvas if we have changed bounds
+        this.draw(this.ctx); // we need to redraw all canvas if we have changed bounds
     }
 
     public onTouchMove(event:TouchEvent) {

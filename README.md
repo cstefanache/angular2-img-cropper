@@ -141,6 +141,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **dynamicSizing**: (default: false) - if true then the cropper becomes responsive - might introduce performance issues on resize;
 * **cropperClass**: string - set class on canvas element;
 * **croppingClass**: string - appends class to cropper when image is set (#142);
+* **resampleFn**: Function(canvas) - function used to resample the cropped image (#136); - see example #3 from runtime sample app
 
 
 ## Customizing Image cropper
@@ -188,3 +189,5 @@ fileChangeListener($event) {
 
 
 ```
+
+
