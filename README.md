@@ -140,6 +140,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **compressRatio**:*number* (default: 1.0) - default compress ratio
 * **dynamicSizing**: (default: false) - if true then the cropper becomes responsive - might introduce performance issues on resize;
 * **cropperClass**: string - set class on canvas element;
+* **croppingClass**: string - appends class to cropper when image is set (#142);
 
 
 ## Customizing Image cropper

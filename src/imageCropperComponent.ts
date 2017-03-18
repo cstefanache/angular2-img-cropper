@@ -52,9 +52,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
             this.settings = new CropperSettings();
         }
 
-        if (this.settings.cropperClass) {
-            this.renderer.setElementAttribute(canvas, "class", this.settings.cropperClass);
-        }
+        this.renderer.setElementAttribute(canvas, "class", this.settings.cropperClass);
 
         if (!this.settings.dynamicSizing) {
             this.renderer.setElementAttribute(canvas, "width", this.settings.canvasWidth.toString());
@@ -138,18 +136,18 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
     public reset():void {
         this.cropper.reset();
+        this.renderer.setElementAttribute(this.cropcanvas.nativeElement, "class", this.settings.cropperClass);
         this.image.image = this.cropper.getCroppedImage().src;
     }
 
     public setImage(image:HTMLImageElement, newBounds:any = null) {
         let self = this;
-
-        this.intervalRef = window.setInterval( () => {
+        this.renderer.setElementAttribute(this.cropcanvas.nativeElement, "class", `${this.settings.cropperClass} ${this.settings.croppingClass}`);
+        this.intervalRef = window.setInterval(() => {
             if (self.intervalRef) {
                 clearInterval(self.intervalRef);
             }
             if (image.naturalHeight > 0 && image.naturalWidth > 0) {
-
 
 
                 image.height = image.naturalHeight;

@@ -28,6 +28,7 @@ export class CropperSettings implements ICropperSettings {
 
     public dynamicSizing: boolean = false;
     public cropperClass: string;
+    public croppingClass: string;
 
     public width: number = 200;
     public height: number = 200;

@@ -190,6 +190,7 @@ export class AppComponent extends Type {
         this.cropperSettings1 = new CropperSettings();
         this.cropperSettings1.dynamicSizing = true;
         this.cropperSettings1.cropperClass = 'custom-class';
+        this.cropperSettings1.croppingClass = 'cropping';
         this.cropperSettings1.width = 200;
         this.cropperSettings1.height = 200;
 
