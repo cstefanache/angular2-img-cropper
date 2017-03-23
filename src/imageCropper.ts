@@ -940,6 +940,7 @@ export class ImageCropper extends ImageCropperModel {
                 return this.currentDragTouches[i];
             }
         }
+        return undefined;
     }
 
     public drawCursors(cropTouch:CropTouch) {
@@ -1012,7 +1013,7 @@ export class ImageCropper extends ImageCropperModel {
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
                 let dragTouch = this.getDragTouchForID(touch.identifier);
-                if (dragTouch && dragTouch !== null) {
+                if (dragTouch && dragTouch !== undefined) {
                     if (dragTouch.dragHandle instanceof CornerMarker || dragTouch.dragHandle instanceof DragMarker) {
                         dragTouch.dragHandle.setOver(false);
                     }
