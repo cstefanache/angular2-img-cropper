@@ -1,5 +1,8 @@
 # Changelog
 
+### Release 0.8.2
+ - fix for #150 - made fileType undefined as default. if defined it will enforce output format
+
 ### Release 0.8.1
  - added dynamicSizing, cropperClass for responsive purposes
 
@@ -136,7 +139,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
     * **strokeColor**:*string* - box/ellipsis stroke color
 * **allowedFilesRegex**:*RegExp* - (default: /\.(jpe?g|png|gif)$/i) - Regex for allowed images
 * **preserveSize**:*boolean* - will not scale the resulting image to the croppedWidth/croppedHeight and will output the exact crop size from original
-* **fileType**:*string* (default: 'png') - default image format
+* **fileType**:*string* - if defined all images will be converted to desired format. sample: cropperSample.fileType = 'image/jpeg'
 * **compressRatio**:*number* (default: 1.0) - default compress ratio
 * **dynamicSizing**: (default: false) - if true then the cropper becomes responsive - might introduce performance issues on resize;
 * **cropperClass**: string - set class on canvas element;

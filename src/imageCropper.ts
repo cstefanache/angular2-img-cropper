@@ -641,7 +641,8 @@ export class ImageCropper extends ImageCropperModel {
             let bufferContext = <CanvasRenderingContext2D> this.buffer.getContext("2d");
             bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
 
-            this.fileType = this.getDataUriMimeType(img.src);
+            if (!this.cropperSettings.fileType)
+                this.fileType = this.getDataUriMimeType(img.src);
 
             if (this.cropperSettings.minWithRelativeToResolution) {
                 this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);

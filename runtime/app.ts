@@ -91,6 +91,8 @@ this.cropperSettings2.minHeight = 100;
 this.cropperSettings2.rounded = true;
 this.cropperSettings2.minWithRelativeToResolution = false;
 
+this.cropperSettings2.fileType = "image/jpeg";
+
 this.cropperSettings2.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
 this.cropperSettings2.cropperDrawSettings.strokeWidth = 2;
 this.cropperSettings2.noFileInput = true;
@@ -234,6 +236,7 @@ export class AppComponent extends Type {
         this.cropperSettings2.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
         this.cropperSettings2.cropperDrawSettings.strokeWidth = 2;
         this.cropperSettings2.noFileInput = true;
+        this.cropperSettings2.fileType = "image/jpeg";
 
         this.data2 = {};
 
