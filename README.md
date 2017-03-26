@@ -1,6 +1,7 @@
 # Changelog
 
 ### Release 0.8.2
+ - CR: #148 - removed ts files from output package.
  - fix for #150 - made fileType undefined as default. if defined it will enforce output format
 
 ### Release 0.8.1
