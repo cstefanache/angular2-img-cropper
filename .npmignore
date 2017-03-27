@@ -7,9 +7,8 @@ Thumbs.db
 .DS_Store
 .idea
 /**/*.ts
-/**/*.d.ts
+!/**/*.d.ts
 runtime
-typings
 /system.config.js
 /typings.json
 *.ngFactory.ts
@@ -17,4 +16,6 @@ typings
 /index.html
 /.npmignore
 /make.js
+/.idea
 dist
+yarn.lock
