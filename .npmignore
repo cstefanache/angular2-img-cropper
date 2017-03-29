@@ -6,7 +6,8 @@ npm-debug.log
 Thumbs.db
 .DS_Store
 .idea
-/**/*.ts
+*.tgz
+!/**/*.ts
 !/**/*.d.ts
 runtime
 /system.config.js
