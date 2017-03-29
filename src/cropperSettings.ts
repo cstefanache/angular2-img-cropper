@@ -1,4 +1,4 @@
-import {CropperDrawSettings} from "./cropperDrawSettings";
+import {CropperDrawSettings} from './cropperDrawSettings';
 
 export interface ICropperSettings {
     canvasWidth?: number;
@@ -21,8 +21,6 @@ export interface ICropperSettings {
 }
 
 export class CropperSettings implements ICropperSettings {
-
-
     public canvasWidth: number = 300;
     public canvasHeight: number = 300;
 
@@ -74,7 +72,7 @@ export class CropperSettings implements ICropperSettings {
 
     set keepAspect(val: boolean) {
         if (val === false && this._rounded) {
-            throw new Error("Cannot set keep aspect to false on rounded cropper. Ellipsis not supported");
+            throw new Error('Cannot set keep aspect to false on rounded cropper. Ellipsis not supported');
         }
 
         this._keepAspect = val;

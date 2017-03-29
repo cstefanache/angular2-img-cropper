@@ -1,8 +1,8 @@
-import {Handle} from "./handle";
-import {PointPool} from "./pointPool";
-import {Point} from "./point";
-import {CropperSettings} from "../cropperSettings";
-import {Bounds} from "./bounds";
+import {Handle} from './handle';
+import {PointPool} from './pointPool';
+import {Point} from './point';
+import {CropperSettings} from '../cropperSettings';
+import {Bounds} from './bounds';
 
 export class DragMarker extends Handle {
 

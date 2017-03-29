@@ -1,5 +1,5 @@
-import {Point} from "./point";
-import {PointPool} from "./pointPool";
+import {Point} from './point';
+import {PointPool} from './pointPool';
 
 export class Bounds {
 

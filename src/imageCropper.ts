@@ -1,13 +1,13 @@
-import {Bounds} from "./model/bounds";
-import {CornerMarker} from "./model/cornerMarker";
-import {CropTouch} from "./model/cropTouch";
-import {CropperSettings} from "./cropperSettings";
-import {DragMarker} from "./model/dragMarker";
-import {ImageCropperModel} from "./model/imageCropperModel";
-import {ImageCropperDataShare} from "./imageCropperDataShare";
-import {PointPool} from "./model/pointPool";
-import {Point} from "./model/point";
-import {ICornerMarker} from "./model/cornerMarker";
+import {Bounds} from './model/bounds';
+import {CornerMarker} from './model/cornerMarker';
+import {CropTouch} from './model/cropTouch';
+import {CropperSettings} from './cropperSettings';
+import {DragMarker} from './model/dragMarker';
+import {ImageCropperModel} from './model/imageCropperModel';
+import {ImageCropperDataShare} from './imageCropperDataShare';
+import {PointPool} from './model/pointPool';
+import {Point} from './model/point';
+import {ICornerMarker} from './model/cornerMarker';
 
 export class ImageCropper extends ImageCropperModel {
 
@@ -103,10 +103,10 @@ export class ImageCropper extends ImageCropperModel {
 
     private static detectVerticalSquash(img:HTMLImageElement | HTMLCanvasElement | HTMLVideoElement) {
         let ih = img.height;
-        let canvas = document.createElement("canvas");
+        let canvas = document.createElement('canvas');
         canvas.width = 1;
         canvas.height = ih;
-        let ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
+        let ctx = <CanvasRenderingContext2D> canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
         let imageData:any = ctx.getImageData(0, 0, 1, ih)
         if (imageData) {
@@ -149,8 +149,8 @@ export class ImageCropper extends ImageCropperModel {
     }
 
     public prepare(canvas:HTMLCanvasElement) {
-        this.buffer = document.createElement("canvas");
-        this.cropCanvas = document.createElement("canvas");
+        this.buffer = document.createElement('canvas');
+        this.cropCanvas = document.createElement('canvas');
 
         // todo get more reliable parent width value.
         let responsiveWidth:number = canvas.parentElement ? canvas.parentElement.clientWidth : 0;
@@ -166,7 +166,7 @@ export class ImageCropper extends ImageCropperModel {
         this.cropCanvas.height = this.cropHeight;
         this.buffer.height = canvas.height;
         this.canvas = canvas;
-        this.ctx = <CanvasRenderingContext2D> this.canvas.getContext("2d");
+        this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d');
 
         this.draw(this.ctx);
     }
@@ -207,14 +207,14 @@ export class ImageCropper extends ImageCropperModel {
                 this.drawImageIOSFix(ctx, this.srcImage, 0, 0, this.srcImage.width, this.srcImage.height, 0,
                     this.buffer.height / 2 - h / 2, w, h);
             }
-            (<CanvasRenderingContext2D> this.buffer.getContext("2d"))
+            (<CanvasRenderingContext2D> this.buffer.getContext('2d'))
                 .drawImage(this.canvas, 0, 0, this.canvasWidth, this.canvasHeight);
 
             ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
-            ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor; // "rgba(255,228,0,1)";
+            ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor; // 'rgba(255,228,0,1)';
 
             if (!this.cropperSettings.rounded) {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
                 ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
                 ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.width, 1),
                     Math.max(bounds.height, 1), bounds.left, bounds.top, bounds.width, bounds.height);
@@ -235,7 +235,7 @@ export class ImageCropper extends ImageCropperModel {
             }
             this.center.draw(ctx);
         } else {
-            ctx.fillStyle = "rgba(192,192,192,1)";
+            ctx.fillStyle = 'rgba(192,192,192,1)';
             ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         }
     }
@@ -569,7 +569,7 @@ export class ImageCropper extends ImageCropperModel {
                     break;
                 }
             }
-            if (newCropTouch.dragHandle === null || typeof newCropTouch.dragHandle === "undefined") {
+            if (newCropTouch.dragHandle === null || typeof newCropTouch.dragHandle === 'undefined') {
                 if (this.center.touchInBounds(newCropTouch.x, newCropTouch.y)) {
                     newCropTouch.dragHandle = this.center;
                     this.currentDragTouches.push(newCropTouch);
@@ -638,7 +638,7 @@ export class ImageCropper extends ImageCropperModel {
         } else {
             this.imageSet = true;
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            let bufferContext = <CanvasRenderingContext2D> this.buffer.getContext("2d");
+            let bufferContext = <CanvasRenderingContext2D> this.buffer.getContext('2d');
             bufferContext.clearRect(0, 0, this.buffer.width, this.buffer.height);
 
             if (!this.cropperSettings.fileType)
@@ -784,7 +784,7 @@ export class ImageCropper extends ImageCropperModel {
             let offsetH:number = (this.buffer.height - h) / 2 / this.ratioH;
             let offsetW:number = (this.buffer.width - w) / 2 / this.ratioW;
 
-            let ctx = <CanvasRenderingContext2D> this.cropCanvas.getContext("2d");
+            let ctx = <CanvasRenderingContext2D> this.cropCanvas.getContext('2d');
 
 
             if (this.cropperSettings.preserveSize) {
@@ -948,7 +948,7 @@ export class ImageCropper extends ImageCropperModel {
         let cursorDrawn = false;
         if (cropTouch != null) {
             if (cropTouch.dragHandle === this.center) {
-                ImageCropperDataShare.setStyle(this.canvas, "move");
+                ImageCropperDataShare.setStyle(this.canvas, 'move');
                 cursorDrawn = true;
             }
             if (cropTouch.dragHandle !== null && cropTouch.dragHandle instanceof CornerMarker) {
@@ -964,13 +964,13 @@ export class ImageCropper extends ImageCropperModel {
                 didDraw = didDraw || this.drawCornerCursor(this.markers[i], cropTouch.x, cropTouch.y);
             }
             if (!didDraw) {
-                ImageCropperDataShare.setStyle(this.canvas, "initial");
+                ImageCropperDataShare.setStyle(this.canvas, 'initial');
             }
         }
         if (!didDraw && !cursorDrawn && this.center.touchInBounds(cropTouch.x, cropTouch.y)) {
             this.center.setOver(true);
             ImageCropperDataShare.setOver(this.canvas);
-            ImageCropperDataShare.setStyle(this.canvas, "move");
+            ImageCropperDataShare.setStyle(this.canvas, 'move');
         } else {
             this.center.setOver(false);
         }
@@ -982,18 +982,18 @@ export class ImageCropper extends ImageCropperModel {
             if (marker.getHorizontalNeighbour().position.x > marker.position.x) {
                 if (marker.getVerticalNeighbour().position.y > marker.position.y) {
                     ImageCropperDataShare.setOver(this.canvas);
-                    ImageCropperDataShare.setStyle(this.canvas, "nwse-resize");
+                    ImageCropperDataShare.setStyle(this.canvas, 'nwse-resize');
                 } else {
                     ImageCropperDataShare.setOver(this.canvas);
-                    ImageCropperDataShare.setStyle(this.canvas, "nesw-resize");
+                    ImageCropperDataShare.setStyle(this.canvas, 'nesw-resize');
                 }
             } else {
                 if (marker.getVerticalNeighbour().position.y > marker.position.y) {
                     ImageCropperDataShare.setOver(this.canvas);
-                    ImageCropperDataShare.setStyle(this.canvas, "nesw-resize");
+                    ImageCropperDataShare.setStyle(this.canvas, 'nesw-resize');
                 } else {
                     ImageCropperDataShare.setOver(this.canvas);
-                    ImageCropperDataShare.setStyle(this.canvas, "nwse-resize");
+                    ImageCropperDataShare.setStyle(this.canvas, 'nwse-resize');
                 }
             }
             return true;

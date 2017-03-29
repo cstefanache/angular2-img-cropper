@@ -1,4 +1,4 @@
-import {Point} from "./point";
+import {Point} from './point';
 
 export class PointPool {
 
@@ -25,7 +25,7 @@ export class PointPool {
 
     public borrow(x: number, y: number): Point {
         if (this.firstAvailable == null) {
-            throw "Pool exhausted";
+            throw 'Pool exhausted';
         }
         this.borrowed++;
         let p: Point = this.firstAvailable;
