@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015", "dom"],
+    "noImplicitAny": true,
+    "module": "es2015",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+
+
+  "exclude": [
+    "node_modules",
+    "dist",
+    "runtime"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipMetadataEmit" : true
+  }
+}

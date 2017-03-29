@@ -26,8 +26,8 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
     @ViewChild("cropcanvas", undefined) cropcanvas:ElementRef;
 
-    @Input() public settings:CropperSettings;
-    @Input() public image:any;
+    @Input('settings') public settings:CropperSettings;
+    @Input('image') public image:any;
     @Input() public cropper:ImageCropper;
     @Input() public cropPosition:CropPosition;
     @Output() public cropPositionChange:EventEmitter<CropPosition> = new EventEmitter<CropPosition>();

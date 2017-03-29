@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { ImageCropperComponent } from './imageCropperComponent';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [ImageCropperComponent],
-  exports: [ImageCropperComponent]
+    imports: [CommonModule],
+    declarations: [ImageCropperComponent],
+    exports: [ImageCropperComponent]
 })
 export class ImageCropperModule {
 }
+
