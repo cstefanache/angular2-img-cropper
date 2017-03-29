@@ -1,5 +1,5 @@
-import {Point} from "./point";
-import {CropperSettings} from "../cropperSettings";
+import {Point} from './point';
+import {CropperSettings} from '../cropperSettings';
 
 export interface IHandle {
     over: boolean;

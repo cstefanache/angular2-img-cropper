@@ -1,7 +1,7 @@
-import {PointPool} from "./pointPool";
-import {CornerMarker} from "./cornerMarker";
-import {DragMarker} from "./dragMarker";
-import {CropTouch} from "./cropTouch";
+import {PointPool} from './pointPool';
+import {CornerMarker} from './cornerMarker';
+import {DragMarker} from './dragMarker';
+import {CropTouch} from './cropTouch';
 
 export class ImageCropperModel {
     public isMouseDown: boolean;

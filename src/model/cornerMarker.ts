@@ -1,5 +1,5 @@
-import {Handle, IHandle} from "./handle";
-import {CropperSettings} from "../cropperSettings";
+import {Handle, IHandle} from './handle';
+import {CropperSettings} from '../cropperSettings';
 
 export interface ICornerMarker extends IHandle {
     horizontalNeighbour: CornerMarker;
@@ -45,7 +45,7 @@ export class CornerMarker extends Handle implements ICornerMarker {
         }
 
         ctx.beginPath();
-        ctx.lineJoin = "miter";
+        ctx.lineJoin = 'miter';
         ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y +
@@ -79,7 +79,7 @@ export class CornerMarker extends Handle implements ICornerMarker {
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
-        ctx.fillStyle = "rgba(255,255,255,.7)";
+        ctx.fillStyle = 'rgba(255,255,255,.7)';
         ctx.fill();
     }
 

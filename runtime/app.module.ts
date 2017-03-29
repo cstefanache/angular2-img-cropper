@@ -10,7 +10,7 @@ import { HttpModule } from '@angular/http';
 import 'rxjs/Rx';
 
 import { AppComponent } from './app';
-import {TabsModule} from "ng2-tabs";
+import {TabsModule} from 'ng2-tabs';
 
 @NgModule({
     imports: [ BrowserModule, TabsModule, FormsModule ],
