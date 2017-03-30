@@ -119,6 +119,8 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     }
 
     public fileChangeListener($event:any) {
+        if($event.target.files.length === 0) return;
+
         let file:File = $event.target.files[0];
         if (this.settings.allowedFilesRegex.test(file.name)) {
             let image:any = new Image();
