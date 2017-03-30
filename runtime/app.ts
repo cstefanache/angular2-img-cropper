@@ -119,7 +119,7 @@ this.cropperSettings2.noFileInput = true;
         <h3>result</h3>
         <div class="col-md-3">
             <span *ngIf="data3.image" >
-              <img [src]="data3.image" [width]="cropperSettings3.croppedWidth" [height]="cropperSettings3.croppedHeight">
+              <img [src]="data3.image" style="max-width: 300px; max-height:200px;">
             </span>
         </div>
         </div>
@@ -256,6 +256,7 @@ export class AppComponent extends Type {
         this.cropperSettings3.minHeight = 100;
 
         this.cropperSettings3.rounded = false;
+        this.cropperSettings3.preserveSize = true;
         this.cropperSettings3.minWithRelativeToResolution = false;
 
         this.cropperSettings3.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
