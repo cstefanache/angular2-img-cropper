@@ -7,7 +7,7 @@ Thumbs.db
 .DS_Store
 .idea
 *.tgz
-!/**/*.ts
+/**/*.ts
 !/**/*.d.ts
 runtime
 /system.config.js

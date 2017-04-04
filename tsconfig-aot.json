@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
-    "lib": ["es2015", "dom"],
-    "noImplicitAny": true,
-    "module": "es2015",
-    "target": "es5",
-    "moduleResolution": "node",
-    "sourceMap": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "suppressImplicitAnyIndexErrors": true
+    "lib": ["es2015", "dom"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "target": "es5",
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "inlineSources": true,
+    "stripInternal": false,
+    "outDir": "dist"
   },
-
-
-  "exclude": [
-    "node_modules",
-    "dist",
-    "runtime"
+  "files": [
+    "index.ts"
   ],
   "angularCompilerOptions": {
-    "genDir": "aot",
-    "skipMetadataEmit" : true
+    "genDir": "dist",
+    "skipTemplateCodegen": true,
+    "debug": true
   }
 }
