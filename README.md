@@ -1,5 +1,7 @@
 # Changelog
 
+### Release 0.8.6
+ - Dist package cleanup (PR by: @leosvelperez)
 
 ### Release 0.8.4
  - Made compatible with Angular 4 && AOT
