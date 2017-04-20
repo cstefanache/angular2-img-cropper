@@ -28,6 +28,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
     @Input('settings') public settings:CropperSettings;
     @Input('image') public image:any;
+    @Input('inputImage') public inputImage:any;
     @Input() public cropper:ImageCropper;
     @Input() public cropPosition:CropPosition;
     @Output() public cropPositionChange:EventEmitter<CropPosition> = new EventEmitter<CropPosition>();
@@ -81,6 +82,10 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                 this.onCrop.emit(bounds);
             }
             this.updateCropBounds();
+        }
+
+        if (changes.inputImage) {
+          this.setImage(changes.inputImage.currentValue);
         }
     }
 
