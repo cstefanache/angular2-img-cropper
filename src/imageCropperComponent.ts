@@ -38,6 +38,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     public croppedWidth:number;
     public croppedHeight:number;
     public intervalRef:number;
+    public raf:number;
     public renderer:Renderer;
 
     private isCropPositionUpdateNeeded:boolean;
@@ -150,9 +151,9 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     public setImage(image:HTMLImageElement, newBounds:any = null) {
         let self = this;
         this.renderer.setElementAttribute(this.cropcanvas.nativeElement, 'class', `${this.settings.cropperClass} ${this.settings.croppingClass}`);
-        this.intervalRef = window.setInterval(() => {
-            if (self.intervalRef) {
-                clearInterval(self.intervalRef);
+        this.raf = window.requestAnimationFrame(() => {
+            if (self.raf) {
+                window.cancelAnimationFrame(self.raf);
             }
             if (image.naturalHeight > 0 && image.naturalWidth > 0) {
 
@@ -160,7 +161,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                 image.height = image.naturalHeight;
                 image.width = image.naturalWidth;
 
-                clearInterval(self.intervalRef);
+                window.cancelAnimationFrame(self.raf);
                 self.getOrientedImage(image, (img:HTMLImageElement) => {
                     if (this.settings.dynamicSizing) {
                         let canvas:HTMLCanvasElement = this.cropcanvas.nativeElement;
@@ -184,7 +185,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                     self.onCrop.emit(bounds);
                 });
             }
-        }, 10);
+        });
     }
 
     private isCropPositionChanged(changes:SimpleChanges):boolean {
