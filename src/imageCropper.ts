@@ -796,6 +796,9 @@ export class ImageCropper extends ImageCropperModel {
 
                 this.cropperSettings.croppedWidth = this.cropCanvas.width;
                 this.cropperSettings.croppedHeight = this.cropCanvas.height;
+            } else {
+                this.cropCanvas.width = this.cropWidth;
+                this.cropCanvas.height = this.cropHeight;
             }
 
             ctx.clearRect(0, 0, this.cropCanvas.width, this.cropCanvas.height);
