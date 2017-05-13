@@ -134,8 +134,10 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
             let that = this;
 
             fileReader.addEventListener('loadend', function (loadEvent:any) {
+                image.addEventListener('load', function() {
+                    that.setImage(image);
+                });
                 image.src = loadEvent.target.result;
-                that.setImage(image);
             });
 
             fileReader.readAsDataURL(file);
