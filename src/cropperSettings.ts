@@ -17,6 +17,7 @@ export interface ICropperSettings {
     rounded: boolean;
     keepAspect: boolean;
     preserveSize: boolean;
+    cropOnResize: boolean;
     compressRatio: number;
 }
 
@@ -47,6 +48,7 @@ export class CropperSettings implements ICropperSettings {
     public resampleFn:Function;
 
     public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif)$/i;
+    public cropOnResize: boolean = true;
     public preserveSize: boolean = false;
 
     public compressRatio:number = 1.0;

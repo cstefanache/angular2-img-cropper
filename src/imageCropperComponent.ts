@@ -79,7 +79,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
             this.cropper.updateCropPosition(this.cropPosition.toBounds());
             if (this.cropper.isImageSet()) {
                 let bounds = this.cropper.getCropBounds();
-                this.image.image = this.cropper.getCroppedImage().src;
+                this.image.image = this.cropper.getCroppedImageHelper().src;
                 this.onCrop.emit(bounds);
             }
             this.updateCropBounds();
@@ -101,7 +101,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     public onTouchEnd(event:TouchEvent):void {
         this.cropper.onTouchEnd(event);
         if (this.cropper.isImageSet()) {
-            this.image.image = this.cropper.getCroppedImage().src;
+            this.image.image = this.cropper.getCroppedImageHelper().src;
             this.onCrop.emit(this.cropper.getCropBounds());
             this.updateCropBounds();
         }
@@ -114,7 +114,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     public onMouseUp(event:MouseEvent):void {
         if (this.cropper.isImageSet()) {
             this.cropper.onMouseUp(event);
-            this.image.image = this.cropper.getCroppedImage().src;
+            this.image.image = this.cropper.getCroppedImageHelper().src;
             this.onCrop.emit(this.cropper.getCropBounds());
             this.updateCropBounds();
         }
@@ -147,7 +147,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     public reset():void {
         this.cropper.reset();
         this.renderer.setElementAttribute(this.cropcanvas.nativeElement, 'class', this.settings.cropperClass);
-        this.image.image = this.cropper.getCroppedImage().src;
+        this.image.image = this.cropper.getCroppedImageHelper().src;
     }
 
     public setImage(image:HTMLImageElement, newBounds:any = null) {
@@ -179,7 +179,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
                     }
                     self.image.original = img;
                     let bounds = self.cropper.getCropBounds();
-                    self.image.image = self.cropper.getCroppedImage().src;
+                    self.image.image = self.cropper.getCroppedImageHelper().src;
                     if (newBounds != null) {
                         bounds = newBounds;
                         self.cropper.setBounds(bounds);
