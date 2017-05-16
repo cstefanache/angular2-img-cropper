@@ -676,7 +676,7 @@ export class ImageCropper extends ImageCropperModel {
 
         this.vertSquashRatio = ImageCropper.detectVerticalSquash(this.srcImage);
         this.draw(this.ctx);
-        this.croppedImage = this.getCroppedImage(this.cropWidth, this.cropHeight);
+        this.croppedImage = this.getCroppedImageHelper(false, this.cropWidth, this.cropHeight);
     }
 
     private getCropPositionFromMarkers():Point[] {
@@ -757,8 +757,15 @@ export class ImageCropper extends ImageCropperModel {
         return positions;
     }
 
+    public getCroppedImageHelper(preserveSize?:boolean, fillWidth?:number, fillHeight?:number):HTMLImageElement {
+        if (this.cropperSettings.cropOnResize) {
+            return this.getCroppedImage(preserveSize, fillWidth, fillHeight);
+        }
+        return this.croppedImage? this.croppedImage : document.createElement('img');
+    }
+
     // todo: Unused parameters?
-    public getCroppedImage(fillWidth?:number, fillHeight?:number):HTMLImageElement {
+    public getCroppedImage(preserveSize?:boolean, fillWidth?:number, fillHeight?:number):HTMLImageElement {
         let bounds:Bounds = this.getBounds();
         if (!this.srcImage) {
             return document.createElement('img');
@@ -787,7 +794,7 @@ export class ImageCropper extends ImageCropperModel {
             let ctx = <CanvasRenderingContext2D> this.cropCanvas.getContext('2d');
 
 
-            if (this.cropperSettings.preserveSize) {
+            if (this.cropperSettings.preserveSize || preserveSize) {
                 var width = Math.round(bounds.right/this.ratioW - bounds.left/this.ratioW);
                 var height = Math.round(bounds.bottom/this.ratioH - bounds.top/this.ratioH);
 
