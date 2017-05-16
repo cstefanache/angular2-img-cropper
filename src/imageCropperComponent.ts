@@ -194,6 +194,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
                     if (newBounds != null) {
                         bounds = newBounds;
                         self.cropper.setBounds(bounds);
+                        this.cropper.updateCropPosition(bounds);
                     }
                     self.onCrop.emit(bounds);
                 });
