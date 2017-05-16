@@ -1,4 +1,4 @@
-import {Component, Input, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type, AfterViewInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, Renderer, ViewChild, ElementRef, Output, EventEmitter, Type, AfterViewInit, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
 import {ImageCropper} from './imageCropper';
 import {CropperSettings} from './cropperSettings';
 import {Exif} from './exif';
@@ -22,7 +22,7 @@ import {CropPosition} from './model/cropPosition';
         </span>
       `
 })
-export class ImageCropperComponent implements AfterViewInit, OnChanges {
+export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     @ViewChild('cropcanvas', undefined) cropcanvas:ElementRef;
 
@@ -40,6 +40,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
     public intervalRef:number;
     public raf:number;
     public renderer:Renderer;
+    public windowListener: EventListenerObject;
 
     private isCropPositionUpdateNeeded:boolean;
 
@@ -60,11 +61,8 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
             this.renderer.setElementAttribute(canvas, 'width', this.settings.canvasWidth.toString());
             this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
         } else {
-            window.addEventListener('resize', () => {
-                this.settings.canvasWidth = canvas.offsetWidth;
-                this.settings.canvasHeight = canvas.offsetHeight;
-                this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, true);
-            });
+            this.windowListener = this.resize.bind(this);
+            window.addEventListener('resize', this.windowListener);
         }
 
         if (!this.cropper) {
@@ -87,6 +85,12 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
         if (changes.inputImage) {
           this.setImage(changes.inputImage.currentValue);
+        }
+    }
+
+    public ngOnDestroy() {
+        if (this.settings.dynamicSizing && this.windowListener) {
+            window.removeEventListener('resize', this.windowListener);
         }
     }
 
@@ -142,6 +146,13 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
             fileReader.readAsDataURL(file);
         }
+    }
+
+    private resize() {
+        let canvas:HTMLCanvasElement = this.cropcanvas.nativeElement;
+        this.settings.canvasWidth = canvas.offsetWidth;
+        this.settings.canvasHeight = canvas.offsetHeight;
+        this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, true);
     }
 
     public reset():void {
