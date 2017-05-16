@@ -153,7 +153,50 @@ this.cropPosition.w = 200;
 this.cropPosition.h = 250;
 </code>
 </pre>
-</tab>    
+</tab>
+
+<tab title="No Crop on Resize" [disabled]="false">
+    <div class="row">
+    <div class="col-md-9">
+        <h3>source</h3>
+        <img-cropper #cropper4 [image]="data4" [settings]="cropperSettings4"></img-cropper>
+        <br/>
+        <button class="btn btn-primary" (click)="getImage()">Crop Image</button>
+    </div>
+    <h3>result</h3>
+    <div class="col-md-3">
+        <span *ngIf="data4.image" >
+            <img [src]="data4.image" [width]="200">
+        </span>
+    </div>
+    </div>
+<h3>settings</h3>
+<pre>
+<code>
+this.cropperSettings4 = new CropperSettings();
+this.cropperSettings4.width = 200;
+this.cropperSettings4.height = 200;
+
+this.cropperSettings4.croppedWidth = 200;
+this.cropperSettings4.croppedHeight = 200;
+
+this.cropperSettings4.canvasWidth = 500;
+this.cropperSettings4.canvasHeight = 300;
+
+this.cropperSettings4.minWidth = 100;
+this.cropperSettings4.minHeight = 100;
+
+this.cropperSettings4.rounded = false;
+
+this.cropperSettings4.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+this.cropperSettings4.cropperDrawSettings.strokeWidth = 2;
+
+this.cropperSettings4.keepAspect = true;
+this.cropperSettings4.preserveSize = true;
+this.cropperSettings4.cropOnResize = false;
+</code>
+</pre>
+</tab>
 </tabset>
     `
 })
@@ -176,6 +219,9 @@ export class AppComponent extends Type {
     @ViewChild('cropper3', undefined)
     public cropper3:ImageCropperComponent;
 
+    @ViewChild('cropper4', undefined)
+    public cropper4:ImageCropperComponent;
+
     public onChange:Function;
     public updateCropPosition:Function;
     public resetCroppers:Function;
@@ -185,6 +231,8 @@ export class AppComponent extends Type {
     public cropperSettings3:CropperSettings;
     public cropPosition:CropPosition;
 
+    //Cropper 4 data
+    public cropperSettings4:CropperSettings;
 
     constructor() {
         super();
@@ -293,6 +341,35 @@ export class AppComponent extends Type {
 
         this.data3 = {};
 
+        //Cropper settings 4
+        this.cropperSettings4 = new CropperSettings();
+        this.cropperSettings4.width = 200;
+        this.cropperSettings4.height = 200;
+
+        this.cropperSettings4.croppedWidth = 200;
+        this.cropperSettings4.croppedHeight = 200;
+
+        this.cropperSettings4.canvasWidth = 500;
+        this.cropperSettings4.canvasHeight = 300;
+
+        this.cropperSettings4.minWidth = 100;
+        this.cropperSettings4.minHeight = 100;
+
+        this.cropperSettings4.rounded = false;
+
+        this.cropperSettings4.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings4.cropperDrawSettings.strokeWidth = 2;
+
+        this.cropperSettings4.keepAspect = true;
+        this.cropperSettings4.preserveSize = true;
+        this.cropperSettings4.cropOnResize = false;
+
+        this.data4 = {};
+
+        this.getImage = () => {
+          this.data4.image = this.cropper4.cropper.getCroppedImage(true).src;
+        }
+
         this.onChange = ($event:any) => {
             var image:any = new Image();
             var file:File = $event.target.files[0];
@@ -313,6 +390,7 @@ export class AppComponent extends Type {
             this.cropper1.reset();
             this.cropper2.reset();
             this.cropper3.reset();
+            this.cropper4.reset();
         }
 
 

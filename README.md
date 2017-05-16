@@ -16,7 +16,7 @@
 ### Release 0.8
 
  - added reset() method on ImageCropperComponent - fix for  #118   
- - added compressRatio as parameter in the cropper settings 
+ - added compressRatio as parameter in the cropper settings
 
 ### Release 0.7.6
 
@@ -24,7 +24,7 @@
 
 ### Release 0.7.1
  - Fixed #87 get unsacled crop of image
- 
+
 
 ### Release 0.7.0
  - update for AngularJS 2.0.1
@@ -69,7 +69,7 @@ Please change your system.config files to make use of the js files.
 # ng2-img-cropper
 
 This is an adapatation of Angular 1 image cropper from: https://github.com/AllanBishop/angular-img-cropper
-An image cropping tool for AngularJS. Features a rectangular crop area. The crop area's aspect ratio can be enforced during dragging. 
+An image cropping tool for AngularJS. Features a rectangular crop area. The crop area's aspect ratio can be enforced during dragging.
 The crop image can either be 1:1 or scaled to fit an area.
 
 ## Install from NPM
@@ -140,7 +140,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **croppedHeight**:*number* - Resulting image height
 * **touchRadius**:*number* - (default: 20) Touch devices radius
 * **minWithRelativeToResolution**:*boolean* - (default: true) By default the resulting image will be cropped from original image. If false, it will be cropped from canvas pixels
-* **noFileInput**:*boolean* - (default: false) - hides the file input element from cropper canvas. 
+* **noFileInput**:*boolean* - (default: false) - hides the file input element from cropper canvas.
 * **cropperDrawSettings**:*CropperDrawSettings* - rendering options
     * **strokeWidth**:*number* - box/ellipsis stroke width
     * **strokeColor**:*string* - box/ellipsis stroke color
@@ -152,7 +152,7 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **cropperClass**: string - set class on canvas element;
 * **croppingClass**: string - appends class to cropper when image is set (#142);
 * **resampleFn**: Function(canvas) - function used to resample the cropped image (#136); - see example #3 from runtime sample app
-
+* **cropOnResize**:*boolean* (default: true) - if true the cropper will create a new cropped Image object immediately when the crop area is resized
 
 ## Customizing Image cropper
 
@@ -174,7 +174,7 @@ Replacing component file input:
 
 data:any;
 
-@ViewChild('cropper', undefined) 
+@ViewChild('cropper', undefined)
 cropper:ImageCropperComponent;
 
 constructor() {
@@ -199,5 +199,3 @@ fileChangeListener($event) {
 
 
 ```
-
-
