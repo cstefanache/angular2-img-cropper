@@ -645,8 +645,8 @@ export class ImageCropper extends ImageCropperModel {
                 this.fileType = this.getDataUriMimeType(img.src);
 
             if (this.cropperSettings.minWithRelativeToResolution) {
-                this.minWidth = (this.canvas.width * this.minWidth / this.srcImage.width);
-                this.minHeight = (this.canvas.height * this.minHeight / this.srcImage.height);
+                this.minWidth = (this.canvas.width * this.cropperSettings.minWidth / this.srcImage.width);
+                this.minHeight = (this.canvas.height * this.cropperSettings.minHeight / this.srcImage.height);
             }
 
             this.updateClampBounds();
