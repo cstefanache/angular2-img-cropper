@@ -899,15 +899,59 @@ export class ImageCropper extends ImageCropperModel {
                 }
             } else {
                 if (event.touches.length === 2) {
-                    let distance = ((event.touches[0].clientX - event.touches[1].clientX) * (event.touches[0].clientX - event.touches[1].clientX)) + ((event.touches[0].clientY - event.touches[1].clientY) * (event.touches[0].clientY - event.touches[1].clientY));
-                    if (this.previousDistance && this.previousDistance !== distance) {
-                        let increment:number = distance < this.previousDistance ? 1 : -1;
-                        let bounds:Bounds = this.getBounds();
 
-                        bounds.top += increment;
-                        bounds.left += increment;
-                        bounds.right -= increment;
-                        bounds.bottom -= increment;
+                    const distance = ((event.touches[0].clientX - event.touches[1].clientX) * (event.touches[0].clientX - event.touches[1].clientX)) + ((event.touches[0].clientY - event.touches[1].clientY) * (event.touches[0].clientY - event.touches[1].clientY));
+                    if (this.previousDistance && this.previousDistance !== distance) {
+                        let bounds = this.getBounds();
+
+                        if (distance < this.previousDistance) {
+                            bounds.top += 1;
+                            bounds.left += 1;
+                            bounds.right -= 1;
+                            bounds.bottom -= 1;
+                        }
+
+                        if (distance > this.previousDistance) {
+                            if (bounds.top !== this.minYClamp && bounds.bottom !== this.maxYClamp && bounds.left !== this.minXClamp && bounds.right !== this.maxXClamp) { // none
+                                bounds.top -= 1;
+                                bounds.left -= 1;
+                                bounds.right += 1;
+                                bounds.bottom += 1;
+                            } else if (bounds.top !== this.minYClamp && bounds.bottom !== this.maxYClamp && bounds.left === this.minXClamp && bounds.right !== this.maxXClamp) { // left
+                                bounds.top -= 1;
+                                bounds.right += 2;
+                                bounds.bottom += 1;
+                            } else if (bounds.top !== this.minYClamp && bounds.bottom !== this.maxYClamp && bounds.left !== this.minXClamp && bounds.right === this.maxXClamp) { // right
+                                bounds.top -= 1;
+                                bounds.left -= 2;
+                                bounds.bottom += 1;
+                            } else if (bounds.top === this.minYClamp && bounds.bottom !== this.maxYClamp && bounds.left !== this.minXClamp && bounds.right !== this.maxXClamp) { // top
+                                bounds.left -= 1;
+                                bounds.right += 1;
+                                bounds.bottom += 2;
+                            } else if (bounds.top !== this.minYClamp && bounds.bottom === this.maxYClamp && bounds.left !== this.minXClamp && bounds.right !== this.maxXClamp) { // bottom
+                                bounds.top -= 2;
+                                bounds.left -= 1;
+                                bounds.right += 1;
+                            } else if (bounds.top === this.minYClamp && bounds.bottom !== this.maxYClamp && bounds.left === this.minXClamp && bounds.right !== this.maxXClamp) { // top left
+                                bounds.right += 2;
+                                bounds.bottom += 2;
+                            } else if (bounds.top === this.minYClamp && bounds.bottom !== this.maxYClamp && bounds.left !== this.minXClamp && bounds.right === this.maxXClamp) { // top right
+                                bounds.left -= 2;
+                                bounds.bottom += 2;
+                            } else if (bounds.top !== this.minYClamp && bounds.bottom === this.maxYClamp && bounds.left === this.minXClamp && bounds.right !== this.maxXClamp) { // bottom left
+                                bounds.top -= 2;
+                                bounds.right += 2;
+                            } else if (bounds.top !== this.minYClamp && bounds.bottom === this.maxYClamp && bounds.left !== this.minXClamp && bounds.right === this.maxXClamp) { // bottom right
+                                bounds.top -= 2;
+                                bounds.left -= 2;
+                            }
+                        }
+
+                        if (bounds.top < this.minYClamp) bounds.top = this.minYClamp;
+                        if (bounds.bottom > this.maxYClamp) bounds.bottom = this.maxYClamp;
+                        if (bounds.left < this.minXClamp) bounds.left = this.minXClamp;
+                        if (bounds.right > this.maxXClamp) bounds.right = this.maxXClamp;
 
                         this.setBounds(bounds);
                     }
