@@ -176,7 +176,7 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
 
                 window.cancelAnimationFrame(self.raf);
                 self.getOrientedImage(image, (img:HTMLImageElement) => {
-					
+
                     if (self.settings.dynamicSizing) {
                         let canvas:HTMLCanvasElement = self.cropcanvas.nativeElement;
                         self.settings.canvasWidth = canvas.offsetWidth;
@@ -195,9 +195,9 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
                         self.cropper.setBounds(bounds);
                         self.cropper.updateCropPosition(bounds);
                     }
-					self.image.image = self.cropper.getCroppedImageHelper().src;
+                    self.image.image = self.cropper.getCroppedImageHelper().src;
                     self.onCrop.emit(bounds);
-					self.updateCropBounds();
+                    self.updateCropBounds();
                 });
             }
         });
