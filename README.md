@@ -1,3 +1,5 @@
+# Call for contributors - I want to donate the project (unable to maintain it anymore #
+
 # Changelog
 
 ### Release 0.8.6
