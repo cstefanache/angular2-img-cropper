@@ -57,8 +57,27 @@ export class CropperSettings implements ICropperSettings {
     private _keepAspect: boolean = true;
 
 
-    constructor() {
-        // init
+    constructor(settings?: any) {
+        if (typeof settings === 'object') {
+            this.canvasWidth = settings.canvasWidth || this.canvasWidth;
+            this.canvasHeight = settings.canvasHeight || this.canvasHeight;
+            this.width = settings.width || this.width;
+            this.height = settings.height || this.height;
+            this.minWidth = settings.minWidth || this.minWidth;
+            this.minHeight = settings.minHeight || this.minHeight;
+            this.minWithRelativeToResolution = settings.minWithRelativeToResolution || this.minWithRelativeToResolution;
+            this.croppedWidth = settings.croppedWidth || this.croppedWidth;
+            this.croppedHeight = settings.croppedHeight || this.croppedHeight;
+            this.touchRadius = settings.touchRadius || this.touchRadius;
+            this.cropperDrawSettings = settings.cropperDrawSettings || this.cropperDrawSettings;
+            this.noFileInput = settings.noFileInput || this.noFileInput;
+            this.allowedFilesRegex = settings.allowedFilesRegex || this.allowedFilesRegex;
+            this.rounded = settings.rounded || this.rounded;
+            this.keepAspect = settings.keepAspect || this.keepAspect;
+            this.preserveSize = settings.preserveSize || this.preserveSize;
+            this.cropOnResize = settings.cropOnResize || this.cropOnResize;
+            this.compressRatio = settings.compressRatio || this.compressRatio;
+        }
     }
 
     set rounded(val: boolean) {
