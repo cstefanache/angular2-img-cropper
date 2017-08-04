@@ -176,13 +176,13 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
 
                 window.cancelAnimationFrame(self.raf);
                 self.getOrientedImage(image, (img:HTMLImageElement) => {
-                    if (this.settings.dynamicSizing) {
-                        let canvas:HTMLCanvasElement = this.cropcanvas.nativeElement;
-                        this.settings.canvasWidth = canvas.offsetWidth;
-                        this.settings.canvasHeight = canvas.offsetHeight;
-                        this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, false);
-                    }
 
+                    if (self.settings.dynamicSizing) {
+                        let canvas:HTMLCanvasElement = self.cropcanvas.nativeElement;
+                        self.settings.canvasWidth = canvas.offsetWidth;
+                        self.settings.canvasHeight = canvas.offsetHeight;
+                        self.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, false);
+                    }
 
                     self.cropper.setImage(img);
                     if (self.cropPosition && self.cropPosition.isInitialized()) {
@@ -190,13 +190,14 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
                     }
                     self.image.original = img;
                     let bounds = self.cropper.getCropBounds();
-                    self.image.image = self.cropper.getCroppedImageHelper().src;
                     if (newBounds != null) {
                         bounds = newBounds;
                         self.cropper.setBounds(bounds);
-                        this.cropper.updateCropPosition(bounds);
+                        self.cropper.updateCropPosition(bounds);
                     }
+                    self.image.image = self.cropper.getCroppedImageHelper().src;
                     self.onCrop.emit(bounds);
+                    self.updateCropBounds();
                 });
             }
         });
