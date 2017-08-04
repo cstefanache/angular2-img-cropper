@@ -1,73 +1,3 @@
-# Call for contributors - I want to donate the project (unable to maintain it anymore #
-
-# Changelog
-
-### Release 0.8.6
- - Dist package cleanup (PR by: @leosvelperez)
-
-### Release 0.8.4
- - Made compatible with Angular 4 && AOT
-
-### Release 0.8.2
- - CR: #148 - removed ts files from output package.
- - fix for #150 - made fileType undefined as default. if defined it will enforce output format
-
-### Release 0.8.1
- - added dynamicSizing, cropperClass for responsive purposes
-
-### Release 0.8
-
- - added reset() method on ImageCropperComponent - fix for  #118   
- - added compressRatio as parameter in the cropper settings
-
-### Release 0.7.6
-
- - 21 Bugs in the code, I fixed 3, (hopefully not) 30 Bugs in the code
-
-### Release 0.7.1
- - Fixed #87 get unsacled crop of image
-
-
-### Release 0.7.0
- - update for AngularJS 2.0.1
- - removed typings
- - fixed aspect ratio issue
- - made cropper property public
- - added onmouseleave behavior
-
-### Release 0.6.1
- - Fixed issue #49 - Error on reading exif
-
-### Release 0.6.0
-
- - Parsed EXIF information for image orientation
- - fixed multiple browser compatibility issues
- - added accepted files regex
- - updated to Angular RC5
-
-
-### Release 0.5.0
-
- - introduced flag to hide the component file input in order to allow customization
- - added pinch/zoom feature for touch devices
-
-###  Release 0.4.5:
- - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)
- - cropper takes into consideration source image data pixels not cropper image data. (Issue #17)
- - support for minSize now have the following option: minWithRelativeToResolution. When set to false it will keep min size relative to canvas size. (Issue #21)
- - allow user to customize look and feel of the cropper:  
-        this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
-        this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
-
-### Release 0.4.2:
-Starting with: 0.4.2 ts files are no loger published (only js & d.ts).
-Please change your system.config files to make use of the js files.
-```
- 'ng2-img-cropper' :           { main: 'index.js', defaultExtension: 'js' }
-```
-
-
-
 # ng2-img-cropper
 
 This is an adapatation of Angular 1 image cropper from: https://github.com/AllanBishop/angular-img-cropper
@@ -201,3 +131,72 @@ fileChangeListener($event) {
 
 
 ```
+
+
+
+# Changelog
+
+### Release 0.8.6
+ - Dist package cleanup (PR by: @leosvelperez)
+
+### Release 0.8.4
+ - Made compatible with Angular 4 && AOT
+
+### Release 0.8.2
+ - CR: #148 - removed ts files from output package.
+ - fix for #150 - made fileType undefined as default. if defined it will enforce output format
+
+### Release 0.8.1
+ - added dynamicSizing, cropperClass for responsive purposes
+
+### Release 0.8
+
+ - added reset() method on ImageCropperComponent - fix for  #118   
+ - added compressRatio as parameter in the cropper settings
+
+### Release 0.7.6
+
+ - 21 Bugs in the code, I fixed 3, (hopefully not) 30 Bugs in the code
+
+### Release 0.7.1
+ - Fixed #87 get unsacled crop of image
+
+
+### Release 0.7.0
+ - update for AngularJS 2.0.1
+ - removed typings
+ - fixed aspect ratio issue
+ - made cropper property public
+ - added onmouseleave behavior
+
+### Release 0.6.1
+ - Fixed issue #49 - Error on reading exif
+
+### Release 0.6.0
+
+ - Parsed EXIF information for image orientation
+ - fixed multiple browser compatibility issues
+ - added accepted files regex
+ - updated to Angular RC5
+
+
+### Release 0.5.0
+
+ - introduced flag to hide the component file input in order to allow customization
+ - added pinch/zoom feature for touch devices
+
+###  Release 0.4.5:
+ - introduced rounded cropper: cropperSettings.rounded = true. Making keep aspect = false will throw an error on rounded cropper. (Issue #14)
+ - cropper takes into consideration source image data pixels not cropper image data. (Issue #17)
+ - support for minSize now have the following option: minWithRelativeToResolution. When set to false it will keep min size relative to canvas size. (Issue #21)
+ - allow user to customize look and feel of the cropper:  
+        this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
+
+### Release 0.4.2:
+Starting with: 0.4.2 ts files are no loger published (only js & d.ts).
+Please change your system.config files to make use of the js files.
+```
+ 'ng2-img-cropper' :           { main: 'index.js', defaultExtension: 'js' }
+```
+

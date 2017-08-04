@@ -180,11 +180,11 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
                         this.cropper.resizeCanvas(canvas.offsetWidth, canvas.offsetHeight, false);
                     }
 
-
                     this.cropper.setImage(img);
                     if (this.cropPosition && this.cropPosition.isInitialized()) {
                         this.cropper.updateCropPosition(this.cropPosition.toBounds());
                     }
+
                     this.image.original = img;
                     let bounds = this.cropper.getCropBounds();
                     this.image.image = this.cropper.getCroppedImageHelper().src;
