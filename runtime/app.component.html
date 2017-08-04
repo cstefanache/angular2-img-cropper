@@ -1,0 +1,189 @@
+<div class="page-header">
+  <h1>angular2-img-cropper <small>samples</small>   <button class="btn btn-primary" (click)="resetCroppers()">Reset</button></h1>
+</div>
+<tabset [pills]="false" >
+    <tab title="Sample 1" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper #cropper1 [image]="data1" [settings]="cropperSettings1"></img-cropper>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
+            <span *ngIf="data1.image" >
+                <img [src]="data1.image"
+                    [width]="cropperSettings1.croppedWidth"
+                    [height]="cropperSettings1.croppedHeight">
+            </span>
+        </div>
+        </div>
+    <h3>settings</h3>
+    <pre>
+        <code>
+            this.cropperSettings1 = new CropperSettings();
+            this.cropperSettings1.width = 200;
+            this.cropperSettings1.height = 200;
+
+            this.cropperSettings1.croppedWidth = 200;
+            this.cropperSettings1.croppedHeight = 200;
+
+            this.cropperSettings1.canvasWidth = 500;
+            this.cropperSettings1.canvasHeight = 300;
+
+            this.cropperSettings1.minWidth = 100;
+            this.cropperSettings1.minHeight = 100;
+
+            this.cropperSettings1.rounded = false;
+
+            this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+            this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
+        </code>
+    </pre>
+    </tab>
+    <tab title="Sample 2" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper #cropper2 [image]="data2" [settings]="cropperSettings2"></img-cropper>
+            <div>
+                <label class="btn btn-primary">
+                    Upload
+                    <input id="file_input_file" class="none" type="file" style="display: none;"
+                    (change)="onChange($event)"/>
+                </label>
+            </div>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
+            <span *ngIf="data2.image" >
+              <img [src]="data2.image" [width]="cropperSettings2.croppedWidth" [height]="cropperSettings2.croppedHeight" style="border-radius: 100px">
+            </span>
+        </div>
+        </div>
+        <h3>settings</h3>
+        <pre>
+            <code>
+                this.cropperSettings2 = new CropperSettings();
+                this.cropperSettings2.width = 200;
+                this.cropperSettings2.height = 200;
+                this.cropperSettings2.keepAspect = false;
+
+                this.cropperSettings2.croppedWidth = 200;
+                this.cropperSettings2.croppedHeight = 200;
+
+                this.cropperSettings2.canvasWidth = 500;
+                this.cropperSettings2.canvasHeight = 300;
+
+                this.cropperSettings2.minWidth = 100;
+                this.cropperSettings2.minHeight = 100;
+
+                this.cropperSettings2.rounded = true;
+                this.cropperSettings2.minWithRelativeToResolution = false;
+
+                this.cropperSettings2.fileType = "image/jpeg";
+
+                this.cropperSettings2.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+                this.cropperSettings2.cropperDrawSettings.strokeWidth = 2;
+                this.cropperSettings2.noFileInput = true;
+            </code>
+        </pre>
+    </tab>
+
+    <tab title="Crop position" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper #cropper3 [image]="data3" [settings]="cropperSettings3" [(cropPosition)]="cropPosition"></img-cropper>
+        <br/>
+        Crop position:
+        <br/>
+        X <input type="text" [(ngModel)]="cropPosition.x">
+        Y <input type="text" [(ngModel)]="cropPosition.y">
+        W <input type="text" [(ngModel)]="cropPosition.w">
+        H <input type="text" [(ngModel)]="cropPosition.h">
+        <label class="btn btn-primary" (click)="updateCropPosition()">
+            update
+        </label>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
+            <span *ngIf="data3.image" >
+              <img [src]="data3.image" style="max-width: 300px; max-height:200px;">
+            </span>
+        </div>
+        </div>
+    <h3>settings</h3>
+    <pre>
+        <code>
+            this.cropperSettings3 = new CropperSettings();
+            this.cropperSettings3.width = 200;
+            this.cropperSettings3.height = 250;
+            this.cropperSettings3.keepAspect = true;
+
+            this.cropperSettings3.croppedWidth = 200;
+            this.cropperSettings3.croppedHeight = 250;
+
+            this.cropperSettings3.canvasWidth = 500;
+            this.cropperSettings3.canvasHeight = 300;
+
+            this.cropperSettings3.minWidth = 100;
+            this.cropperSettings3.minHeight = 100;
+
+            this.cropperSettings3.rounded = false;
+            this.cropperSettings3.minWithRelativeToResolution = false;
+
+            this.cropperSettings3.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+            this.cropperSettings3.cropperDrawSettings.strokeWidth = 2;
+
+            this.cropPosition = new CropPosition();
+            this.cropPosition.x = 10;
+            this.cropPosition.y = 10;
+            this.cropPosition.w = 200;
+            this.cropPosition.h = 250;
+        </code>
+    </pre>
+</tab>
+
+    <tab title="No Crop on Resize" [disabled]="false">
+        <div class="row">
+        <div class="col-md-9">
+            <h3>source</h3>
+            <img-cropper #cropper4 [image]="data4" [settings]="cropperSettings4"></img-cropper>
+            <br/>
+            <button class="btn btn-primary" (click)="getImage()">Crop Image</button>
+        </div>
+        <h3>result</h3>
+        <div class="col-md-3">
+            <span *ngIf="data4.image" >
+                <img [src]="data4.image" [width]="200">
+            </span>
+        </div>
+        </div>
+        <h3>settings</h3>
+        <pre>
+            <code>
+                this.cropperSettings4 = new CropperSettings();
+                this.cropperSettings4.width = 200;
+                this.cropperSettings4.height = 200;
+
+                this.cropperSettings4.croppedWidth = 200;
+                this.cropperSettings4.croppedHeight = 200;
+
+                this.cropperSettings4.canvasWidth = 500;
+                this.cropperSettings4.canvasHeight = 300;
+
+                this.cropperSettings4.minWidth = 100;
+                this.cropperSettings4.minHeight = 100;
+
+                this.cropperSettings4.rounded = false;
+
+                this.cropperSettings4.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+                this.cropperSettings4.cropperDrawSettings.strokeWidth = 2;
+
+                this.cropperSettings4.keepAspect = true;
+                this.cropperSettings4.preserveSize = true;
+                this.cropperSettings4.cropOnResize = false;
+            </code>
+        </pre>
+    </tab>
+</tabset>
