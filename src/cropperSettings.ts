@@ -77,6 +77,8 @@ export class CropperSettings implements ICropperSettings {
             this.preserveSize = settings.preserveSize || this.preserveSize;
             this.cropOnResize = settings.cropOnResize || this.cropOnResize;
             this.compressRatio = settings.compressRatio || this.compressRatio;
+
+            this.cropperDrawSettings = settings.cropperDrawSettings || this.cropperDrawSettings;
         }
     }
 
