@@ -135,11 +135,10 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
         if (this.settings.allowedFilesRegex.test(file.name)) {
             let image:any = new Image();
             let fileReader:FileReader = new FileReader();
-            let that = this;
 
-            fileReader.addEventListener('loadend', function (loadEvent:any) {
-                image.addEventListener('load', function() {
-                    that.setImage(image);
+            fileReader.addEventListener('loadend', (loadEvent:any) => {
+                image.addEventListener('load', () => {
+                    this.setImage(image);
                 });
                 image.src = loadEvent.target.result;
             });
@@ -162,20 +161,18 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
     }
 
     public setImage(image:HTMLImageElement, newBounds:any = null) {
-        let self = this;
         this.renderer.setAttribute(this.cropcanvas.nativeElement, 'class', `${this.settings.cropperClass} ${this.settings.croppingClass}`);
         this.raf = window.requestAnimationFrame(() => {
-            if (self.raf) {
-                window.cancelAnimationFrame(self.raf);
+            if (this.raf) {
+                window.cancelAnimationFrame(this.raf);
             }
             if (image.naturalHeight > 0 && image.naturalWidth > 0) {
-
 
                 image.height = image.naturalHeight;
                 image.width = image.naturalWidth;
 
-                window.cancelAnimationFrame(self.raf);
-                self.getOrientedImage(image, (img:HTMLImageElement) => {
+                window.cancelAnimationFrame(this.raf);
+                this.getOrientedImage(image, (img:HTMLImageElement) => {
                     if (this.settings.dynamicSizing) {
                         let canvas:HTMLCanvasElement = this.cropcanvas.nativeElement;
                         this.settings.canvasWidth = canvas.offsetWidth;
@@ -184,19 +181,19 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
                     }
 
 
-                    self.cropper.setImage(img);
-                    if (self.cropPosition && self.cropPosition.isInitialized()) {
-                        self.cropper.updateCropPosition(self.cropPosition.toBounds());
+                    this.cropper.setImage(img);
+                    if (this.cropPosition && this.cropPosition.isInitialized()) {
+                        this.cropper.updateCropPosition(this.cropPosition.toBounds());
                     }
-                    self.image.original = img;
-                    let bounds = self.cropper.getCropBounds();
-                    self.image.image = self.cropper.getCroppedImageHelper().src;
+                    this.image.original = img;
+                    let bounds = this.cropper.getCropBounds();
+                    this.image.image = this.cropper.getCroppedImageHelper().src;
                     if (newBounds != null) {
                         bounds = newBounds;
-                        self.cropper.setBounds(bounds);
+                        this.cropper.setBounds(bounds);
                         this.cropper.updateCropPosition(bounds);
                     }
-                    self.onCrop.emit(bounds);
+                    this.onCrop.emit(bounds);
                 });
             }
         });
