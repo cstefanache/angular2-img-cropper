@@ -44,7 +44,11 @@ export class CornerMarker extends Handle implements ICornerMarker {
             this.offset.y = 0;
         }
 
+
         ctx.beginPath();
+        if (this.cropperSettings.cropperDrawSettings.lineDash) {
+            ctx.setLineDash([1, 3]);
+        }
         ctx.lineJoin = 'miter';
         ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
@@ -72,6 +76,9 @@ export class CornerMarker extends Handle implements ICornerMarker {
             vDirection = -1;
         }
         ctx.beginPath();
+        if (this.cropperSettings.cropperDrawSettings.lineDash) {
+            ctx.setLineDash([1, 3]);
+        }
         ctx.moveTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y);
         ctx.lineTo(this.position.x + this.offset.x + (sideLength * hDirection), this.position.y + this.offset.y +
@@ -79,7 +86,7 @@ export class CornerMarker extends Handle implements ICornerMarker {
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(255,255,255,.7)';
+        ctx.fillStyle = 'rgba(255,0,0,1)';
         ctx.fill();
     }
 

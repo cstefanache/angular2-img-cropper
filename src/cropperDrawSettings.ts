@@ -1,4 +1,5 @@
 export class CropperDrawSettings {
+    public lineDash: boolean = false;
     public strokeWidth: number = 1;
     public strokeColor: string = 'rgba(255,255,255,1)';
     public dragIconStrokeWidth: number = 1;
@@ -7,6 +8,7 @@ export class CropperDrawSettings {
 
     constructor(settings?: any) {
         if (typeof settings === 'object') {
+            this.lineDash = settings.lineDash || this.lineDash;
             this.strokeWidth = settings.strokeWidth || this.strokeWidth;
             this.strokeColor = settings.strokeColor || this.strokeColor;
             this.dragIconStrokeWidth = settings.dragIconStrokeWidth || this.dragIconStrokeWidth;

@@ -55,7 +55,9 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges, OnDestro
             this.settings = new CropperSettings();
         }
 
-        this.renderer.setAttribute(canvas, 'class', this.settings.cropperClass);
+        if (this.settings.cropperClass) {
+            this.renderer.setAttribute(canvas, 'class', this.settings.cropperClass);
+        }
 
         if (!this.settings.dynamicSizing) {
             this.renderer.setAttribute(canvas, 'width', this.settings.canvasWidth.toString());
