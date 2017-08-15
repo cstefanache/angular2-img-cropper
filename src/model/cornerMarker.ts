@@ -54,7 +54,7 @@ export class CornerMarker extends Handle implements ICornerMarker {
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
         ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
-        ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor;
+        ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor || 'rgba(255,255,255,.7)';
         ctx.stroke();
     }
 
@@ -79,7 +79,7 @@ export class CornerMarker extends Handle implements ICornerMarker {
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y + (sideLength * vDirection));
         ctx.lineTo(this.position.x + this.offset.x, this.position.y + this.offset.y);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(255,255,255,.7)';
+        ctx.fillStyle = this.cropperSettings.cropperDrawSettings.strokeColor || 'rgba(255,255,255,.7)';
         ctx.fill();
     }
 
