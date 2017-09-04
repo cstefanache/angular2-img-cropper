@@ -47,7 +47,7 @@ export class CropperSettings implements ICropperSettings {
 
     public resampleFn:Function;
 
-    public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif)$/i;
+    public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif|bmp)$/i;
     public cropOnResize: boolean = true;
     public preserveSize: boolean = false;
 
