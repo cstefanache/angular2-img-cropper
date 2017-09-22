@@ -47,6 +47,10 @@ export class CropperSettings implements ICropperSettings {
 
     public resampleFn:Function;
 
+    public markerSizeMultiplier:number = 1;
+    public centerTouchRadius: number = 20;
+    public showCenterMarker:boolean = true;
+
     public allowedFilesRegex: RegExp = /\.(jpe?g|png|gif|bmp)$/i;
     public cropOnResize: boolean = true;
     public preserveSize: boolean = false;

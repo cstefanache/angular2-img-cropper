@@ -58,18 +58,20 @@ export class DragMarker extends Handle {
     }
 
     public drawIcon(ctx: CanvasRenderingContext2D, points: Array<Point>) {
-        ctx.beginPath();
-        ctx.moveTo(points[0].x + this.position.x, points[0].y + this.position.y);
-        for (let k = 0; k < points.length; k++) {
-            let p = points[k];
-            ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
+        if(this.cropperSettings.showCenterMarker){
+            ctx.beginPath();
+            ctx.moveTo(points[0].x + this.position.x, points[0].y + this.position.y);
+            for (let k = 0; k < points.length; k++) {
+                let p = points[k];
+                ctx.lineTo(p.x + this.position.x, p.y + this.position.y);
+            }
+            ctx.closePath();
+            ctx.fillStyle = this.cropperSettings.cropperDrawSettings.dragIconFillColor;
+            ctx.fill();
+            ctx.lineWidth = this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth;
+            ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.dragIconStrokeColor;
+            ctx.stroke();
         }
-        ctx.closePath();
-        ctx.fillStyle = this.cropperSettings.cropperDrawSettings.dragIconFillColor;
-        ctx.fill();
-        ctx.lineWidth = this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth;
-        ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.dragIconStrokeColor;
-        ctx.stroke();
     }
 
     public recalculatePosition(bounds: Bounds) {

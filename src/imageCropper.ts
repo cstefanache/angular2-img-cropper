@@ -24,6 +24,7 @@ export class ImageCropper extends ImageCropperModel {
         let height:number = cropperSettings.height;
         let keepAspect:boolean = cropperSettings.keepAspect;
         let touchRadius:number = cropperSettings.touchRadius;
+        let centerTouchRadius:number = cropperSettings.centerTouchRadius;
         let minWidth:number = cropperSettings.minWidth;
         let minHeight:number = cropperSettings.minHeight;
         let croppedWidth:number = cropperSettings.croppedWidth;
@@ -75,7 +76,7 @@ export class ImageCropper extends ImageCropperModel {
         this.markers = [this.tl, this.tr, this.bl, this.br];
 
 
-        this.center = new DragMarker(x + (width / 2), y + (height / 2), touchRadius, this.cropperSettings);
+        this.center = new DragMarker(x + (width / 2), y + (height / 2), centerTouchRadius, this.cropperSettings);
         this.keepAspect = keepAspect;
         this.aspectRatio = height / width;
         this.croppedImage = new Image();
