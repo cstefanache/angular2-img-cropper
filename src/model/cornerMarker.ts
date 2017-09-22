@@ -21,13 +21,13 @@ export class CornerMarker extends Handle implements ICornerMarker {
             sideLength = 12;
         }
 
-        let hDirection: number = 1;
-        let vDirection: number = 1;
+        let hDirection: number = this.cropperSettings.markerSizeMultiplier;
+        let vDirection: number = this.cropperSettings.markerSizeMultiplier;
         if (this.horizontalNeighbour.position.x < this.position.x) {
-            hDirection = -1;
+            hDirection = -this.cropperSettings.markerSizeMultiplier;
         }
         if (this.verticalNeighbour.position.y < this.position.y) {
-            vDirection = -1;
+            vDirection = -this.cropperSettings.markerSizeMultiplier;
         }
 
         if (this.cropperSettings.rounded) {
@@ -67,13 +67,15 @@ export class CornerMarker extends Handle implements ICornerMarker {
         if (this.over || this.drag) {
             sideLength = 12;
         }
-        let hDirection: number = 1;
-        let vDirection: number = 1;
+        let hDirection: number = this.cropperSettings.markerSizeMultiplier;
+        let vDirection: number = this.cropperSettings.markerSizeMultiplier;
         if (this.horizontalNeighbour.position.x < this.position.x) {
-            hDirection = -1;
+            hDirection = -this.cropperSettings.markerSizeMultiplier;
         }
         if (this.verticalNeighbour.position.y < this.position.y) {
-            vDirection = -1;
+            vDirection = -this.cropperSettings.markerSizeMultiplier;
+        }
+
         }
         ctx.beginPath();
         if (this.cropperSettings.cropperDrawSettings.lineDash) {

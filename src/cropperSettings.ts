@@ -47,6 +47,7 @@ export class CropperSettings implements ICropperSettings {
 
     public resampleFn:Function;
 
+    public markerSizeMultiplier:number = 1;
     public centerTouchRadius: number = 20;
     public showCenterMarker:boolean = true;
 
