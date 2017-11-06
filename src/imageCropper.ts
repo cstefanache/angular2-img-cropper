@@ -611,6 +611,15 @@ export class ImageCropper extends ImageCropperModel {
         return bounds;
     }
 
+    public getCropBoundsNotRounded() {
+        let bounds = this.getBounds();
+        bounds.top = (bounds.top - this.minYClamp) / this.ratioH;
+        bounds.bottom = bounds.bottom - this.minYClamp / this.ratioH;
+        bounds.left = (bounds.left - this.minXClamp) / this.ratioW;
+        bounds.right = (bounds.right - this.minXClamp) / this.ratioW;
+        return bounds;
+    }
+
     public clampPosition(x:number, y:number) {
         if (x < this.minXClamp) {
             x = this.minXClamp;
