@@ -1,6 +1,6 @@
 {
   "name": "ng2-img-cropper",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "Angular2 Image Cropper Component",
   "repository": {
     "type": "git",
@@ -10,28 +10,25 @@
     "tsc": "tsc",
     "build": "npm run clean && ngc -p tsconfig-aot.json",
     "clean": "rimraf dist",
-    "copy:release":
-      "node tools/package.json-cleanup.js && copyfiles README.md LICENSE.md dist",
+    "copy:release": "node tools/package.json-cleanup.js && copyfiles README.md LICENSE.md dist",
     "preversion": "npm test && npm run build",
-    "version":
-      "git commit -am \"Prerelease updates\" && git checkout -b release && git add -f ./",
-    "postversion":
-      "git push --tags && git checkout master && git branch -D release && git push && npm publish",
-    "release:patch":
-      "npm version patch && npm run copy:release && cd dist && npm publish",
-    "release:minor":
-      "npm version minor && npm run copy:release && cd dist && npm publish",
-    "release:major":
-      "npm version major && npm run copy:release && cd dist && npm publish",
+    "version": "git commit -am \"Prerelease updates\" && git checkout -b release && git add -f ./",
+    "postversion": "git push --tags && git checkout master && git branch -D release && git push && npm publish",
+    "release:patch": "npm version patch && npm run copy:release && cd dist && npm publish",
+    "release:minor": "npm version minor && npm run copy:release && cd dist && npm publish",
+    "release:major": "npm version major && npm run copy:release && cd dist && npm publish",
     "compile": "npm run compile:ts",
     "compile:ts": "tsc",
     "all": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
-    "start":
-      "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
+    "start": "concurrently \"tsc -w \" \"tsc -p runtime -w \" \"npm run lite\" ",
     "watch": "tsc -w ",
     "lite": "lite-server"
   },
-  "keywords": ["angular2", "image", "cropper"],
+  "keywords": [
+    "angular2",
+    "image",
+    "cropper"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^5.0.0",
