@@ -214,18 +214,17 @@ export class ImageCropper extends ImageCropperModel {
             ctx.lineWidth = this.cropperSettings.cropperDrawSettings.strokeWidth;
             ctx.strokeStyle = this.cropperSettings.cropperDrawSettings.strokeColor; // 'rgba(255,228,0,1)';
 
+            ctx.fillStyle =  'rgba(0, 0, 0, 0.6)';
             if (!this.cropperSettings.rounded) {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
                 ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-                ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.width, 1),
-                    Math.max(bounds.height, 1), bounds.left, bounds.top, bounds.width, bounds.height);
+                ctx.drawImage(this.buffer, bounds.left, bounds.top, Math.max(bounds.width, 1), Math.max(bounds.height, 1), bounds.left, bounds.top, bounds.width, bounds.height);
                 ctx.strokeRect(bounds.left, bounds.top, bounds.width, bounds.height);
-            } else {
+            }
+            else {
                 ctx.beginPath();
-                ctx.arc(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2, bounds.width / 2, 0,
-                    Math.PI * 2, true);
-                ctx.closePath();
-                ctx.stroke();
+                ctx.arc(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2,  bounds.width / 2, 0, 2 * Math.PI);
+                ctx.rect(this.canvasWidth, 0, -this.canvasWidth, this.canvasHeight);
+                ctx.fill();
             }
 
             let marker:CornerMarker;
