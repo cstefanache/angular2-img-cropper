@@ -1,3 +1,5 @@
+# This repo is deprecated, but will be maintained by web-dave at https://github.com/web-dave/ngx-img-cropper
+
 # ng2-img-cropper
 
 This is an adapatation of Angular 1 image cropper from: https://github.com/AllanBishop/angular-img-cropper
